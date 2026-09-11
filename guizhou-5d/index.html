@@ -15,15 +15,18 @@ html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--paper); color: var(--ink);
   font: 16px/1.65 -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif; }
 a { color: var(--moss); }
+img { max-width: 100%; display: block; }
 .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px 80px; }
 nav { position: sticky; top: 0; z-index: 20; background: rgba(243,239,230,.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
 nav .inner { max-width: 860px; margin: 0 auto; padding: 10px 16px; overflow-x: auto; display: flex; gap: 8px; }
 nav a { flex: 0 0 auto; text-decoration: none; color: var(--ink); font-size: 13px; padding: 6px 10px; border-radius: 999px; background: #efe6d6; }
 nav a:hover { background: var(--pine); color: #f3efe6; }
-.hero { background: var(--pine); color: #f3efe6; padding: 36px 20px 40px; }
-.hero .inner { max-width: 860px; margin: 0 auto; }
+.hero { position: relative; min-height: 360px; color: #f3efe6; overflow: hidden; }
+.hero img { width: 100%; height: 420px; object-fit: cover; }
+.hero .veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(26,24,20,.12), rgba(26,24,20,.74) 70%); }
+.hero .copy { position: absolute; left: 0; right: 0; bottom: 0; max-width: 860px; margin: 0 auto; padding: 28px 20px 32px; }
 .kicker { letter-spacing: .18em; font-size: 11px; opacity: .85; }
-.hero h1 { font-size: clamp(26px, 5vw, 38px); line-height: 1.25; margin: 10px 0 12px; font-weight: 650; }
+.hero h1 { font-size: clamp(28px, 6vw, 42px); line-height: 1.2; margin: 8px 0 10px; font-weight: 650; }
 .hero h1 em { font-style: normal; color: #e8c98a; }
 .pills { display: flex; flex-wrap: wrap; gap: 8px; }
 .pills span { font-size: 12px; padding: 4px 10px; border: 1px solid rgba(243,239,230,.35); border-radius: 999px; }
@@ -60,13 +63,27 @@ tr:last-child td { border-bottom: 0; }
 .pit { background: var(--card); border-left: 3px solid var(--clay); padding: 12px 14px; border-radius: 0 12px 12px 0; font-size: 14px; }
 footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
 .tag { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: #efe6d6; color: var(--muted); }
-.back { display: inline-block; margin: 16px 0 0; font-size: 13px; color: var(--moss); }
+.spot { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; margin: 12px 0; }
+.spot h3 { margin: 0 0 8px; }
+.shots { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
+@media (max-width: 640px) { .shots { grid-template-columns: 1fr; } }
+.shots figure { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.shots img { width: 100%; height: 210px; object-fit: cover; }
+.day .shots { margin: 0 0 14px; }
+.day .shots img { height: 180px; }
+.shots figcaption { font-size: 12px; color: var(--muted); padding: 8px 10px 10px; line-height: 1.45; }
+.shots figcaption b { display: block; color: var(--ink); font-size: 13px; margin-bottom: 2px; }
+.xhs { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 6px; }
+.xhs a { font-size: 13px; padding: 6px 12px; border-radius: 999px; background: #efe6d6; text-decoration: none; color: var(--ink); }
+.warn { background: #f6e8e0; border-radius: 12px; padding: 12px 14px; font-size: 13px; color: var(--muted); margin: 16px 0 0; }
+.back { color: #e8c98a; text-decoration: none; font-size: 13px; }
 </style>
 </head>
 <body>
 <nav><div class="inner">
   <a href="#top">总览</a>
-  <a href="#who">谁去</a>
+  <a href="#shots">出片</a>
+  <a href="#why">为什么这样排</a>
   <a href="#train">高铁</a>
   <a href="#d1">1 到贵阳</a>
   <a href="#d2">2 黄果树</a>
@@ -78,16 +95,18 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
 </div></nav>
 
 <section class="hero" id="top">
-  <div class="inner">
-    <div class="kicker">GUIZHOU · 5 DAYS · HSR</div>
+  <img src="img/hg-wide.jpg" alt="黄果树瀑布" />
+  <div class="veil"></div>
+  <div class="copy">
+    <div class="kicker">GUIZHOU · 5 DAYS · 6 PEOPLE · HSR</div>
     <h1>贵州 5 天<br />贵阳住满 <em>×</em> 黄果树 <em>×</em> 青岩</h1>
     <div class="pills">
       <span>日期未定</span>
-      <span>6 人 · 两家庭</span>
+      <span>两家庭 · 外婆 + 两个三岁</span>
       <span>深圳高铁</span>
       <span>贵阳 4 晚不换</span>
     </div>
-    <a class="back" href="../">← 全部行程</a>
+    <p style="margin:12px 0 0"><a class="back" href="../">← 全部行程</a></p>
   </div>
 </section>
 
@@ -95,21 +114,145 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
   <div class="grid">
     <div class="stat"><small>高铁往返（大人二等，9.12 现图）</small><b>约 ¥1,000</b><small>去约 460 · 回约 496 · 旺季浮动</small></div>
     <div class="stat"><small>住宿</small><b>贵阳 4 晚</b><small>观山湖或喷水池 · 电梯房</small></div>
-    <div class="stat"><small>硬菜</small><b>黄果树一天</b><small>扶梯 + 陡坡塘 + 天星桥下半段</small></div>
-    <div class="stat"><small>节奏</small><b>慢</b><small>外婆 + 两个三岁</small></div>
+    <div class="stat"><small>硬菜</small><b>黄果树一天</b><small>携程 4.6 · 约 4 万条</small></div>
+    <div class="stat"><small>节奏</small><b>慢</b><small>少换酒店 · 少爬台阶</small></div>
   </div>
 
-  <h2 id="who">谁去</h2>
-  <p>两个家庭，一共 6 人：外婆、两个妈妈、两个三岁女孩、一个男人。高铁进出。少换酒店，少爬台阶，少坐长途车。</p>
+  <h2 id="shots">朋友圈会有的几张</h2>
+  <p>发给家人看的就是这些。黄果树大瀑布、天星桥下半段、青岩石街、甲秀楼。小红书搜词挂下面。</p>
+  <div class="xhs">
+    <a href="https://www.xiaohongshu.com/search_result?keyword=%E9%BB%84%E6%9E%9C%E6%A0%91%E7%80%91%E5%B8%83" target="_blank" rel="noopener">黄果树瀑布</a>
+    <a href="https://www.xiaohongshu.com/search_result?keyword=%E9%BB%84%E6%9E%9C%E6%A0%91%E6%B0%B4%E5%B8%98%E6%B4%9E" target="_blank" rel="noopener">水帘洞</a>
+    <a href="https://www.xiaohongshu.com/search_result?keyword=%E5%A4%A9%E6%98%9F%E6%A1%A5%E9%93%B6%E9%93%BE%E5%9D%A0%E6%BD%AD" target="_blank" rel="noopener">银链坠潭</a>
+    <a href="https://www.xiaohongshu.com/search_result?keyword=%E9%9D%92%E5%B2%A9%E5%8F%A4%E9%95%87" target="_blank" rel="noopener">青岩古镇</a>
+    <a href="https://www.xiaohongshu.com/search_result?keyword=%E7%94%B2%E7%A7%80%E6%A5%BC" target="_blank" rel="noopener">甲秀楼</a>
+    <a href="https://www.xiaohongshu.com/search_result?keyword=%E9%BB%94%E7%81%B5%E5%B1%B1%E7%8C%B4%E5%AD%90" target="_blank" rel="noopener">黔灵山猴子</a>
+  </div>
+  <div class="shots">
+    <figure>
+      <img src="img/hg-01.jpg" alt="黄果树大瀑布" />
+      <figcaption><b>大瀑布</b>图源 Wikimedia Commons · Liuxingy / CC BY-SA 4.0</figcaption>
+    </figure>
+    <figure>
+      <img src="img/hg-2024a.jpg" alt="黄果树近景" />
+      <figcaption><b>近景</b>图源 Wikimedia Commons · FN-082 / CC BY-SA 4.0</figcaption>
+    </figure>
+    <figure>
+      <img src="img/tx-06.jpg" alt="天星桥" />
+      <figcaption><b>天星桥</b>图源 Wikimedia Commons · Huangdan2060 / CC BY 3.0</figcaption>
+    </figure>
+    <figure>
+      <img src="img/qy-main.jpg" alt="青岩古镇" />
+      <figcaption><b>青岩</b>图源 Wikimedia Commons · xiquinhosilva / CC BY 2.0</figcaption>
+    </figure>
+    <figure>
+      <img src="img/jx-pavilion.jpg" alt="甲秀楼" />
+      <figcaption><b>甲秀楼</b>图源 Wikimedia Commons · xiquinhosilva / CC BY 2.0</figcaption>
+    </figure>
+    <figure>
+      <img src="img/ql-monkey.jpg" alt="黔灵山猕猴" />
+      <figcaption><b>黔灵山猕猴</b>图源 Wikimedia Commons · Augustokremo / CC BY-SA 4.0</figcaption>
+    </figure>
+  </div>
+  <div class="warn">照片都标了出处。权利人认为侵权的，说一声立刻删。本页只给同行家人看，用完会下线。</div>
+
+  <h2 id="why">为什么这样排</h2>
+  <p>两家庭一共 6 人：外婆、两个妈妈、两个三岁女孩、一个男人。高铁进出深圳。贵阳住满四晚，几乎不换酒店。硬菜只留黄果树一天，有扶梯能省台阶。青岩半天平路多。黔灵山看猴当轻松日。荔波、西江、梵净山、镇远这趟不塞。</p>
+
+  <div class="spot">
+    <h3>黄果树 · 唯一重活</h3>
+    <div class="shots">
+      <figure>
+        <img src="img/hg-wide.jpg" alt="黄果树全景" />
+        <figcaption><b>全景</b>图源 Wikimedia Commons · Robinliu / CC0</figcaption>
+      </figure>
+      <figure>
+        <img src="img/hg-2024b.jpg" alt="黄果树另一角度" />
+        <figcaption><b>另一角度</b>图源 Wikimedia Commons · FN-082 / CC BY-SA 4.0</figcaption>
+      </figure>
+      <figure>
+        <img src="img/hg-pano.jpg" alt="瀑布水雾" />
+        <figcaption><b>水雾</b>图源 Wikimedia Commons · Nyx Ning / CC BY-SA 3.0</figcaption>
+      </figure>
+      <figure>
+        <img src="img/hg-pano2.jpg" alt="大瀑布远观" />
+        <figcaption><b>远观</b>图源 Wikimedia Commons · Nyx Ning / CC BY-SA 3.0</figcaption>
+      </figure>
+      <figure>
+        <img src="img/tx-03.jpg" alt="天星桥石景" />
+        <figcaption><b>天星桥石景</b>图源 Wikimedia Commons · Huangdan2060 / CC BY 3.0</figcaption>
+      </figure>
+      <figure>
+        <img src="img/tx-08.jpg" alt="天星桥水景" />
+        <figcaption><b>天星桥水景</b>图源 Wikimedia Commons · Huangdan2060 / CC BY 3.0</figcaption>
+      </figure>
+      <figure>
+        <img src="img/dp-anshun.jpg" alt="陡坡塘一带瀑布" />
+        <figcaption><b>安顺瀑布景观</b>（陡坡塘片区同类平缓步道）图源 Wikimedia Commons · Robinliu / CC0</figcaption>
+      </figure>
+      <figure>
+        <img src="img/tx-06.jpg" alt="天星桥下半段" />
+        <figcaption><b>下半段精华</b>图源 Wikimedia Commons · Huangdan2060 / CC BY 3.0</figcaption>
+      </figure>
+    </div>
+    <p>携程 4.6 分，大约 4 万条点评。三大片区：陡坡塘、天星桥、大瀑布。门票十天内有效。观光车大约 50 元/人，片区之间必坐。大瀑布扶梯单程约 30、往返约 50。外婆和两个三岁的，往返扶梯直接买。</p>
+    <p>推荐顺序：天星桥下半段 → 大瀑布（扶梯）→ 陡坡塘。天星桥索道停运，别指望坐上去。水帘洞旺季要预约，没约上大瀑布可玩性会打折。带雨衣和换洗衣。65 岁以上、6 岁以下常免大门票，观光车和扶梯另买。带身份证、户口本。</p>
+  </div>
+
+  <div class="spot">
+    <h3>青岩古镇 · 半天平路</h3>
+    <div class="shots">
+      <figure>
+        <img src="img/qy-main.jpg" alt="青岩古镇" />
+        <figcaption><b>古镇外观</b>图源 Wikimedia Commons · xiquinhosilva / CC BY 2.0</figcaption>
+      </figure>
+      <figure>
+        <img src="img/qy-street.jpg" alt="青岩街巷" />
+        <figcaption><b>街巷</b>图源 Wikimedia Commons · xiquinhosilva / CC BY 2.0</figcaption>
+      </figure>
+      <figure>
+        <img src="img/qy-town.jpg" alt="青岩建筑" />
+        <figcaption><b>建筑</b>图源 Wikimedia Commons · Harry Alverson / CC BY-SA 2.0</figcaption>
+      </figure>
+      <figure>
+        <img src="img/qy-pano.jpg" alt="青岩全景" />
+        <figcaption><b>全景</b>图源 Wikimedia Commons · 汗血 / CC BY 3.0</figcaption>
+      </figure>
+    </div>
+    <p>花溪区，贵阳南边。车程大约一小时内。携程青岩定广门页 4.7 分、61 条（样本量不大）。石板路多，台阶比西江少很多。商业化有，卤猪蹄、豆腐圆子到处是。大门票常见大约 10 元档，通票更贵，半天随便逛大门票够。外婆能走完主要街。下午必须回酒店午睡，两个三岁的扛不住全天。</p>
+  </div>
+
+  <div class="spot">
+    <h3>贵阳轻松点 · 甲秀楼 + 黔灵山</h3>
+    <div class="shots">
+      <figure>
+        <img src="img/jx-pavilion.jpg" alt="甲秀楼" />
+        <figcaption><b>甲秀楼</b>图源 Wikimedia Commons · xiquinhosilva / CC BY 2.0</figcaption>
+      </figure>
+      <figure>
+        <img src="img/ql-hill.jpg" alt="黔灵山" />
+        <figcaption><b>黔灵山</b>图源 Wikimedia Commons · 維基小霸王 / CC BY-SA 4.0</figcaption>
+      </figure>
+      <figure>
+        <img src="img/ql-monkey.jpg" alt="猕猴" />
+        <figcaption><b>猕猴</b>图源 Wikimedia Commons · Augustokremo / CC BY-SA 4.0</figcaption>
+      </figure>
+      <figure>
+        <img src="img/ql-macaque.jpg" alt="猕猴近景" />
+        <figcaption><b>近景</b>图源 Wikimedia Commons · Yhuo / CC BY-SA 3.0</figcaption>
+      </figure>
+    </div>
+    <p>甲秀楼在南明河边，D1 傍晚走一圈就够，别当大景点。黔灵山携程约 4.6 分、五千多条。门票便宜。猴子是卖点，也是麻烦：零食别外露，看好两个三岁的，别喂。累了坐缆车可以，周末队会长。花溪湿地备选，散步比爬山轻松。</p>
+  </div>
 
   <h2 id="train">高铁怎么走</h2>
-  <p class="note">票价是 2026-09-12 携程现图二等。出行日另查。旺季提前抢，六人同一班。</p>
+  <p class="note">票价是 2026-09-12 携程现图二等。出行日另查。旺季提前抢，六人同一班。三岁儿童规则以 12306 为准。</p>
   <table>
     <tr><th>方向</th><th>参考车次</th><th>时刻</th><th>二等</th></tr>
     <tr class="pick"><td>去</td><td>G2942 深圳北 → 龙洞堡 / 贵阳东</td><td>07:03 → 约 11:10–11:23</td><td>约 ¥458–466</td></tr>
-    <tr><td></td><td colspan="3">四个多小时。中午前后到，下午能歇。</td></tr>
+    <tr><td></td><td colspan="3">四个多小时。中午前后到，下午能歇。带娃早点出门，安检排队预留时间。</td></tr>
     <tr class="pick"><td>回</td><td>G2921 贵阳北 → 深圳北</td><td>11:14 → 15:47</td><td>约 ¥496</td></tr>
-    <tr><td></td><td colspan="3">下午晚一点的班也有。三岁儿童规则以 12306 为准。</td></tr>
+    <tr><td></td><td colspan="3">下午晚一点的班也有。大人往返大约一人一千出头。</td></tr>
   </table>
 
   <article class="day" id="d1">
@@ -119,12 +262,24 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
       <span class="tag">不排景点</span>
     </header>
     <div class="body">
+      <div class="shots">
+        <figure>
+          <img src="img/jx-pavilion.jpg" alt="甲秀楼" />
+          <figcaption><b>甲秀楼</b>图源 Wikimedia Commons · xiquinhosilva / CC BY 2.0</figcaption>
+        </figure>
+        <figure>
+          <img src="img/ql-crowd.jpg" alt="贵阳人流参考" />
+          <figcaption><b>城里人流</b>图源 Wikimedia Commons · 維基小霸王 / CC BY-SA 4.0</figcaption>
+        </figure>
+      </div>
       <ul class="tl">
-        <li><time>早上</time><div>深圳北上车。中午前后到贵阳。</div></li>
-        <li><time>下午</time><div>入住。观山湖或喷水池一带，电梯房，能加婴儿床最好。</div></li>
-        <li><time>傍晚</time><div>甲秀楼附近走走吃饭。够了就回酒店。</div></li>
+        <li><time>早上</time><div>深圳北 G2942。中午前后到贵阳。</div></li>
+        <li><time>下午</time><div>入住观山湖或喷水池一带。电梯房，能加婴儿床最好。全程四晚住这。</div></li>
+        <li><time>傍晚</time><div>甲秀楼河边走走。晚饭酸汤牛肉或肠旺面。</div></li>
       </ul>
-      <div class="stay"><b>住 · 贵阳第 1 晚</b>后面三晚也住这，不换。</div>
+      <div class="eat"><b>晚饭参考</b>贵厨酸汤牛肉（花果园国际中心店）携程 4.3 / 47 评 / 人均约 ¥65，酸汤偏温和。甲秀楼附近黔诚·多彩火锅 4.0 / 8 评 / 人均约 ¥62，样本量小，备选。蒋家肠旺面馆（合群路店）携程约 4.8 / 人均约 ¥18，小孩能吃面。</div>
+      <div class="stay"><b>住 · 贵阳第 1 晚</b>店名等日期定了再锁。</div>
+      <div class="trap"><b>避坑</b>别当天赶黄果树。六个小时高铁加两个三岁的，到了就歇。</div>
     </div>
   </article>
 
@@ -135,15 +290,34 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
       <span class="tag">唯一重活</span>
     </header>
     <div class="body">
+      <div class="shots">
+        <figure>
+          <img src="img/hg-01.jpg" alt="大瀑布" />
+          <figcaption><b>大瀑布</b>图源 Wikimedia Commons · Liuxingy / CC BY-SA 4.0</figcaption>
+        </figure>
+        <figure>
+          <img src="img/hg-2024a.jpg" alt="近景" />
+          <figcaption><b>近景</b>图源 Wikimedia Commons · FN-082 / CC BY-SA 4.0</figcaption>
+        </figure>
+        <figure>
+          <img src="img/tx-08.jpg" alt="天星桥" />
+          <figcaption><b>天星桥</b>图源 Wikimedia Commons · Huangdan2060 / CC BY 3.0</figcaption>
+        </figure>
+        <figure>
+          <img src="img/dp-anshun.jpg" alt="平缓瀑布步道" />
+          <figcaption><b>平缓步道片区</b>图源 Wikimedia Commons · Robinliu / CC0</figcaption>
+        </figure>
+      </div>
       <ul class="tl">
-        <li><time>早上</time><div>贵阳包车去，大约 2 小时。七座商务，问清有没有儿童座椅。</div></li>
-        <li><time>白天</time><div>大瀑布坐扶梯（单程约 30，往返约 50），别爬那几百级。陡坡塘路平，适合遛娃。天星桥只走下半段精华。索道还在停。</div></li>
-        <li><time>水帘洞</time><div>旺季要预约。带雨衣和换洗衣。水雾大。</div></li>
-        <li><time>傍晚</time><div>原车回贵阳酒店。</div></li>
+        <li><time>早上</time><div>贵阳包车去，大约 2 小时。七座商务，问清儿童座椅。尽量 8 点前进园，人少一点。</div></li>
+        <li><time>上午</time><div>天星桥只走下半段。银链坠潭是精华。索道停运，别按旧攻略找索道。</div></li>
+        <li><time>中午</time><div>景区简餐将就，或回票务中心一带吃。别在里面耗太久排队。</div></li>
+        <li><time>下午</time><div>大瀑布。扶梯往返约 50。水帘洞提前预约。没约上就看观景台，别硬等。</div></li>
+        <li><time>傍晚前</time><div>陡坡塘走一圈，路平，适合遛娃。原车回贵阳。</div></li>
       </ul>
-      <div class="eat"><b>票</b>65 岁以上、6 岁以下常免大门票。观光车和扶梯另买。带身份证、户口本。</div>
-      <div class="trap"><b>避坑</b>别跟团塞荔波。天星桥别硬走上半段。</div>
-      <div class="stay"><b>住 · 贵阳第 2 晚</b></div>
+      <div class="eat"><b>票</b>成人常见大门票 + 观光车一套大约 210 档（含上行扶梯 30 的说法以现场为准）。往返扶梯另加。65+、6 岁以下常免大门票，观光车和扶梯仍要买。</div>
+      <div class="trap"><b>避坑</b>禁止带宠物。无人机禁飞。水帘洞没约别赌。商业街出口还要走一段，带娃预留脚力。</div>
+      <div class="stay"><b>住 · 贵阳第 2 晚</b>不住景区酒店，少换床。</div>
     </div>
   </article>
 
@@ -154,11 +328,30 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
       <span class="tag">平路</span>
     </header>
     <div class="body">
+      <div class="shots">
+        <figure>
+          <img src="img/qy-street.jpg" alt="青岩街" />
+          <figcaption><b>街</b>图源 Wikimedia Commons · xiquinhosilva / CC BY 2.0</figcaption>
+        </figure>
+        <figure>
+          <img src="img/qy-town.jpg" alt="青岩建筑" />
+          <figcaption><b>建筑</b>图源 Wikimedia Commons · Harry Alverson / CC BY-SA 2.0</figcaption>
+        </figure>
+        <figure>
+          <img src="img/qy-pano.jpg" alt="青岩全景" />
+          <figcaption><b>全景</b>图源 Wikimedia Commons · 汗血 / CC BY 3.0</figcaption>
+        </figure>
+        <figure>
+          <img src="img/qy-main.jpg" alt="青岩外观" />
+          <figcaption><b>外观</b>图源 Wikimedia Commons · xiquinhosilva / CC BY 2.0</figcaption>
+        </figure>
+      </div>
       <ul class="tl">
-        <li><time>上午</time><div>青岩。平路多，小吃多。外婆和小孩能走完主要街。</div></li>
-        <li><time>午饭</time><div>古镇里吃。别点一堆，够吃就行。</div></li>
-        <li><time>下午</time><div>回酒店午睡。小孩恢复体力。</div></li>
+        <li><time>上午</time><div>打车或公交去青岩。进门逛石板街，城墙能上就上一点，累了就下。</div></li>
+        <li><time>午饭</time><div>卤猪蹄、豆腐圆子。一家点一份分着吃，别六个人各点一套。</div></li>
+        <li><time>下午</time><div>回酒店午睡。晚上城里吃肠旺面或丝娃娃，看状态。</div></li>
       </ul>
+      <div class="eat"><b>青岩吃</b>西门外美食街居多。携程单独高分店不多，按现场人气和卫生选。酸辣重，小孩少放辣椒。</div>
       <div class="stay"><b>住 · 贵阳第 3 晚</b></div>
     </div>
   </article>
@@ -170,11 +363,30 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
       <span class="tag">不赶路</span>
     </header>
     <div class="body">
+      <div class="shots">
+        <figure>
+          <img src="img/ql-monkey.jpg" alt="猴子" />
+          <figcaption><b>猴子</b>图源 Wikimedia Commons · Augustokremo / CC BY-SA 4.0</figcaption>
+        </figure>
+        <figure>
+          <img src="img/ql-macaque.jpg" alt="猕猴" />
+          <figcaption><b>猕猴</b>图源 Wikimedia Commons · Yhuo / CC BY-SA 3.0</figcaption>
+        </figure>
+        <figure>
+          <img src="img/ql-hill.jpg" alt="黔灵山" />
+          <figcaption><b>山</b>图源 Wikimedia Commons · 維基小霸王 / CC BY-SA 4.0</figcaption>
+        </figure>
+        <figure>
+          <img src="img/jx-pavilion.jpg" alt="甲秀楼" />
+          <figcaption><b>甲秀楼备选夜景</b>图源 Wikimedia Commons · xiquinhosilva / CC BY 2.0</figcaption>
+        </figure>
+      </div>
       <ul class="tl">
-        <li><time>选一</time><div>黔灵山看猴。看好两个三岁的，别喂。</div></li>
-        <li><time>或</time><div>花溪湿地散步。累了就坐。</div></li>
-        <li><time>下午</time><div>回酒店。收拾回程行李。</div></li>
+        <li><time>选一</time><div>黔灵山看猴。零食收好。缆车可坐，周末队会长。</div></li>
+        <li><time>或</time><div>花溪湿地散步。比爬山轻松，推车友好一些。</div></li>
+        <li><time>下午</time><div>回酒店收拾。晚饭别吃太野，明天赶车。</div></li>
       </ul>
+      <div class="trap"><b>避坑</b>别喂猴。帽子压好，有人会被揪头发。</div>
       <div class="stay"><b>住 · 贵阳第 4 晚</b></div>
     </div>
   </article>
@@ -188,6 +400,7 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
     <div class="body">
       <ul class="tl">
         <li><time>上午</time><div>贵阳北上车。参考 G2921 11:14 → 深圳北 15:47。</div></li>
+        <li><time>车上</time><div>给小孩准备零食和充电宝。六人座位尽量连在一起。</div></li>
       </ul>
     </div>
   </article>
@@ -197,21 +410,21 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
     <li><span class="box"></span><div>定出行日，抢去程 + 回程六人票</div></li>
     <li><span class="box"></span><div>贵阳电梯房 4 晚（观山湖或喷水池）</div></li>
     <li><span class="box"></span><div>D2 黄果树包车（七座，问儿童座椅）</div></li>
-    <li><span class="box"></span><div>黄果树票 + 观光车 + 扶梯；水帘洞预约</div></li>
+    <li><span class="box"></span><div>黄果树票 + 观光车 + 扶梯往返；水帘洞预约</div></li>
     <li><span class="box"></span><div>外婆身份证、两个小孩户口本</div></li>
   </ul>
 
   <h2 id="pits">砍掉的</h2>
   <div class="pits">
-    <div class="pit"><b>荔波小七孔</b><br />单边 3–4 小时。这趟人带不动。</div>
-    <div class="pit"><b>西江千户苗寨</b><br />台阶多。电瓶车也救不全外婆和两个三岁的。</div>
+    <div class="pit"><b>荔波小七孔</b><br />单边 3–4 小时。外婆和两个三岁的当天会散架。</div>
+    <div class="pit"><b>西江千户苗寨</b><br />台阶多。电瓶车也救不全。以后单独去。</div>
     <div class="pit"><b>梵净山</b><br />索道排队。老人小孩太累。</div>
     <div class="pit"><b>镇远</b><br />又换一晚酒店。五天塞不下。</div>
   </div>
 
   <footer>
-    <p>6 人，深圳高铁进出，日期未定。高铁价是 2026-09-12 携程现图二等参考价。黄果树扶梯、免票口径来自 2026 年公开攻略，入园以景区当天为准。</p>
-    <p>本页只给同行家人看行程。写完会下线。</p>
+    <p>6 人，深圳高铁进出，日期未定。高铁价是 2026-09-12 携程现图二等参考价。黄果树 4.6 / 约 4 万条、票务与免票口径来自携程景区页（2026）。贵厨酸汤牛肉花果园店 4.3 / 47 评 / 约 ¥65；蒋家肠旺面合群路店约 4.8 / 约 ¥18；黔诚甲秀楼店 4.0 / 8 评 / 约 ¥62。青岩定广门页 4.7 / 61 条。入园与票价以景区当天为准。</p>
+    <p>照片来自 Wikimedia Commons，作者与许可写在每张图下面。如权利人认为侵权，联系后立即删除。本页只给同行家人看行程，用完会下线。</p>
   </footer>
 </div>
 </body>
