@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#2c4a42" />
+<title>贵州 5 天｜贵阳住满 · 黄果树 · 青岩</title>
+<style>
+:root {
+  --ink: #1a1814; --muted: #6b6358; --paper: #f3efe6; --card: #fffaf2;
+  --pine: #2c4a42; --moss: #3d5c52; --ochre: #c45c3e; --clay: #8b3a2a; --line: #e4d9c8;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink);
+  font: 16px/1.65 -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+a { color: var(--moss); }
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 20px 80px; }
+nav { position: sticky; top: 0; z-index: 20; background: rgba(243,239,230,.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+nav .inner { max-width: 860px; margin: 0 auto; padding: 10px 16px; overflow-x: auto; display: flex; gap: 8px; }
+nav a { flex: 0 0 auto; text-decoration: none; color: var(--ink); font-size: 13px; padding: 6px 10px; border-radius: 999px; background: #efe6d6; }
+nav a:hover { background: var(--pine); color: #f3efe6; }
+.hero { background: var(--pine); color: #f3efe6; padding: 36px 20px 40px; }
+.hero .inner { max-width: 860px; margin: 0 auto; }
+.kicker { letter-spacing: .18em; font-size: 11px; opacity: .85; }
+.hero h1 { font-size: clamp(26px, 5vw, 38px); line-height: 1.25; margin: 10px 0 12px; font-weight: 650; }
+.hero h1 em { font-style: normal; color: #e8c98a; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pills span { font-size: 12px; padding: 4px 10px; border: 1px solid rgba(243,239,230,.35); border-radius: 999px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 22px 0; }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+.stat b { display: block; font-size: 20px; }
+.stat small { color: var(--muted); }
+h2 { font-size: 22px; margin: 36px 0 12px; }
+h3 { font-size: 18px; margin: 0 0 8px; }
+.note { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 14px; overflow: hidden; font-size: 14px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { background: var(--pine); color: #f3efe6; font-weight: 550; }
+tr:last-child td { border-bottom: 0; }
+.pick { background: #eef3ea; }
+.day { background: var(--card); border: 1px solid var(--line); border-radius: 18px; margin: 18px 0; overflow: hidden; }
+.day header { padding: 16px 18px 12px; display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; border-bottom: 1px solid var(--line); }
+.day .idx { font-size: 13px; color: var(--ochre); letter-spacing: .08em; }
+.day header h3 { margin: 0; flex: 1; }
+.day .body { padding: 16px 18px 20px; }
+.tl { list-style: none; padding: 0; margin: 0 0 14px; }
+.tl li { display: grid; grid-template-columns: 72px 1fr; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--line); }
+.tl li:last-child { border-bottom: 0; }
+.tl time { color: var(--moss); font-size: 13px; font-variant-numeric: tabular-nums; }
+.eat, .trap, .stay { border-radius: 12px; padding: 12px 14px; margin: 10px 0 0; font-size: 14px; }
+.eat { background: #f3eee2; }
+.trap { background: #f6e8e0; }
+.stay { background: #eef3ea; }
+.eat b, .trap b, .stay b { display: block; font-size: 12px; letter-spacing: .08em; color: var(--muted); margin-bottom: 4px; }
+.checklist { list-style: none; padding: 0; }
+.checklist li { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; margin: 8px 0; display: flex; gap: 10px; align-items: flex-start; }
+.box { width: 16px; height: 16px; border: 1.5px solid var(--pine); border-radius: 4px; margin-top: 4px; flex: none; }
+.pits { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.pit { background: var(--card); border-left: 3px solid var(--clay); padding: 12px 14px; border-radius: 0 12px 12px 0; font-size: 14px; }
+footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
+.tag { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: #efe6d6; color: var(--muted); }
+.back { display: inline-block; margin: 16px 0 0; font-size: 13px; color: var(--moss); }
+</style>
+</head>
+<body>
+<nav><div class="inner">
+  <a href="#top">总览</a>
+  <a href="#who">谁去</a>
+  <a href="#train">高铁</a>
+  <a href="#d1">1 到贵阳</a>
+  <a href="#d2">2 黄果树</a>
+  <a href="#d3">3 青岩</a>
+  <a href="#d4">4 轻松</a>
+  <a href="#d5">5 回家</a>
+  <a href="#todo">未订</a>
+  <a href="#pits">砍掉的</a>
+</div></nav>
+
+<section class="hero" id="top">
+  <div class="inner">
+    <div class="kicker">GUIZHOU · 5 DAYS · HSR</div>
+    <h1>贵州 5 天<br />贵阳住满 <em>×</em> 黄果树 <em>×</em> 青岩</h1>
+    <div class="pills">
+      <span>日期未定</span>
+      <span>6 人 · 两家庭</span>
+      <span>深圳高铁</span>
+      <span>贵阳 4 晚不换</span>
+    </div>
+    <a class="back" href="../">← 全部行程</a>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="grid">
+    <div class="stat"><small>高铁往返（大人二等，9.12 现图）</small><b>约 ¥1,000</b><small>去约 460 · 回约 496 · 旺季浮动</small></div>
+    <div class="stat"><small>住宿</small><b>贵阳 4 晚</b><small>观山湖或喷水池 · 电梯房</small></div>
+    <div class="stat"><small>硬菜</small><b>黄果树一天</b><small>扶梯 + 陡坡塘 + 天星桥下半段</small></div>
+    <div class="stat"><small>节奏</small><b>慢</b><small>外婆 + 两个三岁</small></div>
+  </div>
+
+  <h2 id="who">谁去</h2>
+  <p>两个家庭，一共 6 人：外婆、两个妈妈、两个三岁女孩、一个男人。高铁进出。少换酒店，少爬台阶，少坐长途车。</p>
+
+  <h2 id="train">高铁怎么走</h2>
+  <p class="note">票价是 2026-09-12 携程现图二等。出行日另查。旺季提前抢，六人同一班。</p>
+  <table>
+    <tr><th>方向</th><th>参考车次</th><th>时刻</th><th>二等</th></tr>
+    <tr class="pick"><td>去</td><td>G2942 深圳北 → 龙洞堡 / 贵阳东</td><td>07:03 → 约 11:10–11:23</td><td>约 ¥458–466</td></tr>
+    <tr><td></td><td colspan="3">四个多小时。中午前后到，下午能歇。</td></tr>
+    <tr class="pick"><td>回</td><td>G2921 贵阳北 → 深圳北</td><td>11:14 → 15:47</td><td>约 ¥496</td></tr>
+    <tr><td></td><td colspan="3">下午晚一点的班也有。三岁儿童规则以 12306 为准。</td></tr>
+  </table>
+
+  <article class="day" id="d1">
+    <header>
+      <span class="idx">D1</span>
+      <h3>到贵阳 · 只歇</h3>
+      <span class="tag">不排景点</span>
+    </header>
+    <div class="body">
+      <ul class="tl">
+        <li><time>早上</time><div>深圳北上车。中午前后到贵阳。</div></li>
+        <li><time>下午</time><div>入住。观山湖或喷水池一带，电梯房，能加婴儿床最好。</div></li>
+        <li><time>傍晚</time><div>甲秀楼附近走走吃饭。够了就回酒店。</div></li>
+      </ul>
+      <div class="stay"><b>住 · 贵阳第 1 晚</b>后面三晚也住这，不换。</div>
+    </div>
+  </article>
+
+  <article class="day" id="d2">
+    <header>
+      <span class="idx">D2</span>
+      <h3>黄果树 · 包车往返</h3>
+      <span class="tag">唯一重活</span>
+    </header>
+    <div class="body">
+      <ul class="tl">
+        <li><time>早上</time><div>贵阳包车去，大约 2 小时。七座商务，问清有没有儿童座椅。</div></li>
+        <li><time>白天</time><div>大瀑布坐扶梯（单程约 30，往返约 50），别爬那几百级。陡坡塘路平，适合遛娃。天星桥只走下半段精华。索道还在停。</div></li>
+        <li><time>水帘洞</time><div>旺季要预约。带雨衣和换洗衣。水雾大。</div></li>
+        <li><time>傍晚</time><div>原车回贵阳酒店。</div></li>
+      </ul>
+      <div class="eat"><b>票</b>65 岁以上、6 岁以下常免大门票。观光车和扶梯另买。带身份证、户口本。</div>
+      <div class="trap"><b>避坑</b>别跟团塞荔波。天星桥别硬走上半段。</div>
+      <div class="stay"><b>住 · 贵阳第 2 晚</b></div>
+    </div>
+  </article>
+
+  <article class="day" id="d3">
+    <header>
+      <span class="idx">D3</span>
+      <h3>青岩古镇半天</h3>
+      <span class="tag">平路</span>
+    </header>
+    <div class="body">
+      <ul class="tl">
+        <li><time>上午</time><div>青岩。平路多，小吃多。外婆和小孩能走完主要街。</div></li>
+        <li><time>午饭</time><div>古镇里吃。别点一堆，够吃就行。</div></li>
+        <li><time>下午</time><div>回酒店午睡。小孩恢复体力。</div></li>
+      </ul>
+      <div class="stay"><b>住 · 贵阳第 3 晚</b></div>
+    </div>
+  </article>
+
+  <article class="day" id="d4">
+    <header>
+      <span class="idx">D4</span>
+      <h3>贵阳轻松日</h3>
+      <span class="tag">不赶路</span>
+    </header>
+    <div class="body">
+      <ul class="tl">
+        <li><time>选一</time><div>黔灵山看猴。看好两个三岁的，别喂。</div></li>
+        <li><time>或</time><div>花溪湿地散步。累了就坐。</div></li>
+        <li><time>下午</time><div>回酒店。收拾回程行李。</div></li>
+      </ul>
+      <div class="stay"><b>住 · 贵阳第 4 晚</b></div>
+    </div>
+  </article>
+
+  <article class="day" id="d5">
+    <header>
+      <span class="idx">D5</span>
+      <h3>高铁回深圳</h3>
+      <span class="tag">中午前走</span>
+    </header>
+    <div class="body">
+      <ul class="tl">
+        <li><time>上午</time><div>贵阳北上车。参考 G2921 11:14 → 深圳北 15:47。</div></li>
+      </ul>
+    </div>
+  </article>
+
+  <h2 id="todo">还没订</h2>
+  <ul class="checklist">
+    <li><span class="box"></span><div>定出行日，抢去程 + 回程六人票</div></li>
+    <li><span class="box"></span><div>贵阳电梯房 4 晚（观山湖或喷水池）</div></li>
+    <li><span class="box"></span><div>D2 黄果树包车（七座，问儿童座椅）</div></li>
+    <li><span class="box"></span><div>黄果树票 + 观光车 + 扶梯；水帘洞预约</div></li>
+    <li><span class="box"></span><div>外婆身份证、两个小孩户口本</div></li>
+  </ul>
+
+  <h2 id="pits">砍掉的</h2>
+  <div class="pits">
+    <div class="pit"><b>荔波小七孔</b><br />单边 3–4 小时。这趟人带不动。</div>
+    <div class="pit"><b>西江千户苗寨</b><br />台阶多。电瓶车也救不全外婆和两个三岁的。</div>
+    <div class="pit"><b>梵净山</b><br />索道排队。老人小孩太累。</div>
+    <div class="pit"><b>镇远</b><br />又换一晚酒店。五天塞不下。</div>
+  </div>
+
+  <footer>
+    <p>6 人，深圳高铁进出，日期未定。高铁价是 2026-09-12 携程现图二等参考价。黄果树扶梯、免票口径来自 2026 年公开攻略，入园以景区当天为准。</p>
+    <p>本页只给同行家人看行程。写完会下线。</p>
+  </footer>
+</div>
+</body>
+</html>
