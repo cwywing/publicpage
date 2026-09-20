@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#171512">
+<title>BeeSIM × 飞狐智连 · App 对标</title>
+<style>
+:root{
+  --bg:#e6dfd2;
+  --paper:#faf7f1;
+  --ink:#161411;
+  --mute:#6b655a;
+  --line:#e2d9c9;
+  --card:#fff;
+  --good:#0c5c4d;
+  --good-bg:#e8f3ef;
+  --bad:#8f2a2a;
+  --bad-bg:#f7eceb;
+  --accent:#0c5c4d;
+  --chip:#f0ebe1;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font:16.5px/1.72 "PingFang SC","Noto Sans CJK SC","Noto Sans SC",system-ui,sans-serif;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{
+  max-width:40rem;
+  margin:0 auto;
+  background:var(--paper);
+  min-height:100vh;
+  box-shadow:0 0 0 1px rgba(22,20,17,.06), 0 18px 50px rgba(22,20,17,.08);
+  padding-bottom:calc(3.2rem + env(safe-area-inset-bottom));
+}
+header.top{
+  background:#161411;
+  color:#faf7f1;
+  padding:2.2rem 1.5rem 1.7rem;
+  padding-top:calc(2.2rem + env(safe-area-inset-top));
+}
+.crumb{display:flex;flex-wrap:wrap;gap:.45rem .7rem;align-items:center;margin:0 0 .85rem}
+.crumb a{color:#cfe8e1;text-decoration:none;font-size:.78rem;font-weight:550}
+.crumb a:hover{text-decoration:underline}
+.only{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.08em;
+  padding:.2rem .5rem;border-radius:999px;border:1px solid #3d6b5d;color:#9dcec0}
+header.top .eyebrow{
+  display:block;font-size:.72rem;font-weight:650;letter-spacing:.16em;
+  color:#9a9384;margin-bottom:.55rem;
+}
+header.top h1{margin:0 0 .55rem;font-size:1.55rem;line-height:1.22;font-weight:650}
+header.top .meta{margin:0;color:#b4ad9e;font-size:.9rem;line-height:1.55}
+nav{
+  position:sticky;top:0;z-index:8;
+  display:flex;gap:.45rem;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  padding:.75rem 1.1rem;
+  background:rgba(250,247,241,.92);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+nav::-webkit-scrollbar{display:none}
+nav a{
+  flex:none;text-decoration:none;color:var(--ink);
+  font-size:.78rem;font-weight:550;padding:.42rem .8rem;
+  border:1px solid var(--line);border-radius:999px;background:#fff;
+  white-space:nowrap;
+}
+section{padding:2.35rem 1.5rem .15rem}
+section + section{border-top:1px solid var(--line)}
+h2{
+  margin:0 0 1.15rem;
+  padding-left:.75rem;
+  border-left:3px solid var(--accent);
+  font-size:1.28rem;line-height:1.28;font-weight:650;
+}
+h3{margin:1.7rem 0 .75rem;font-size:1.02rem;font-weight:650}
+p{margin:.85rem 0}
+.note{color:var(--mute);font-size:.92rem}
+.box{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:1.2rem 1.25rem;
+  margin:1.05rem 0 1.2rem;
+}
+.ok{box-shadow:inset 5px 0 0 var(--good);background:var(--good-bg);border-color:#c5ddd5}
+.warn{background:#fff7dc;border-color:#ead79a}
+.box p{margin:.45rem 0}
+.box p:first-child{margin-top:0}
+.box p:last-child{margin-bottom:0}
+code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,"Noto Sans Mono CJK SC",monospace;
+  font-size:.84em;background:#fff;border:1px solid var(--line);
+  padding:.1em .35em;border-radius:4px;word-break:break-all;
+}
+pre{
+  font-family:ui-monospace,SFMono-Regular,Menlo,"Noto Sans Mono CJK SC",monospace;
+  font-size:.78rem;line-height:1.45;
+  background:#161411;color:#f3ece0;
+  border-radius:14px;padding:1rem 1.05rem;
+  overflow:auto;-webkit-overflow-scrolling:touch;
+  margin:1rem 0 1.2rem;
+}
+.tag{
+  display:inline-block;font-size:.68rem;font-weight:650;
+  padding:.18rem .5rem;margin:0 .12rem .12rem 0;
+  border-radius:999px;background:var(--chip);color:var(--mute);
+  vertical-align:middle;
+}
+.kv{margin:1rem 0 1.25rem;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:.2rem 1.2rem}
+.kv .r{padding:.85rem 0;border-bottom:1px solid var(--line)}
+.kv .r:last-child{border-bottom:0}
+.kv .k{color:var(--mute);font-size:.78rem;font-weight:650;margin-bottom:.25rem}
+.kv .v{word-break:break-word}
+@media(min-width:540px){
+  .kv .r{display:grid;grid-template-columns:6.6rem 1fr;gap:.35rem 1rem;align-items:start}
+  .kv .k{margin:0;padding-top:.12rem}
+}
+table.cmp{width:100%;border-collapse:collapse;font-size:.9rem;margin:1rem 0 1.25rem}
+table.cmp th,table.cmp td{
+  border:1px solid var(--line);padding:.7rem .7rem;text-align:left;vertical-align:top;
+  background:var(--card);
+}
+table.cmp th{background:var(--chip);font-size:.78rem}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1rem 0 1.25rem}
+ul.plain{list-style:none;margin:.15rem 0;padding:0}
+ul.plain li{position:relative;margin:.7rem 0;padding-left:1.05rem}
+ul.plain li::before{content:"";position:absolute;left:0;top:.72em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.gallery{display:grid;gap:.7rem;grid-template-columns:1fr;margin:1rem 0 1.25rem}
+@media(min-width:560px){.gallery{grid-template-columns:1fr 1fr}}
+figure.shot{
+  margin:0;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;
+}
+figure.shot img{display:block;width:100%;height:auto}
+figcaption{padding:.7rem .85rem .85rem;color:var(--mute);font-size:.82rem}
+.lanes{display:flex;flex-direction:column;gap:.6rem;margin:1rem 0 1.25rem}
+.lane{border-radius:14px;padding:.95rem 1.05rem;border:1px solid var(--line);background:#fff}
+.lane p{margin:.2rem 0 0;font-size:.94rem}
+.kicker{display:block;font-size:.72rem;font-weight:700;letter-spacing:.06em;margin-bottom:.4rem}
+.lane.a{background:#eaf2f6;border-color:#c8d7e2}
+.lane.a .kicker{color:#3d6b99}
+.lane.c{background:var(--chip)}
+.lane.d{background:var(--bad-bg);border-color:#e4c7c4}
+.lane.d .kicker{color:var(--bad)}
+footer{padding:2.6rem 1.5rem 0;color:var(--mute);font-size:.84rem}
+footer a{color:var(--accent)}
+a.inline{color:var(--accent)}
+@media print{
+  nav{display:none}
+  header.top,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .wrap{box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <p class="crumb">
+    <a href="../">← 总目录</a>
+    <a href="./">见面 brief</a>
+    <span class="only">仅内部</span>
+  </p>
+  <span class="eyebrow">产品对标 · 2026-09-15</span>
+  <h1>BeeSIM × 飞狐智连 App 拆解</h1>
+  <p class="meta">给 Alex 看的 diligence，别发给对方。商店截图、更新日志、公开接口样例都在这页。不含后台口令，也不写利用步骤。</p>
+</header>
+<nav>
+  <a href="#summary">结论</a>
+  <a href="#beesim">BeeSIM</a>
+  <a href="#foxisim">飞狐智连</a>
+  <a href="#apis">接口</a>
+  <a href="#changelog">更新日志</a>
+  <a href="#shots">截图</a>
+  <a href="#compare">对照</a>
+  <a href="#build">自建清单</a>
+</nav>
+
+<section id="summary">
+  <h2>一页结论</h2>
+  <div class="scroll">
+    <table class="cmp">
+      <tr><th>维度</th><th>BeeSIM</th><th>飞狐智连 / FoxiSIM</th></tr>
+      <tr><td>定位</td><td>自有卡 + App / Web BLE / 微信小程序</td><td>硬件白标；不卖套餐、无云端账户；激活码走用户自己的 SM-DP+</td></tr>
+      <tr><td>iOS</td><td><code>com.beesim.esim</code> · Store <strong>1.0</strong>（无 releaseNotes）</td><td><code>com.liankemobile.foxisim</code> · Store <strong>1.5</strong></td></tr>
+      <tr><td>Android</td><td><code>com.beesimapp</code> · APK <strong>1.0</strong> · RN+Hermes</td><td>同 iOS bundle · APK <strong>1.0.8</strong> · uni-app + 原生插件</td></tr>
+      <tr><td>云依赖</td><td><code>api.simhub.cn</code>（ES9+ / 固件）</td><td><code>liankemobile.com/prod-api</code>（版本 / 购买渠道 / 诊断）</td></tr>
+      <tr><td>抄什么</td><td>多通道管理</td><td>Tab IA、演示模式、套餐改名、按卡空间、合规话术</td></tr>
+    </table>
+  </div>
+  <div class="box ok">
+    <p><strong>自建怎么抄</strong></p>
+    <p>交互和信息架构跟飞狐。多端与开放生态跟 Bee。底层 LPA / GATT 必须走我们自己的原生 Swift / Android SDK，不要复用对方壳。</p>
+  </div>
+</section>
+
+<section id="beesim">
+  <h2>BeeSIM</h2>
+  <h3>商店与主体</h3>
+  <div class="kv">
+    <div class="r"><div class="k">App Store</div><div class="v"><a class="inline" href="https://apps.apple.com/us/app/beesim/id6774274906">id6774274906</a> · 卖家 BEESIM TECHNOLOGY CO., LIMITED</div></div>
+    <div class="r"><div class="k">iOS</div><div class="v">Bundle <code>com.beesim.esim</code> · <strong>1.0</strong> · 2026-07-16 · ~45.9 MB · iOS 15.6+ · 英文 · Productivity · 0 评分</div></div>
+    <div class="r"><div class="k">Privacy</div><div class="v">Data Not Collected</div></div>
+    <div class="r"><div class="k">官网</div><div class="v"><code>beeesim.com</code>（双 e）· Web BLE <code>beeesim.com/ble/</code> · 指南 <code>beeesim.com/guide</code> · 微信小程序「BeeSIM」</div></div>
+    <div class="r"><div class="k">Android</div><div class="v"><code>https://beeesim.com/static/app/android-v1.apk</code> · 包名 <code>com.beesimapp</code>（与 iOS 不一致）</div></div>
+  </div>
+  <div class="box">
+    <p>商店一句话：Turn regular mobile into eSIM-ready devices via Beesim Bluetooth eSIM card。</p>
+    <p>公开页卖点：BLE 管 eUICC 的写入、启用、停用、删除；插卡后搜「BeeSIM」前缀；扫码解析 DP+ 与激活码；启用后卡会重启并断连重连。</p>
+  </div>
+
+  <h3>Android APK</h3>
+  <div class="kv">
+    <div class="r"><div class="k">版本</div><div class="v">1.0 / code 1 · minSdk 24 / target 36 · ~84.5 MB · AGP 8.12.0</div></div>
+    <div class="r"><div class="k">栈</div><div class="v">React Native + Hermes（<code>libreactnative.so</code>、<code>libhermesvm.so</code>）。源码路径痕迹 <code>…/RN/beeSim</code></div></div>
+    <div class="r"><div class="k">扫码</div><div class="v">VisionCamera + ML Kit barcode</div></div>
+    <div class="r"><div class="k">入口</div><div class="v">单 Activity <code>com.beesimapp.MainActivity</code></div></div>
+    <div class="r"><div class="k">权限</div><div class="v">INTERNET、BLUETOOTH / ADMIN（maxSdk 30）、CONNECT / SCAN、粗/精定位、CAMERA、NETWORK_STATE。没有 NFC，没有 <code>REQUEST_INSTALL_PACKAGES</code>，没有厂商角标。比飞狐干净。</div></div>
+  </div>
+  <h3>产品文案（包内可见）</h3>
+  <ul class="plain">
+    <li>Please connect a BeeSIM device first</li>
+    <li>Please allow Bluetooth and location permissions before scanning for BeeSIM devices</li>
+    <li>Bluetooth disconnected. Automatically reconnecting to BeeSIM…</li>
+    <li>Bluetooth unavailable: failed to automatically connect to BeeSIM after 3 attempts</li>
+    <li>No writable + notifiable profile was found on this BeeSIM device</li>
+    <li>Firmware update available / please do not exit the app</li>
+  </ul>
+  <div class="box warn">
+    <p>包内还能看到标准 Device Information 附近的 UUID 碎片，以及依赖带入的 <code>redteamobile.com</code> 权限名。这不足以还原私有 GATT，也不等于业务绑了那家。</p>
+  </div>
+</section>
+
+<section id="foxisim">
+  <h2>飞狐智连 / FoxiSIM</h2>
+  <div class="kv">
+    <div class="r"><div class="k">App Store</div><div class="v"><a class="inline" href="https://apps.apple.com/cn/app/飞狐智连/id6790338080">id6790338080</a> · 连可通讯（深圳）</div></div>
+    <div class="r"><div class="k">Bundle</div><div class="v"><code>com.liankemobile.foxisim</code>，iOS / Android 一致</div></div>
+    <div class="r"><div class="k">iOS</div><div class="v">Store <strong>1.5</strong>（约 2026-09-10）· 首发约 07-20 · ~33 MB · iOS 13+ · 中/英 · 工具 · 5.0 / 1 条</div></div>
+    <div class="r"><div class="k">Android</div><div class="v">官网 APK <code>FoxiSIM_1.0.8_108.apk</code> · minSdk 26 / target 35</div></div>
+    <div class="r"><div class="k">壳</div><div class="v">uni-app <code>__UNI__5B8605D</code> compiler 5.24。入口 <code>io.dcloud.PandoraEntry</code></div></div>
+    <div class="r"><div class="k">插件</div><div class="v">FoxiSimSDK 1.0.42（<code>com.foxisim.sdk.FoxiSimSDKModule</code>）· FoxiQrScanner 1.1.2 · native <code>libtylpa.so</code></div></div>
+    <div class="r"><div class="k">隐私</div><div class="v">分析（崩溃 / 性能）；粗略位置、设备 ID、诊断、产品交互未与你关联。文案自述 uni 统计 2.0，对得上 <code>tongji.dcloud.io</code></div></div>
+  </div>
+  <div class="box">
+    <p>商店合规段可直接对标：BLE 连卡 → 扫码/输入合法激活码 → 装进卡内 eUICC。装 / 启 / 禁 / 删。不碰系统 eSIM，不复制 SIM / 凭据，不改 IMEI，不绕过运营商授权。<strong>不卖套餐、不生成激活码、无云端账户。</strong></p>
+  </div>
+  <p class="note">iOS 商店显示 1.5，官网 Android 强制更新接口返回 1.0.8。两端版本号体系不同，对表时别混用。</p>
+
+  <h3>页面路由</h3>
+  <div class="kv">
+    <div class="r"><div class="k">卡管理</div><div class="v"><code>pages/card-management/index</code> · BLE / 连接</div></div>
+    <div class="r"><div class="k">套餐</div><div class="v"><code>pages/packages/index</code></div></div>
+    <div class="r"><div class="k">更多</div><div class="v"><code>pages/more/index</code></div></div>
+    <div class="r"><div class="k">其它</div><div class="v">language / help / privacy / firmware-update / about / download / purchase（外链导流，不是应用内售卖）</div></div>
+  </div>
+  <p>业务代码里能看到 <code>demoMode</code>、<code>forceUpgrade</code>、<code>FoxiSimSDK</code>。</p>
+
+  <h3>Android 权限（比 Bee 更宽）</h3>
+  <p>蓝牙 / 定位 / 相机之外还有 NFC、闪光灯、<code>READ_PHONE_STATE</code>、存储 / 媒体、应用内装包（<code>REQUEST_INSTALL_PACKAGES</code>）、华硕 / 华为 / vivo 角标、震动、Wi-Fi 状态。</p>
+</section>
+
+<section id="apis">
+  <h2>公开接口样例</h2>
+  <p class="note">2026-09-15 对公开路径做的产品探测。只记版本检查和购买渠道。后台登录、口令、未鉴权利用一律不写。</p>
+  <pre>API_BASE_URL = "http://www.liankemobile.com/prod-api"
+API_PATHS = {
+  checkVersion:      "/app/version/check",
+  purchaseChannels:  "/app/purchaseChannel/list",
+  diagnosticLog:     "/app/diagnostic/log/report"
+}
+# 另有历史路径也可通：/foxisim/app/version/check
+# 包内开发残留（勿当正式依赖）：内网地址、临时反代域名</pre>
+  <p class="note">客户端会解析字段别名：hasUpdate / upgrade / needUpdate、forceUpgrade / forceUpdate、versionNo / versionName / versionCode，以及中英 updateTitle / updateContent。</p>
+
+  <h3>版本检查 · Android</h3>
+  <pre>GET /prod-api/app/version/check?system=android&amp;currentVersion=1.0.0
+
+{
+  "msg": "操作成功",
+  "code": 200,
+  "data": {
+    "appStoreUrl": "http://www.liankemobile.com/FoxiSIM_1.0.8_108.apk",
+    "downloadUrl": "http://www.liankemobile.com/FoxiSIM_1.0.8_108.apk",
+    "forceUpgrade": true,
+    "system": "android",
+    "updateContent": "修复已知问题，提升整体使用体验。",
+    "upgrade": true,
+    "versionNo": "1.0.8"
+  }
+}</pre>
+
+  <h3>版本检查 · iOS</h3>
+  <p class="note">接口 <code>versionNo</code> 仍是 <strong>1.0.8</strong>，跟 App Store 的 <strong>1.5</strong> 对不上。</p>
+  <pre>GET /prod-api/app/version/check?system=ios&amp;currentVersion=1.0.0
+
+{
+  "msg": "操作成功",
+  "code": 200,
+  "data": {
+    "appStoreUrl": "https://apps.apple.com/cn/app/6790338080",
+    "downloadUrl": "https://apps.apple.com/cn/app/6790338080",
+    "forceUpgrade": true,
+    "system": "ios",
+    "updateContent": "修复部分已知问题，提升应用稳定性和使用体验",
+    "upgrade": true,
+    "versionNo": "1.0.8"
+  }
+}</pre>
+
+  <h3>购买渠道</h3>
+  <pre>GET /prod-api/app/purchaseChannel/list
+
+{
+  "msg": "操作成功",
+  "code": 200,
+  "data": [
+    {
+      "channelId": 1,
+      "channelName": "eSIM.net",
+      "description": "覆盖140+个国家和地区的旅行eSIM，随时随地保持连接，畅享实惠流量套餐",
+      "logoUrl": "http://www.liankemobile.com/foxisim/profile/upload/2026/07/28/buy_logo_esimcc@3x_20260728134304A002.png",
+      "purchaseUrl": "https://www.esim.cc/?affiliate=FOXISIM",
+      "tags": [
+        { "name": "着陆时激活", "color": "#12B8B0" },
+        { "name": "网络稳定", "color": "#F59A23" },
+        { "name": "价格实惠", "color": "#F56C6C" }
+      ],
+      "themeColor": "#409EFF"
+    }
+  ]
+}</pre>
+  <p class="note">外链买套餐，联盟码 <code>FOXISIM</code>。符合「App 不卖套餐」。诊断上报只要特定请求头，未继续拆字段。</p>
+
+  <h3>BeeSIM · simhub</h3>
+  <pre>HTTPS 主机：https://api.simhub.cn
+1) /v2/plugin/esim/rsp/es9plus/execute   — RSP / ES9+ 执行入口命名
+2) /v2/plugin/mall/firmware.do           — 固件商城 / 升级检查
+
+无业务 body 的裸 GET（2026-09-15）只说明主机存活：
+{"status":500,"msg":"服务器异常，请稍后再试！","i18n":"res.server.error"}</pre>
+  <p class="note">Bee 写卡主路径仍是本地 BLE。云接口需要业务 body。官网 H5 历史脚手架还写过 <code>baseURL: https://www.beeesim.com/</code>，别当成飞狐现网后端。</p>
+</section>
+
+<section id="changelog">
+  <h2>飞狐智连更新日志</h2>
+  <p>BeeSIM 只有 1.0，App Store / iTunes Lookup <strong>没有 releaseNotes</strong>。Android APK 也是 1.0 (code 1)。</p>
+  <div class="kv">
+    <div class="r"><div class="k">1.5 · ~09-10</div><div class="v">新增套餐名称编辑。取消固定套餐数，改为按卡实际存储空间安装。优化 Profile 下 / 启 / 禁 / 删。优化蓝牙断连重连和状态同步。完善提示与错误文案。优化套餐列表并修已知问题。</div></div>
+    <div class="r"><div class="k">1.4 · 08-31</div><div class="v">优化连接与自动重连。优化套餐安装、启用、禁用、删除及状态刷新。<strong>新增演示模式</strong>，无实体卡也能走主路径。完善使用说明和常见问题。</div></div>
+    <div class="r"><div class="k">1.3 · 08-01</div><div class="v">优化连接及自动重连；优化加载与刷新；优化固件升级和应用版本更新。</div></div>
+    <div class="r"><div class="k">1.2 · 07-28</div><div class="v">优化二维码扫描和相册识别；优化连接 / 断开 / 重连提示；优化安装启用禁用反馈。</div></div>
+    <div class="r"><div class="k">1.1 · 07-21</div><div class="v">早期迭代，商店条目较短。</div></div>
+  </div>
+  <p class="note">Android 强制更新文案（接口 updateContent）：「修复已知问题，提升整体使用体验。」推 APK 1.0.8。</p>
+</section>
+
+<section id="shots">
+  <h2>商店与包内截图</h2>
+  <h3>BeeSIM · App Store</h3>
+  <div class="gallery">
+    <figure class="shot"><img src="assets/beesim-ss-1.jpg" alt="BeeSIM App Store 截图 1" loading="lazy"><figcaption>BeeSIM 商店主视觉</figcaption></figure>
+    <figure class="shot"><img src="assets/beesim-ss-2.jpg" alt="BeeSIM App Store 截图 2" loading="lazy"><figcaption>连接 / 管理界面（英文 UI）</figcaption></figure>
+    <figure class="shot"><img src="assets/beesim-ss-3.jpg" alt="BeeSIM App Store 截图 3" loading="lazy"><figcaption>套餐 / Profile 相关界面</figcaption></figure>
+  </div>
+  <h3>飞狐智连 · App Store</h3>
+  <div class="gallery">
+    <figure class="shot"><img src="assets/foxi-home-disconnected.jpg" alt="飞狐智连未连接首页" loading="lazy"><figcaption>未连接首页：一键连接；新增 eSIM = 扫码 | 粘贴</figcaption></figure>
+    <figure class="shot"><img src="assets/foxi-connected-profiles.jpg" alt="飞狐智连已连接套餐列表" loading="lazy"><figcaption>已连接：EID、套餐列表（截图仍带 2/6，1.5 已改成按空间）</figcaption></figure>
+    <figure class="shot"><img src="assets/foxi-ble-scan.jpg" alt="飞狐智连蓝牙扫描" loading="lazy"><figcaption>蓝牙扫描：清单（蓝牙 / 定位 / FoxiSIM）+ 扫描中列表</figcaption></figure>
+  </div>
+  <h3>飞狐 · 包内 UI 素材</h3>
+  <div class="gallery">
+    <figure class="shot"><img src="assets/foxi-ble-guide.jpg" alt="BLE 连接引导" loading="lazy"><figcaption>BLE 连接引导</figcaption></figure>
+    <figure class="shot"><img src="assets/foxi-connect-guide.jpg" alt="连接指南" loading="lazy"><figcaption>三步连接指南：插卡、开蓝牙+定位</figcaption></figure>
+    <figure class="shot"><img src="assets/foxi-card-connected.png" alt="已连接卡态" loading="lazy"><figcaption>已连接卡态</figcaption></figure>
+    <figure class="shot"><img src="assets/foxi-card-disconnected.png" alt="未连接卡态" loading="lazy"><figcaption>未连接卡态</figcaption></figure>
+    <figure class="shot"><img src="assets/foxi-packages-empty.png" alt="套餐空态" loading="lazy"><figcaption>套餐空态</figcaption></figure>
+    <figure class="shot"><img src="assets/foxi-purchase-promo.jpg" alt="购买导流页素材" loading="lazy"><figcaption>购买导流页素材</figcaption></figure>
+    <figure class="shot"><img src="assets/foxi-purchase-entry.jpg" alt="购买入口" loading="lazy"><figcaption>购买入口（外链，不是应用内售卖）</figcaption></figure>
+    <figure class="shot"><img src="assets/foxi-blank-card.jpg" alt="白卡初始态" loading="lazy"><figcaption>白卡初始态</figcaption></figure>
+  </div>
+</section>
+
+<section id="compare">
+  <h2>功能与栈对照</h2>
+  <div class="scroll">
+    <table class="cmp">
+      <tr><th>能力</th><th>BeeSIM</th><th>飞狐智连</th></tr>
+      <tr><td>BLE 搜卡</td><td>有；设备名前缀 BeeSIM；蓝牙+定位</td><td>有；一键连接 + 扫描页；蓝牙+定位</td></tr>
+      <tr><td>断线重连</td><td>文案成熟（自动重连、3 次失败）</td><td>1.4 / 1.5 重点优化</td></tr>
+      <tr><td>扫码 / 手输码</td><td>Vision Camera + ML Kit；有手输</td><td>FoxiQrScanner；粘贴或输入</td></tr>
+      <tr><td>启 / 禁 / 删</td><td>有；删前确认</td><td>有；列表操作完整</td></tr>
+      <tr><td>套餐改名</td><td>商店未强调</td><td><strong>1.5 新增</strong></td></tr>
+      <tr><td>槽位</td><td>商店没写清</td><td><strong>1.5：按卡空间，不固定条数</strong></td></tr>
+      <tr><td>固件 OTA</td><td>simhub firmware.do + 勿退出</td><td>独立「固件升级」页</td></tr>
+      <tr><td>演示模式</td><td>未见</td><td><strong>1.4 起</strong></td></tr>
+      <tr><td>卖套餐</td><td>官网主推全球套餐 / 登录</td><td>App 明确不卖；purchase 外链</td></tr>
+      <tr><td>多端</td><td>App + Web BLE + 小程序 + 社区工具</td><td>基本只有官方 App</td></tr>
+      <tr><td>系统 eSIM</td><td>不声称操作</td><td>商店明确不碰</td></tr>
+    </table>
+  </div>
+  <p>两边用户路径高度同构：插卡 → 开蓝牙（安卓还要定位）→ 扫卡绑定 → 扫码或输入 <code>LPA:1$smdp$matchingId</code> → 下载并启用（可能重启 / 断连）→ 列表管理，可选固件升级。差异在套餐商业化和是否锁死官方 App。</p>
+  <div class="lanes">
+    <div class="lane a"><span class="kicker">Bee Android</span><p>RN + Hermes，单页。BLE 在 JS 层（scan / notify / write / reconnect 文案都在）。云：simhub ES9+ 和固件。</p></div>
+    <div class="lane c"><span class="kicker">飞狐 Android</span><p>uni-app 壳 + 两个原生 module。FoxiSimSDK 收敛 BLE / OMA / LPA。云只做版本、统计、购买导流。写卡主路径本地。</p></div>
+    <div class="lane d"><span class="kicker">对我们</span><p>不要用 uni-app / RN 壳去包 LPA。GATT / ES10x / 命令队列必须原生，并预留 ARA-M 绑我们自己的 Team ID 和包签名。</p></div>
+  </div>
+</section>
+
+<section id="build">
+  <h2>自建 App 清单</h2>
+  <h3>信息架构（偏飞狐）</h3>
+  <ul class="plain">
+    <li>Tab1 卡管理：连接状态、EID、一键连接 / 连接管理、空态指南</li>
+    <li>Tab2 套餐：列表、空间占用、启用 / 禁用 / 删除、改名、扫码 / 粘贴</li>
+    <li>Tab3 更多：固件升级、语言、帮助、隐私、关于、可选购买导流</li>
+  </ul>
+  <h3>必做体验</h3>
+  <ul class="plain">
+    <li>权限引导：蓝牙 +（Android）定位，失败可重试</li>
+    <li>断线自动重连，重连后刷新 Profile 列表</li>
+    <li>写卡 / 启用：禁退出、进度、卡重启预期说明</li>
+    <li>删除 Profile 二次确认</li>
+    <li>固件升级独立页 + 「勿退出」</li>
+    <li>演示模式（无卡走完主路径，方便销售和审核）</li>
+    <li>Profile 自定义名称；槽位按剩余 eUICC 空间，不写死 N 条</li>
+  </ul>
+  <h3>差异化（偏 Bee + 我们现有生意）</h3>
+  <ul class="plain">
+    <li>多通道：官方 App +（可选）Web BLE + 兼容开源 LPA（前提是 GATT 文档化）</li>
+    <li>套餐购买留在现有 DTC / Amazon / 激活码流。App 内只导流或深链</li>
+    <li>商店合规段对标飞狐：不碰系统 eSIM、不卖未授权码、只管理自有硬件</li>
+  </ul>
+  <div class="box ok">
+    <p><strong>工程验收（对齐见面 brief 的 go / no-go）</strong></p>
+    <p>卡在 iPhone 上能被 nRF Connect 扫到。用我们真实 <code>LPA:1$…$…</code> 写入并可驻网，不依赖对方云、无 per-download 锁。Consumer SGP.22 + SAS-UP。SDK 是 iOS XCFramework / Android AAR，绑定我们 Team ID 与包签名。</p>
+  </div>
+  <p class="note">未做动态调试，未还原完整私有 GATT，未抓实时 ES9+ / ES10x 报文。未登录任何后台。社区硬件对照见 <a class="inline" href="./#peers">见面 brief</a>。</p>
+</section>
+
+<footer>
+  <p>仅内部。别发给 Foxi 或对家。不含管理后台口令或利用步骤。</p>
+  <p><a href="./">回见面 brief</a> · <a href="../">回总目录</a></p>
+</footer>
+</div>
+</body>
+</html>
