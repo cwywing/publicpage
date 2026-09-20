@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#171512">
+<title>见 Foxi 前过一遍</title>
+<style>
+:root{
+  --bg:#e6dfd2;
+  --paper:#faf7f1;
+  --ink:#161411;
+  --mute:#6b655a;
+  --line:#e2d9c9;
+  --card:#fff;
+  --good:#0c5c4d;
+  --good-bg:#e8f3ef;
+  --bad:#8f2a2a;
+  --bad-bg:#f7eceb;
+  --accent:#0c5c4d;
+  --chip:#f0ebe1;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font:16.5px/1.72 "PingFang SC","Noto Sans CJK SC","Noto Sans SC",system-ui,sans-serif;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{
+  max-width:40rem;
+  margin:0 auto;
+  background:var(--paper);
+  min-height:100vh;
+  box-shadow:0 0 0 1px rgba(22,20,17,.06), 0 18px 50px rgba(22,20,17,.08);
+  padding-bottom:calc(3.2rem + env(safe-area-inset-bottom));
+}
+header.top{
+  background:#161411;
+  color:#faf7f1;
+  padding:2.2rem 1.5rem 1.7rem;
+  padding-top:calc(2.2rem + env(safe-area-inset-top));
+}
+header.top .eyebrow{
+  display:block;font-size:.72rem;font-weight:650;letter-spacing:.16em;
+  color:#9a9384;margin-bottom:.55rem;
+}
+header.top h1{margin:0 0 .55rem;font-size:1.72rem;line-height:1.22;font-weight:650}
+header.top .meta{margin:0;color:#b4ad9e;font-size:.9rem;line-height:1.55}
+nav{
+  position:sticky;top:0;z-index:8;
+  display:flex;gap:.45rem;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  padding:.75rem 1.1rem;
+  background:rgba(250,247,241,.92);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+nav::-webkit-scrollbar{display:none}
+nav a{
+  flex:none;text-decoration:none;color:var(--ink);
+  font-size:.78rem;font-weight:550;padding:.42rem .8rem;
+  border:1px solid var(--line);border-radius:999px;background:#fff;
+  white-space:nowrap;
+}
+section{padding:2.35rem 1.5rem .15rem}
+section + section{border-top:1px solid var(--line)}
+h2{
+  margin:0 0 1.15rem;
+  padding-left:.75rem;
+  border-left:3px solid var(--accent);
+  font-size:1.28rem;line-height:1.28;font-weight:650;
+}
+h3{margin:1.7rem 0 .75rem;font-size:1.02rem;font-weight:650}
+p{margin:.85rem 0}
+.note{color:var(--mute);font-size:.92rem}
+.box,.who{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:1.2rem 1.25rem;
+  margin:1.05rem 0 1.2rem;
+}
+.ok{box-shadow:inset 5px 0 0 var(--good);background:var(--good-bg);border-color:#c5ddd5}
+.bad{box-shadow:inset 5px 0 0 var(--bad);background:var(--bad-bg);border-color:#e4c7c4}
+.warn{background:#fff7dc;border-color:#ead79a}
+.ok p,.bad p,.warn p,.box p,.who p{margin:.45rem 0}
+.ok p:first-child,.bad p:first-child,.warn p:first-child,.box p:first-child,.who p:first-child{margin-top:0}
+.ok p:last-child,.bad p:last-child,.warn p:last-child,.box p:last-child,.who p:last-child{margin-bottom:0}
+code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,"Noto Sans Mono CJK SC",monospace;
+  font-size:.84em;background:#fff;border:1px solid var(--line);
+  padding:.1em .35em;border-radius:4px;word-break:break-all;
+}
+.tag{
+  display:inline-block;font-size:.68rem;font-weight:650;
+  padding:.18rem .5rem;margin:0 .12rem .12rem 0;
+  border-radius:999px;background:var(--chip);color:var(--mute);
+  vertical-align:middle;
+}
+.who h3{margin:0 0 .5rem;font-size:1.02rem;border:0;padding:0}
+.row2{display:grid;gap:.85rem;grid-template-columns:1fr}
+@media(min-width:640px){.row2{grid-template-columns:1fr 1fr}}
+ul.plain,ul.ask{list-style:none;margin:.15rem 0;padding:0}
+ul.plain li{position:relative;margin:.7rem 0;padding-left:1.05rem}
+ul.plain li::before{content:"";position:absolute;left:0;top:.72em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+label.chk{
+  display:flex;gap:.75rem;align-items:flex-start;
+  padding:.78rem 0;border-bottom:1px solid var(--line);min-height:48px;
+}
+label.chk:last-child{border-bottom:0}
+input[type=checkbox]{width:1.15rem;height:1.15rem;margin-top:.28rem;flex:none;accent-color:var(--accent)}
+.kv{margin:1rem 0 1.25rem;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:.2rem 1.2rem}
+.kv .r{padding:.85rem 0;border-bottom:1px solid var(--line)}
+.kv .r:last-child{border-bottom:0}
+.kv .k{color:var(--mute);font-size:.78rem;font-weight:650;margin-bottom:.25rem}
+.kv .v{word-break:break-word}
+@media(min-width:540px){
+  .kv .r{display:grid;grid-template-columns:6.6rem 1fr;gap:.35rem 1rem;align-items:start}
+  .kv .k{margin:0;padding-top:.12rem}
+}
+.srcs{list-style:none;margin:.4rem 0 1rem;padding:0}
+.srcs li{margin:.55rem 0;font-size:.84rem;line-height:1.5}
+.srcs a{color:var(--accent);word-break:break-all}
+footer{padding:2.6rem 1.5rem 0;color:var(--mute);font-size:.84rem}
+.crumb{display:flex;flex-wrap:wrap;gap:.45rem .7rem;align-items:center;margin:0 0 .85rem}
+.crumb a{color:#cfe8e1;text-decoration:none;font-size:.78rem;font-weight:550}
+.crumb a:hover{text-decoration:underline}
+.only{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.08em;
+  padding:.2rem .5rem;border-radius:999px;border:1px solid #3d6b5d;color:#9dcec0}
+.deep{
+  display:block;text-decoration:none;color:inherit;
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:1.1rem 1.2rem;margin:1.05rem 0 1.2rem;
+}
+.deep strong{display:block;margin-bottom:.25rem}
+.deep span{color:var(--mute);font-size:.92rem}
+
+.viz{margin:1.2rem 0 1.35rem}
+.viz-cap{margin:.7rem 0 0;color:var(--mute);font-size:.88rem;line-height:1.55}
+.pair{display:grid;gap:.7rem}
+@media(min-width:560px){.pair{grid-template-columns:1fr 1fr}}
+.cell{border-radius:16px;padding:1.05rem 1.1rem;border:1px solid var(--line);background:#fff}
+.cell.g{background:var(--good-bg);border-color:#c5ddd5}
+.cell.b{background:var(--bad-bg);border-color:#e4c7c4}
+.kicker{display:block;font-size:.72rem;font-weight:700;letter-spacing:.06em;margin-bottom:.4rem}
+.cell.g .kicker,.lane.a .kicker{color:var(--good)}
+.cell.b .kicker,.lane.d .kicker{color:var(--bad)}
+.cell p{margin:.2rem 0}
+.stack{display:flex;flex-direction:column;gap:.4rem}
+.layer{border-radius:14px;padding:1rem 1.05rem;border:1px solid var(--line);background:#fff}
+.layer.l1{border-left:5px solid #c4a574}
+.layer.l2{border-left:5px solid var(--good)}
+.layer.l3{border-left:5px solid #3d6b99}
+.layer em{display:block;font-style:normal;color:var(--mute);font-size:.88rem;margin-top:.2rem}
+.conn{text-align:center;color:var(--mute);font-size:.78rem}
+.tl{margin:1.05rem 0 1.25rem}
+.tl ol{list-style:none;margin:0;padding:0;counter-reset:s}
+.tl li{position:relative;padding:0 0 1.15rem 2.7rem;counter-increment:s}
+.tl li:last-child{padding-bottom:0}
+.tl li::before{
+  content:counter(s);
+  position:absolute;left:0;top:.05rem;
+  width:1.75rem;height:1.75rem;border-radius:50%;
+  background:#161411;color:#faf7f1;
+  font-size:.78rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.tl li::after{content:"";position:absolute;left:.84rem;top:1.9rem;bottom:.1rem;width:1px;background:var(--line)}
+.tl li:last-child::after{display:none}
+.tl strong{display:block;margin-bottom:.12rem}
+.lanes{display:flex;flex-direction:column;gap:.6rem}
+.lane{border-radius:14px;padding:.95rem 1.05rem;border:1px solid var(--line);background:#fff}
+.lane p{margin:.2rem 0 0;font-size:.94rem}
+.lane.a{background:#eaf2f6;border-color:#c8d7e2}
+.lane.c{background:var(--chip)}
+.lane.d{background:var(--bad-bg);border-color:#e4c7c4}
+.hero{
+  margin:0 0 1.25rem;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  overflow:hidden;
+}
+.hero svg{display:block;width:100%;height:auto}
+.hero .viz-cap{padding:0 1.1rem 1rem;margin:0}
+@media print{
+  nav{display:none}
+  header.top,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .wrap{box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <p class="crumb"><a href="../">← 总目录</a> <span class="only">仅内部</span></p>
+  <span class="eyebrow">内部备忘 · 09-02</span>
+  <h1>见 Foxi 前过一遍</h1>
+  <p class="meta">给 Alex 自己看，别发给 Foxi 或对家。勾选存在这台手机里，刷新不会掉。</p>
+</header>
+<nav>
+  <a href="#goal">图什么</a>
+  <a href="#card">这张卡</a>
+  <a href="#app">App</a>
+  <a href="app-teardown.html">App 对标</a>
+  <a href="#foxi">对方底细</a>
+  <a href="#feihu">飞狐智连</a>
+  <a href="#tianyu">天喻</a>
+  <a href="#foxi-empty">公开空白</a>
+  <a href="#hard">硬数字</a>
+  <a href="#ask">要问的</a>
+  <a href="#test">怎么验</a>
+  <a href="#stop">别拍板</a>
+  <a href="#peers">竞品对照</a>
+  <a href="#talk">沟通怎么说</a>
+</nav>
+
+<section id="goal">
+  <h2>今晚图什么</h2>
+  <p>我们要白标。卡他们出。牌子和 App 是我们的，后面卖流量也是我们的。</p>
+  <p>今晚先不签合同。先确认一件事：他们手里有没有一张卡，能插在 iPhone 卡槽里，用我们自己的 App，把我们正在卖的码写进去。</p>
+  <div class="box ok">
+    <p><strong>谈成</strong></p>
+    <p>谈成的样子是用户买我们品牌的卡。在我们 App 里买套餐。App 连上卡里的蓝牙，把 Profile 写进卡。手机基带只当这是一张普通 SIM。卡卖一次。后面每一次写卡，才是我们现在的生意。</p>
+  </div>
+  <div class="box bad">
+    <p><strong>谈砸</strong></p>
+    <p>谈砸就是卡得用他们的 App 写。或者每次写卡打他们的云、按次扣次数。那是帮他们铺硬件，充值被截走。</p>
+  </div>
+</section>
+
+<section id="card">
+  <h2>这张卡是啥</h2>
+  <div class="hero" aria-hidden="true">
+    <svg viewBox="0 0 390 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="卡插在卡托里，蓝牙连到手机 App">
+      <rect width="390" height="200" fill="#161411"/>
+      <!-- tray -->
+      <rect x="28" y="36" width="150" height="118" rx="16" fill="#2a2621"/>
+      <rect x="40" y="50" width="126" height="90" rx="10" fill="#1c1916"/>
+      <text x="103" y="168" text-anchor="middle" font-size="11" fill="#8d8678" font-family="PingFang SC,Noto Sans CJK SC,sans-serif">卡托</text>
+      <!-- nano sim -->
+      <g transform="translate(62,68)">
+        <path d="M8 0 H70 A8 8 0 0 1 78 8 V46 A8 8 0 0 1 70 54 H24 L0 30 V8 A8 8 0 0 1 8 0 Z" fill="#f3ece0"/>
+        <rect x="10" y="10" width="16" height="12" rx="1.5" fill="#c4a574"/>
+        <rect x="30" y="10" width="16" height="12" rx="1.5" fill="#c4a574"/>
+        <rect x="50" y="10" width="16" height="12" rx="1.5" fill="#c4a574"/>
+        <rect x="10" y="28" width="16" height="12" rx="1.5" fill="#c4a574"/>
+        <rect x="30" y="28" width="16" height="12" rx="1.5" fill="#c4a574"/>
+        <rect x="50" y="28" width="16" height="12" rx="1.5" fill="#c4a574"/>
+      </g>
+      <!-- waves -->
+      <path d="M188 96 C214 68 240 68 266 96" fill="none" stroke="#7dcebc" stroke-width="2"/>
+      <path d="M198 96 C218 78 238 78 258 96" fill="none" stroke="#7dcebc" stroke-width="2"/>
+      <path d="M208 96 C222 86 234 86 248 96" fill="none" stroke="#7dcebc" stroke-width="2"/>
+      <circle cx="227" cy="96" r="3.5" fill="#7dcebc"/>
+      <text x="227" y="128" text-anchor="middle" font-size="11" fill="#7dcebc" font-family="PingFang SC,Noto Sans CJK SC,sans-serif">卡内蓝牙</text>
+      <!-- phone -->
+      <rect x="276" y="24" width="88" height="148" rx="16" fill="#2a2621"/>
+      <rect x="284" y="40" width="72" height="108" rx="6" fill="#0c5c4d"/>
+      <text x="320" y="88" text-anchor="middle" font-size="12" fill="#faf7f1" font-family="PingFang SC,Noto Sans CJK SC,sans-serif">我们 App</text>
+      <text x="320" y="108" text-anchor="middle" font-size="11" fill="#cfe8e1" font-family="PingFang SC,Noto Sans CJK SC,sans-serif">写套餐</text>
+      <rect x="306" y="156" width="28" height="5" rx="2.5" fill="#4a453d"/>
+    </svg>
+    <p class="viz-cap">卡插在托里。蓝牙做在卡里。手机 App 去连它。外置读卡器不算。</p>
+  </div>
+  <p>一张 Nano SIM（4FF），蓝牙做在卡里面。出厂固件已经烧好。我们不自己做芯片，也不自己做天线。</p>
+  <p>买回来如果没有对接办法，手机扫得到蓝牙，也写不了号。所以交付物是两样绑在一起的：卡，加上这张卡怎么跟 App 说话。</p>
+  <h3>卡里大概有什么</h3>
+  <div class="viz">
+    <div class="stack">
+      <div class="layer l1">金手指 · 给手机基带<em>ISO 7816。C7 只能一个主机。手机当这是普通 SIM。</em></div>
+      <div class="conn">同一张卡里</div>
+      <div class="layer l2">eUICC · 存 Profile<em>消费级 SGP.22，要正规 EUM。两边都要碰这颗芯片。</em></div>
+      <div class="conn">卡内第二总线 · 不能跟金手指并联</div>
+      <div class="layer l3">BLE 芯片 + 微型天线<em>吃 SIM 的 VCC，对外广播，给 App 连。</em></div>
+    </div>
+    <p class="viz-cap">厚度名义 0.67 mm，上限 0.70 mm。有的竞品会偏厚，卡托会夹卡。样卡用千分尺量。</p>
+  </div>
+</section>
+
+<section id="app">
+  <h2>我们 App 要接什么</h2>
+  <div class="viz">
+    <div class="cell g"><span class="kicker">用户看到的</span><p>一张卡，里面多个套餐。切换靠 App。最好 iPhone 还能用 STK 菜单切，不用每次开蓝牙。</p></div>
+  </div>
+  <p>我们是 Swift 和原生 Android。接蓝牙这件事本身不麻烦。iOS 走 Core Bluetooth，Android 走 BLE API。</p>
+  <p>费时间的是写卡。蓝牙只是管子，里面走 eUICC 的 APDU，再加一套 GSMA 下载流程。</p>
+  <h3>一次写卡实际在干什么</h3>
+  <div class="tl">
+    <ol>
+      <li><strong>我们后端发激活码</strong>格式大概是 <code>LPA:1$smdp地址$matchingId</code>，跟现在卖二维码是同一类东西。</li>
+      <li><strong>App 连蓝牙</strong>找到卡，绑上。读 EID、剩余空间、已经装了哪些 Profile。</li>
+      <li><strong>App 当 LPA</strong>一边跟 SM-DP+ 走 HTTPS，一边把数据包经 BLE 喂进卡。</li>
+      <li><strong>启用 Profile</strong>手机基带这时才「看见」一张能上网的 SIM。必要时飞行模式开关一下。</li>
+    </ol>
+  </div>
+  <div class="row2">
+    <div class="box ok">
+      <p><strong>对接轻的情况</strong></p>
+      <p>安卓他们已经有 FoxiSimSDK 原生模块。轻的情况是拆成给我们的 AAR，iOS 再给 XCFramework，带能编译的示例。卡插在 iPhone 上，示例能把我们的码写进去。我们现有充值发完激活码之后，多调几个方法。</p>
+    </div>
+    <div class="box bad">
+      <p><strong>对接重的情况</strong></p>
+      <p>只给一份 UUID 表，让我们自己发 hex。那就变成我们自己做 LPA，按周排期。必须用他们 App，或者写卡打他们云，白标直接没了。</p>
+    </div>
+  </div>
+  <p>SGP.22 规范里，没有「卡内蓝牙 MCU 当 LPA」这个角色。合规的是手机系统 LPA，或卡内 LPAe。iPhone 不管托盘里的第三方 eUICC，所以市面上这类卡都是私有方案：MCU 在卡里打 ISD-R，App 经 BLE 当界面，并转发 SM-DP+。能卖，但得看 EUM 同不同意，以及他们愿不愿意把这套私有通道给我们。</p>
+  <a class="deep" href="app-teardown.html">
+    <strong>BeeSIM × 飞狐智连 · App 对标拆解 →</strong>
+    <span>商店元数据、1.1–1.5 更新日志、权限 / 插件 / 栈、公开接口 JSON、商店与包内截图。采样日 2026-09-15。</span>
+  </a>
+</section>
+
+<section id="foxi">
+  <h2>FoxiSIM 公开调研（2026-09-02）</h2>
+  <p class="note">展会稿能对上的写在下面。飞狐智连和官网是另查的 APK、站点，见下一节。</p>
+
+  <h3>能核实的主体</h3>
+  <div class="kv">
+    <div class="r"><div class="k">产品名</div><div class="v">FoxiSIM。展会稿标题写成「实体蓝牙 eSIM 卡」</div></div>
+    <div class="r"><div class="k">香港公司</div><div class="v"><strong>Linko Mobile Limited / 連可移動有限公司</strong>。BRN <code>78597150</code>。私人股份有限公司。2025-08-11 成立，存续。2026-08-11 交过周年申报（FNAR1）。登记文件一共 4 份：成立证书、章程、成立表格、年报。实控人、董事名单公开网页没贴出来，年报要向香港公司注册处调。</div></div>
+    <div class="r"><div class="k">内地主体</div><div class="v"><strong>连可通讯（深圳）有限公司</strong>。ICP <code>粤ICP备2026082344号-1</code>，材料写 2026-06 备的。icplishi 更新到 2026-08-27。统一社会信用代码、法人、注册资本，公开网页没找到。</div></div>
+    <div class="r"><div class="k">自述总部</div><div class="v">「中国香港服务中心为总部，深圳设办事处」</div></div>
+    <div class="r"><div class="k">官网</div><div class="v">裸域 <code>liankemobile.com</code> 2026-09-02 抓过一次 HTTP 500。<code>www.liankemobile.com</code> 能开，见「飞狐智连」一节。</div></div>
+    <div class="r"><div class="k">展会</div><div class="v">IOTE 2026 深圳。2026-08-26 到 28 日，深圳国际会展中心宝安新馆，10 号馆 <code>10D110</code>。展会稿发布于 2026-08-06。展会已结束。</div></div>
+    <div class="r"><div class="k">1688 / 阿里</div><div class="v">没找到 FoxiSIM 或连可的蓝牙 eSIM 店铺。</div></div>
+    <div class="r"><div class="k">OEM 专页</div><div class="v">没有。公开只写「相关产品诚招代理，支持流量池与 API 对接」。</div></div>
+    <div class="r"><div class="k">旁支品牌</div><div class="v">同一篇展会稿还推 <strong>FoxToken / FoxxiPlay</strong>，是 AI 大模型聚合和短剧工具，跟 SIM 卡无关。</div></div>
+  </div>
+
+  <h3>他们自己怎么写公司</h3>
+  <div class="box">
+    <p>展会稿原文口径写连可移动有限公司是「香港持牌移动虚拟网络运营商（MVNO）」，「依托香港通讯事务管理局办公室（OFCA）许可资质」，整合本地持牌运营商基础设施，做跨境通信。</p>
+    <p>业务自述涵盖全球数据漫游，eSIM 与实体蓝牙 eSIM，还有 AI 大模型聚合平台。</p>
+  </div>
+  <div class="box warn">
+    <p>OFCA 公开可查的 SBO 里，带 MVNO 标记的持牌人截至 2026-05-01 是 26 家。名单里没有 Linko Mobile，也没有連可移動。</p>
+    <p>这不等于一定没牌。可能挂在别人牌下，也可能拿的是 ETS / IAS 这类牌。今晚要的是<strong>牌照号 + 扫描件</strong>，不要口头「我们是持牌 MVNO」。</p>
+  </div>
+
+  <h3>别跟这些名字搞混</h3>
+  <ul class="plain">
+    <li><code>FoxSims.com</code> 是接码 / 临时短信号，另一家。</li>
+    <li><code>eSIMFOX</code> / esimfox.com 是卖旅游 eSIM 二维码的，德国市场向，跟这张实体蓝牙卡无关。</li>
+    <li>「深圳市连可电子科技有限公司」2006 年成立，法人何桂胜，注册资本 3 万。名字像，<strong>对不上</strong>，别当成同一家。</li>
+  </ul>
+
+  <h3>产品：公开只能落到纸上的三句话</h3>
+  <p>展会稿原文（尽量不改他们的词）：</p>
+  <div class="box">
+    <p>「FoxiSIM是一款实体eSIM卡，外形是标准 Nano SIM 塑料卡片，内部搭载 eUICC 加密芯片，同时具备 eSIM 远程下载、多套餐存储能力，是跨境出行、老旧设备的折中方案。」</p>
+    <p>卖点就三条：兼容老旧设备；一卡存多地区套餐；芯片采用 GSMA 标准加密，身份密钥独立存储。</p>
+  </div>
+  <p>标题写了「实体蓝牙 eSIM 卡」。三条卖点里<strong>没有</strong>写 BLE 芯片和 GATT，也没写小程序连卡或插进手机能被扫到。对比 BeeSIM，天联科，还有 9eSIM B 系列，那些都有用户或官网写明「插卡后手机能扫到 BLE 广播名」。FoxiSIM 这一条公开是空的。</p>
+  <p>所以今晚第一件事：样卡插进 iPhone，nRF Connect 能不能扫到广播。扫不到，后面 SDK、白标都不用往下聊。</p>
+</section>
+
+<section id="feihu">
+  <h2>飞狐智连和官网</h2>
+  <p class="note">这一节来自 APK 和现网站点。展会稿在上一节。后台口令和未鉴权接口不写在这页。</p>
+
+  <div class="kv">
+    <div class="r"><div class="k">官方 App</div><div class="v"><strong>飞狐智连</strong>。包名 <code>com.liankemobile.foxisim</code>。iOS App Store <strong>1.5</strong>（2026-09-10）。安卓官网 APK <strong>1.0.8</strong>。版本号两端不通用，详见 <a href="app-teardown.html">App 对标</a>。</div></div>
+    <div class="r"><div class="k">壳</div><div class="v">uni-app。隐私政策自己写了 DCloud 打包，还有 uni 统计 2.0。APK 里 AppID 是 <code>__UNI__5B8605D</code>。</div></div>
+    <div class="r"><div class="k">写卡插件</div><div class="v"><strong>FoxiSimSDK</strong>，类名 <code>com.foxisim.sdk.FoxiSimSDKModule</code>。能力标了 BLE。也标了 OMA 和 LPA。另有扫码插件 FoxiQrScanner。原生插件，直接调蓝牙。</div></div>
+    <div class="r"><div class="k">App 干什么</div><div class="v">本地蓝牙管卡。扫码装 eSIM，走 SM-DP+。固件能 BLE OTA。云端没有账户。App 里不卖套餐。云接口目前看到的是检查更新，外加一份购买渠道列表，里面有 eSIM.net。</div></div>
+    <div class="r"><div class="k">官网</div><div class="v"><code>www.liankemobile.com</code> 是 uni-app 打的 H5。只开了 HTTP，443 没开。登录注册购买都弹 Toast「建设中」，没接到自家后台。</div></div>
+    <div class="r"><div class="k">脚手架残留</div><div class="v">官网 JS 里还写着 <code>baseURL: https://www.beeesim.com/</code>。这是超雪 BeeSIM 的域。飞狐智连自己走 <code>liankemobile.com</code>。两套没对齐。</div></div>
+    <div class="r"><div class="k">工程观感</div><div class="v">后台是若依开源脚手架。站点 App 后台三套配置没拧到一块。有官方 App，不等于有给我们用的 SDK。</div></div>
+  </div>
+
+  <div class="viz">
+    <div class="lanes">
+      <div class="lane a"><span class="kicker">对我们有用</span><p>安卓侧已经有原生写卡模块，类名都在。卡内蓝牙他们自己的 App 已经在用。</p></div>
+      <div class="lane d"><span class="kicker">对我们卡住</span><p>插件挂在 uni-app 壳上。我们是 Swift 和原生 Android。今晚要独立的 XCFramework 和 AAR。再装一个飞狐智连不算白标。</p></div>
+      <div class="lane c"><span class="kicker">今晚点名问</span><p>官网为什么还指着 beeesim.com。卡和超雪是不是一条供应链。FoxiSimSDK 能不能拆出来给我们。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="tianyu">
+  <h2>天喻这张卡从哪来</h2>
+  <p class="note">对方说卡从天喻进。别跟「天联科」搞混，差一个字。</p>
+  <p>对得上的是<strong>武汉天喻信息产业股份有限公司</strong>。官网 <code>whty.com.cn</code>。深交所 <code>300205.SZ</code>。统一社会信用代码 <code>91420000714587800U</code>。1999 年成立。做运营商 SIM 和安全芯片，也做 eSIM 模块。Foxi 是贴牌商。</p>
+
+  <div class="kv">
+    <div class="r"><div class="k">EID 前缀</div><div class="v">社区对照表把 <code>89086029</code> 写成 Wuhan Tianyu。东信和平是 <code>89086030</code>。捷德是 <code>89049032</code>。BeeSIM 走捷德这条。样卡读出来前 8 位，对不上就不是这家。</div></div>
+    <div class="r"><div class="k">EUM</div><div class="v">社区稿写 2024-02 GSMA 给 Wuhan Tianyu Information Industry 发过 EUM 证书。今晚要证书扫描件。</div></div>
+    <div class="r"><div class="k">SAS</div><div class="v">2020-11 天喻自己发过稿，说 SAS-UP 和 SAS-SM 都过了。现网名单今晚拿证书号对着 GSMA 查。口头「我们过了」不算。</div></div>
+    <div class="r"><div class="k">官网卖什么</div><div class="v">eSIM 页主推嵌入式模块，DFN8 那种，给手表、CPE、车载。也写支持 GSMA RSP 和 M2M。入围国内三大运营商产品库。4FF 可插拔白卡、卡内蓝牙，官网没当主卖点写。</div></div>
+    <div class="r"><div class="k">进货拆开</div><div class="v">天喻更像出 eUICC。蓝牙 MCU 和天线多半是 Foxi 自己封，或另一家。今晚分开问：芯片谁的，蓝牙谁封，个人化谁做。</div></div>
+  </div>
+
+  <div class="box warn">
+    <p><strong>美亚先停一下</strong></p>
+    <p>美国财政部 OFAC 把 Wuhan Tianyu Information Industry Co Ltd 列进 SDN。项目代码 <code>RUSSIA-EO14024</code>。进名单日期 2024-06-12。公司 2024-06-16 发过公告。OpenSanctions 2026-09-02 还在名单上。统一社会信用代码对得上。</p>
+    <p>我们在美亚卖卡。EUM 在 SDN 上，这张 SKU 先别当美国货盘。合规过完再说。</p>
+  </div>
+
+  <div class="viz">
+    <div class="lanes">
+      <div class="lane a"><span class="kicker">对我们有用</span><p>天喻是正经卡厂。有 EUM 号段。比「创业公司自己烧一颗安全芯片」靠谱。</p></div>
+      <div class="lane d"><span class="kicker">对我们卡住</span><p><code>89086</code> 是中国大陆号段。奶昔上红茶、澳门 CTM 都有人说这类 EID 被拒。BeeSIM 特意走捷德 <code>89049032</code>，就是为了少踩这个。</p></div>
+      <div class="lane c"><span class="kicker">论坛样本</span><p>奶昔有人淘宝小白卡 EID 就是 <code>89086029</code>，发货地湖北。另有帖发天喻测试卡，有人回 bug 多。样本少，当提醒，不当结论。</p></div>
+    </div>
+  </div>
+  <p>今晚核对就一件事：样卡读 EID。是 <code>89086029</code>，进货口径能对上。是别的前缀，让对方把供应链重新说一遍。</p>
+</section>
+
+<section id="foxi-empty">
+  <h2>公开完全没找到的（今晚要对方补）</h2>
+  <div class="box">
+    <ul class="plain">
+      <li>卡插进 iPhone，nRF Connect 能不能扫到广播。飞狐智连里有 BLE 插件，现场还是要扫。</li>
+      <li>样卡 EID 前 8 位。对方说天喻的话应对 <code>89086029</code>。蓝牙芯片料号另外问，天喻官网没写卡内蓝牙。</li>
+      <li>厚度。会不会超标、卡托夹卡。</li>
+      <li>Profile 槽位。可用 KB。</li>
+      <li>iOS / Android 兼容表。美版无卡槽 iPhone 他们怎么标。</li>
+      <li>FoxiSimSDK 有没有独立的 Swift / AAR。BLE UUID。NekokoLPA2 能不能发现这张卡。</li>
+      <li>价格、MOQ、交期、白牌丝印。</li>
+      <li>FCC / CE-RED / NCC / SRRC 任何一种 ID。</li>
+      <li>拆解、X-ray、用户评测、砖卡率、配对差评。公开零样本。</li>
+      <li>连可通讯（深圳）的工商全套。</li>
+      <li>官网 JS 为什么还写着 beeesim.com。卡和超雪是不是一条供应链。</li>
+    </ul>
+  </div>
+  <p>今晚要盯的是：卡是不是真硬件，写卡通道给我们不给。他们会不会做流量，今晚先放下。</p>
+
+  <h3>公开出处（2026-09-02 查过）</h3>
+  <ul class="srcs">
+    <li>展会稿：<a href="https://www.x-techcon.com/article/171578.html">https://www.x-techcon.com/article/171578.html</a></li>
+    <li>香港公司：<a href="https://crhk.guru/company/brn/78597150/linko-mobile">https://crhk.guru/company/brn/78597150/linko-mobile</a></li>
+    <li>香港公司备份：<a href="https://coltd.hk/company-78597150-details.htm">https://coltd.hk/company-78597150-details.htm</a></li>
+    <li>ICP：<a href="https://icplishi.com/company/%E8%BF%9E%E5%8F%AF%E9%80%9A%E8%AE%AF%EF%BC%88%E6%B7%B1%E5%9C%B3%EF%BC%89%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8/">连可通讯（深圳）· 粤ICP备2026082344号-1</a></li>
+    <li>官网 www：<a href="http://www.liankemobile.com">http://www.liankemobile.com</a>（仅 HTTP）</li>
+    <li>裸域曾 500：<a href="https://liankemobile.com">https://liankemobile.com</a></li>
+    <li>OFCA 牌照查询：<a href="https://app2.coms-auth.hk/apps/sbo_lic_search/mobileService">https://app2.coms-auth.hk/apps/sbo_lic_search/mobileService</a></li>
+    <li>26 家 MVNO 整理：<a href="https://simcardhk.com/news/2026-04-27-hk-mvno-full-list-26">https://simcardhk.com/news/2026-04-27-hk-mvno-full-list-26</a></li>
+    <li>IOTE 展会页：<a href="https://www.iotexpo.com.cn/SZ/NewsView/50024B3195383643.html">https://www.iotexpo.com.cn/SZ/NewsView/50024B3195383643.html</a></li>
+    <li>天喻官网 eSIM：<a href="https://www.whty.com.cn/securitychip.aspx?nid=3&amp;typeid=73">whty.com.cn 安全芯片</a></li>
+    <li>天喻 SAS 自述（2020-11）：<a href="https://www.whty.com.cn/news_view.aspx?id=536&amp;nid=2&amp;typeid=4">国内首家 SAS-SM 全范围</a></li>
+    <li>OFAC SDN：<a href="https://sanctionssearch.ofac.treas.gov/Details.aspx?id=49541">WUHAN TIANYU · 49541</a></li>
+    <li>OpenSanctions：<a href="https://www.opensanctions.org/entities/NK-7DEFhYyoEjrdh4jFCtX3zn/">武汉天喻信息</a></li>
+    <li>EID 对照（奶昔）：<a href="https://forum.naixi.net/thread-10177-1-1.html">thread-10177</a></li>
+    <li>EID 对照（王掌柜 2026-01）：<a href="https://wzzgg.com/brand/pluggable-euicc-esim-card-vendors.html">89086029 Tianyu</a></li>
+    <li>奶昔 89086029 小白卡：<a href="https://forum.naixi.net/thread-11440-1-1.html">thread-11440</a></li>
+    <li>奶昔天喻测试卡：<a href="https://forum.naixi.net/thread-11916-1-1.html">thread-11916</a></li>
+  </ul>
+</section>
+
+<section id="hard">
+  <h2>几个硬数字，心里有数</h2>
+  <p>不用跟对方背规范号。他们一含糊，我们知道标准线在哪。</p>
+  <div class="box">
+    <p><strong>尺寸</strong>　Nano-SIM 12.3 × 8.8 mm。厚度名义 0.67 mm，规范允许 0.60 到 0.70 mm。量厚度要含金手指凸起。</p>
+    <p><strong>供电</strong>　卡没电池，吃手机卡槽的 VCC。Class B 约 3.0 V，Class C 是 1.8 V。规范要求手机至少能供约 10 mA。UICC 上限大约 Class B 50 mA，Class C 60 mA。idle / clock-stop 只有 100 到 200 µA。BLE 一广播就超过这个 idle。有的手机会测浪涌，有的飞行模式会直接把 VCC 掐掉。掐掉以后 App 发现不了卡。</p>
+    <p><strong>抢线</strong>　金手指 C7 只允许一个主机，就是手机基带。蓝牙 MCU 不能跟基带并联在 C7 上。能工作的结构只有卡内第二总线，再加仲裁。基带正在 AUTH，BLE 写卡会冲突、复位，手机会报 SIM 故障。要拓扑图，口头「没问题」不算。</p>
+    <p><strong>eUICC</strong>　得是 Consumer SGP.22。SGP.02 是 M2M，SGP.32 是物联网，拿来充消费级旅行卡会出事。EUM 要有 GSMA SAS-UP。创业公司买一颗安全芯片自己烧，成不了可商用 eUICC。</p>
+  </div>
+  <div class="viz">
+    <div class="pair">
+      <div class="cell b"><span class="kicker">错</span><p>基带和 BLE MCU 并联在金手指 C7 上。会冲突、复位，手机会报 SIM 故障。</p></div>
+      <div class="cell g"><span class="kicker">对</span><p>C7 只给基带。BLE 走卡内第二总线，中间有仲裁。今晚要这张图。</p></div>
+    </div>
+  </div>
+
+</section>
+
+<section id="ask">
+  <h2>见面问什么</h2>
+  <p class="note">勾着问。答不上的记下原话，别现场替对方圆。</p>
+
+  <h3>公司</h3>
+  <div class="box">
+    <ul class="ask">
+      <li><label class="chk"><input type="checkbox" data-k="c1"> 香港牌照号，拿得出扫描件吗。是 SBO 还是别的牌</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="c2"> 深圳执照。法人是谁。和香港公司什么股权关系</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="c3"> eUICC 是天喻出的整卡，还是只出芯片。蓝牙 MCU 谁封。个人化谁做。封装厂是谁</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="c4"> eUICC 是不是武汉天喻。EUM 证书拿得出扫描件吗。SAS-UP 证书号多少。现网 GSMA 名单对不对得上。是不是 Consumer SGP.22</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="c5"> 样卡现场读 EID。是不是 <code>89086029</code>。号段归谁。停供以后已卖掉的卡还能不能继续写号。ECASD 密钥谁拿着</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="c6"> 官网 JS 为什么写着 beeesim.com。你们跟超雪什么关系。卡是不是一条供应链</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="c7"> 知道天喻在 OFAC SDN 上吗。美亚这条线你们怎么出货。证挂谁的名</label></li>
+    </ul>
+  </div>
+
+  <h3>样卡</h3>
+  <div class="box">
+    <ul class="ask">
+      <li><label class="chk"><input type="checkbox" data-k="s1"> 今晚有没有样卡。没有的话哪天能寄，至少 5 张，固件跟量产一致</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="s2"> 现场用 nRF Connect 扫广播名、Service UUID、RSSI</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="s3"> 厚度量一下，上限 0.70 mm。卡托会不会夹卡</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="s4"> 蓝牙芯片料号、固件版本、BLE 版本、发射功率。EID 印在哪。天线在卡的哪一侧</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="s5"> 广播名能不能改成我们的品牌。丝印、包装、说明书怎么改，周期和费用</label></li>
+    </ul>
+  </div>
+
+  <h3>写卡 · 今晚最要紧</h3>
+  <div class="box">
+    <ul class="ask">
+      <li><label class="chk"><input type="checkbox" data-k="w1"> 飞狐智连里的 FoxiSimSDK，今晚能不能给独立的 XCFramework 和 AAR。不要只给 uni-app 插件。有没有可编译的示例</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="w2"> 没有 SDK 的话，GATT 表给不给。每条 UUID、读写通知、MTU、分包、APDU 怎么进 eUICC</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="w3"> 卡插在 iPhone 里，不接读卡器，能不能写。示例必须这个条件能跑</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="w4"> 写卡打不打你们服务器。能不能我们 App 直连 SM-DP+，卡只经 BLE 收 APDU</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="w5"> 收不收「下载次数」。5ber 就是这个模式，公司没了新码写不进去</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="w6"> 我们 App 的 iOS Team ID、Android 包名和签名，能不能写进卡里。不能只认他们自己的 App</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="w7"> 我们正在卖的激活码，能不能直接写进去。指定我们的 SM-DP+ 行不行</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="w8"> 读 EID、空间、Profile 列表。Enable / Disable / Delete 有没有。错误码表有没有（空间不足、码过期、SM-DP+ 拒绝、基带占卡、VCC 掉电、BLE 断开）</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="w9"> iPhone 上能不能用 STK 菜单切换已经写好的套餐，不开 App。没有的话，每次换套餐都要开蓝牙</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="w10"> 写卡用 Wi-Fi 行不行。BLE 中途断了能不能续传。锁屏以后还能不能连上</label></li>
+    </ul>
+  </div>
+
+  <h3>供电、抢卡、机型</h3>
+  <div class="box">
+    <ul class="ask">
+      <li><label class="chk"><input type="checkbox" data-k="p1"> 1.8 V 下，待机、广播、连接、写卡峰值电流测过没有。最好有示波器图</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="p2"> 锁屏和飞行模式，还有双卡没用的那张槽，VCC 还在不在，蓝牙还在不在</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="p3"> 手机基带和卡里蓝牙一起访问 eUICC，怎么避免打架。有没有内部第二总线的图。基带 AUTH 时写卡失败怎么报错、怎么重试</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="p4"> 有没有机型表。国行 iPhone 测过没有。至少 10 款安卓。美版没卡槽的标清楚，覆盖不了</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="p5"> 金属卡槽里 RSSI 和掉线率。射频功率能不能往下调</label></li>
+    </ul>
+  </div>
+
+  <h3>认证、亚马逊、价钱</h3>
+  <div class="box">
+    <ul class="ask">
+      <li><label class="chk"><input type="checkbox" data-k="b1"> FCC 有没有，CE 有没有，SRRC 有没有。没有的话谁出钱，证挂谁的名，周期多久。美亚上无线电配件要 FCC ID</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="b2"> 你们自己在亚马逊卖吗。白标区域、价格保护、跟卖怎么写</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="b3"> MOQ、单价阶梯、交期、最小补单。丝印包装怎么改</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="b4"> 蓝牙连不上算谁保修，和普通死卡分开算。坏卡率怎么承诺</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="b5"> 固件漏洞、GSMA 证书过期谁补。SDK 上线后能不能收回或改协议让旧卡失效</label></li>
+      <li><label class="chk"><input type="checkbox" data-k="b6"> 你们要是停了，卡还能不能用我们 App，或开源 LPA、读卡器、STK 继续写标准码</label></li>
+    </ul>
+  </div>
+</section>
+
+<section id="test">
+  <h2>样卡怎么验</h2>
+  <p>有样卡就按这个做。没有样卡，今晚只收材料。</p>
+  <div class="tl">
+    <ol>
+      <li><strong>量厚度</strong>超过 0.70 mm 记下来。试插一两台卡托，看夹不夹。</li>
+      <li><strong>扫广播</strong>卡插进 iPhone，打开 nRF Connect。记下广播名、UUID、RSSI。扫不到，后面都别谈。</li>
+      <li><strong>亮屏 / 锁屏 / 飞行</strong>双卡机再试没用的那张槽。</li>
+      <li><strong>写我们正在卖的码</strong>用他们官方 App。写不进，说明 eUICC 和我们码号不匹配。</li>
+      <li><strong>自己的测试包再写一次</strong>必须打他们云，或必须用他们 App，白标不成立。</li>
+    </ol>
+  </div>
+  <p class="note">第 4 步能过、第 5 步过不了，就是「有卡，不给我们通道」。别开始改我们正式 App。</p>
+
+</section>
+
+<section id="stop">
+  <h2>今晚先别拍板</h2>
+  <div class="box warn">
+    <ul class="plain">
+      <li>样卡没有，或插上扫不到蓝牙。</li>
+      <li>写卡必须走他们 App，或必须打他们云，或按次扣下载次数。</li>
+      <li>EUM 说不清。是不是 SGP.22 说不清。</li>
+      <li>1.8 V 电流说不清。双主机怎么仲裁说不清。</li>
+      <li>样卡 EID 对上天喻 <code>89086029</code>，美亚这条线今晚不定美国货盘。</li>
+    </ul>
+    <p>上面几条里中了，今晚只收材料，不定货，不改 App。</p>
+  </div>
+  <p>回来对齐就三句话：卡内蓝牙是不是真的。写卡通道给不给我们。我们正在卖的码写不写得进去。</p>
+</section>
+
+<section id="peers">
+  <h2>奶昔论坛里的竞品对照</h2>
+  <p class="note">来源主要是 <a href="https://forum.naixi.net/forum-87-1.html">forum.naixi.net 版 87</a>。eSIM 版大部分帖是流量码和保号，硬件帖不多。蓝牙实体卡真正有人上手写的，目前就是下面这几家。FoxiSIM 这个版上<strong>没有</strong>找到测评帖。</p>
+  <p>对照只看我们要的白标：卡插在 iPhone 里能不能写，通道能不能接到我们自己的 App，官方停了卡还能不能用。</p>
+  <div class="viz">
+    <div class="lanes">
+      <div class="lane a"><span class="kicker">卡内蓝牙 · 我们这条</span><p>BeeSIM · 天联科 · 9eSIM B · ESIMfan · Foxi 还在问号里</p></div>
+      <div class="lane c"><span class="kicker">无蓝牙 · 论坛常拿来比</span><p>ESTKme · 9eSIM V 系列 · 小白卡 · eSIM.me</p></div>
+      <div class="lane d"><span class="kicker">锁云 / 锁 App · 白标避开</span><p>5ber → Xesim · GlocalMe · 全讯写卡次数</p></div>
+    </div>
+  </div>
+
+
+  <h3>同一赛道：卡内蓝牙</h3>
+
+  <div class="who">
+    <h3>FoxiSIM <span class="tag">有官方 App</span> <span class="tag">奶昔无实测</span></h3>
+    <p>官方 App 叫飞狐智连。壳是 uni-app，写卡靠自研插件 FoxiSimSDK。奶昔上还是没人发过插卡实测。今晚带样卡。</p>
+  </div>
+
+  <div class="who">
+    <h3>超雪 BeeSIM <span class="tag">卡内蓝牙</span> <span class="tag">第三方 LPA</span></h3>
+    <p>奶昔介绍帖和 2026-07-15 测评帖都有。eUICC 社区说是捷德，EID 前缀 <code>89049032</code>。固件 1.3.6：eUICC 32.33.0，总容量介绍帖写 425 KB，测评实际看到约 370 KB。</p>
+    <p>管理口有微信小程序，网页 <code>beeesim.com/ble</code>，还有 NekokoLPA2。1.3.6 起加了读卡器写卡，和 STK 启用/停用/删除。不拔卡切卡，是这品类的卖点。</p>
+    <p>测评原话：不用读卡器就赢了。槽点是初次固件升级很慢，扫码下载有时要等一分钟，切卡会卡住然后蓝牙断开，有时要拔卡重插。小程序和网站糙。回帖关心官方停了还能不能本地切。楼主说最新固件可用读卡器兜底。有人说小程序写卡比 NekokoLPA2 稳，bootstrap 删不掉。另有帖：美版 iPhone 改双卡槽之后，小程序蓝牙找不到 BeeSIM，同一张卡换到别的手机正常。这是改卡机兼容问题，跟美版无卡槽分开看。</p>
+    <p>白标这边，第三方 LPA 已经能接，说明协议至少能被复现。软件稳不稳是硬伤。读卡器兜底对「对方跑路」是加分。</p>
+    <p class="note">帖子：<a href="https://forum.naixi.net/thread-13091-1-1.html">介绍 13091</a> · <a href="https://forum.naixi.net/thread-13380-1-1.html">测评 13380</a></p>
+  </div>
+
+  <div class="who">
+    <h3>天联科 eSIM-Home <span class="tag">卡内蓝牙</span> <span class="tag">iOS 锁自家 App</span></h3>
+    <p>2026-07 众筹约 99 元。用户插卡后手机蓝牙能扫到 <code>ESIM-HOME-BLE-xxxx</code>。官网 <code>esim-home.cn</code>。EID 前缀 <code>89049</code>，捷德，iPhone 同款号段。测试卡可用约 800–850 KB，官方说总量 1.1 MB。</p>
+    <p>Android：NekokoLPA / EasyEUICC 就能写，不必用他们 App。iOS：必须自家 App <code>esim-home</code>，还要绑定设备，第三方 BLE 扫得到卡但 Nekoko 连不上，用户怀疑私有协议。STK 有，SE3 上不流畅。STK 里有蓝牙解绑。有人写过 Vodafone UK、CTUK，下载快。背面没印 EID，多张卡会混。</p>
+    <p>论坛有人拿它跟 BeeSIM 比：容量更大，iOS 有独立 App 不像只靠小程序。也有人说官网 AI 味重，像照着抄，怕炒作。</p>
+    <p>白标这边，Android 通道开，iOS 通道锁。跟我们「Swift 自己 App 写卡」是对上的风险点。绑定设备也讨厌。</p>
+    <p class="note">帖子：<a href="https://forum.naixi.net/thread-13013-1-1.html">情报 13013</a> · <a href="https://forum.naixi.net/thread-13018-1-1.html">上手 13018</a></p>
+  </div>
+
+  <div class="who">
+    <h3>9eSIM B0 / B1 <span class="tag">卡内蓝牙 测试版</span></h3>
+    <p>V0 / V3 没有卡内蓝牙，iOS 写卡要读卡器。B 系列才是蓝牙卡。奶昔交易区有人出 B0 测试版，官方说没售后。有人说京东 9.9 包邮的是测试蓝牙卡。量产规格和 SDK 仍然薄。</p>
+    <p>V 系列优点在开源 LPA，自己不卖套餐。B 系列如果协议同样开放，白标叙事最好。现在更像试产。</p>
+    <p class="note">帖子：<a href="https://forum.naixi.net/thread-14868-1-1.html">B0 测试卡 14868</a></p>
+  </div>
+
+  <div class="who">
+    <h3>ESIMfan V2 <span class="tag">卡内蓝牙</span> <span class="tag">锁官方 App</span></h3>
+    <p>奶昔 14 品牌介绍里有，标价约 15 美元，最多 15 个 Profile，兼容多数安卓。功能接近，官方 App 强制。和我们白标冲突。</p>
+  </div>
+
+  <div class="who">
+    <h3>全讯物联「eSIM+环球卡」<span class="tag">自称内置蓝牙</span></h3>
+    <p>奶昔 14 品牌介绍写：168 元，内置蓝牙，苹果安卓，APP 管理，新用户免费写 3 次，送 1GB。写卡次数限制像 5ber。更像卖他们自己的流量，接不了我们 App。</p>
+  </div>
+
+  <div class="who">
+    <h3>GlocalMe eSIM Trio / Yolloo</h3>
+    <p>GlocalMe：约 70 元，免费写 3 次，卡有效期 180 天，App 内续费。天联科帖里有人说它不能用 STK 和第三方 App，体验一般。Yolloo Smart Card 约 21 美元，有 iOS/安卓 App。这两家都偏「官方 App + 自己流量」，开放写卡做不到。</p>
+  </div>
+
+  <h3>论坛也会拿无蓝牙的卡来比</h3>
+
+  <div class="who">
+    <h3>ESTKme <span class="tag">无卡内蓝牙</span> <span class="tag">STK / 读卡器成熟</span></h3>
+    <p>奶昔里被当成实体 eSIM 的稳妥选项。iPhone 靠 STK 和读卡器，不靠卡里那颗蓝牙。BeeSIM 测评回帖有人直接问「何不选 estk」。我们要的是旅行客群插着就能写，读卡器 SKU 不好卖。可以当「没有蓝牙时 iPhone 怎么活」的对照，不适合当我们的主货。</p>
+  </div>
+
+  <div class="who">
+    <h3>9eSIM V0 / V0 Max / V3</h3>
+    <p>V0 东信和平 EID <code>89086030</code>，约 480 KB，常被叫小白卡。V0 Max 约 1 MB，STK 可下卡切卡。V3 是 Kigen。iOS 写新码仍要安卓或读卡器。开源 LPA。OEM 公开要 1 万张。跟 B 系列分开看。</p>
+  </div>
+
+  <div class="who">
+    <h3>Xesim（5ber 转生）</h3>
+    <p>5ber 锁官方 App 和下载次数，2025 年母公司崩，奶昔很多人把卡迁到 9eSIM / ESTK。Xesim 是原班人马后续产品，论坛有人推也有人说跑路过还能信吗。锁云模式不要碰。</p>
+  </div>
+
+  <div class="who">
+    <h3>小白卡 / eSIM.me / Switch / 联拉 Linklan</h3>
+    <p>小白卡：廉价 ECP 白卡，安卓 OMAPI 或读卡器写，iPhone 基本只能切不能写。eSIM.me：安卓 OMAPI，iPhone 不能写。Switch：蓝牙在外置读卡器。联拉：主业是 eSIM 热点盒子，蓝牙在盒子上，不是 Nano 卡。</p>
+  </div>
+</section>
+
+<section id="talk">
+  <h2>后续沟通可以点名的</h2>
+  <p>别空口「市面上都有蓝牙卡」。点名，让对方知道我们跟过玩家实测。</p>
+  <div class="box">
+    <ul class="plain">
+      <li>你们说卡从天喻进。样卡 EID 前 8 位请现场读。<code>89086029</code> 才对得上武汉天喻。<code>89086030</code> 是东信和平。<code>89049032</code> 是捷德。</li>
+      <li>天喻 2024-06 进了美国 OFAC SDN。我们有美亚货盘。这张 SKU 怎么出美国，请给书面。</li>
+      <li>你们官网 JS 还写着 <code>www.beeesim.com</code>。卡是超雪贴牌，还是脚手架没改干净。请当场说清楚。</li>
+      <li>飞狐智连里已经有 FoxiSimSDK。我们是 Swift 和原生 Android。这个插件能不能拆成独立包给我们。uni-app 壳接不进我们现有 App。</li>
+      <li>奶昔上真正有人插卡写过的蓝牙卡，是 BeeSIM 和天联科。Foxi 这块是空的。请当场插 iPhone，给我们看 nRF Connect 能扫到。</li>
+      <li>BeeSIM 已经能被 NekokoLPA2 接上，1.3.6 还有读卡器和 STK 兜底。你们的 BLE 协议能不能同样给到我们自己的 Swift App，还是只给你们自己的程序。</li>
+      <li>天联科 iOS 必须自家 App 还要绑定设备，Android 反而开着。我们主路径是 iPhone 插着写卡。你们走哪边。</li>
+      <li>玩家最怕官方停了还能不能本地切，以及用读卡器救。5ber 在这个论坛是集体阴影。下载次数、云授权，我们不接。</li>
+      <li>BeeSIM 测评里下载慢、切卡断蓝牙、有时要拔卡。改卡双卡槽的美版机，有人小程序扫不到卡。机型表和断线怎么处理，请给书面。</li>
+      <li>如果通道不开放，我们会并行问 BeeSIM、天联科、9eSIM B 系列。硬件牌子没有我们现有的码号和 App 重要。</li>
+    </ul>
+  </div>
+  <p class="note">奶昔相关帖：版面 <a href="https://forum.naixi.net/forum-87-1.html">forum-87-1</a>；BeeSIM 测评 <a href="https://forum.naixi.net/thread-13380-1-1.html">13380</a>；BeeSIM 介绍 <a href="https://forum.naixi.net/thread-13091-1-1.html">13091</a>；天联科 <a href="https://forum.naixi.net/thread-13013-1-1.html">13013</a> <a href="https://forum.naixi.net/thread-13018-1-1.html">13018</a>；怎么选 <a href="https://forum.naixi.net/thread-12398-1-1.html">12398</a>；14 品牌 <a href="https://forum.naixi.net/thread-11220-1-1.html">11220</a>；技术概要 <a href="https://forum.naixi.net/thread-5941-1-1.html">5941</a>；美版改卡与 BeeSIM <a href="https://forum.naixi.net/thread-14675-1-1.html">14675</a>。</p>
+</section>
+
+<footer>
+  <p>仅内部。公开链接谁拿到谁能看，别发到客户群，也别转给 Foxi。</p>
+  <p>勾选存在这台手机的浏览器里，前缀仍是 <code>foxi-brief-20260902-</code>。同属 <code>cwywing.github.io</code> 时，旧独立站勾过的状态会跟着过来。</p>
+  <p><a href="../">回总目录</a> · <a href="app-teardown.html">App 对标拆解</a></p>
+</footer>
+</div>
+<script>
+(function () {
+  const prefix = "foxi-brief-20260902-";
+  document.querySelectorAll("input[type=checkbox][data-k]").forEach(function (el) {
+    const k = prefix + el.getAttribute("data-k");
+    try { el.checked = localStorage.getItem(k) === "1"; } catch (e) {}
+    el.addEventListener("change", function () {
+      try { localStorage.setItem(k, el.checked ? "1" : "0"); } catch (e) {}
+    });
+  });
+})();
+</script>
+</body>
+</html>
