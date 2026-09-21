@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#2c4a42" />
+<title>赣北7日行李勾选清单</title>
+<style>
+:root {
+  --ink: #1a1814; --muted: #6b6358; --paper: #f3efe6; --card: #fffaf2;
+  --pine: #2c4a42; --moss: #3d5c52; --ochre: #c45c3e; --clay: #8b3a2a; --line: #e4d9c8;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink);
+  font: 16px/1.65 -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+a { color: var(--moss); }
+.wrap { max-width: 640px; margin: 0 auto; padding: 0 20px 80px; }
+.topbar { padding: 14px 0 0; font-size: 13px; display: flex; flex-wrap: wrap; gap: 12px; }
+.topbar a { text-decoration: none; color: var(--moss); }
+.hero-block { margin: 18px 0 8px; }
+.kicker { letter-spacing: .14em; font-size: 11px; color: var(--muted); }
+h1 { font-size: clamp(24px, 5.5vw, 32px); line-height: 1.25; margin: 6px 0 10px; font-weight: 650; }
+.sub { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 0 0 20px; }
+.toolbar button {
+  appearance: none; border: 1px solid var(--line); background: var(--card);
+  color: var(--ink); font: inherit; font-size: 14px; padding: 8px 14px;
+  border-radius: 999px; cursor: pointer;
+}
+.toolbar button:hover { background: var(--pine); color: #f3efe6; border-color: var(--pine); }
+.progress { font-size: 13px; color: var(--muted); }
+h2 {
+  font-size: 17px; margin: 28px 0 10px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--line); color: var(--pine);
+}
+.note {
+  background: #f3eee2; border-radius: 12px; padding: 12px 14px;
+  font-size: 13px; color: var(--muted); margin: 0 0 12px; line-height: 1.55;
+}
+.note.warn { background: #f6e8e0; }
+.note b { color: var(--ink); font-weight: 600; }
+ul.pack { list-style: none; padding: 0; margin: 0 0 8px; }
+ul.pack li {
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  margin: 8px 0; padding: 0;
+}
+ul.pack label {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 12px 14px; cursor: pointer; width: 100%;
+}
+ul.pack input[type="checkbox"] {
+  flex: none; width: 18px; height: 18px; margin-top: 2px;
+  accent-color: var(--pine); cursor: pointer;
+}
+ul.pack label span { flex: 1; }
+ul.pack li.done label span { color: var(--muted); text-decoration: line-through; }
+.hint { font-size: 13px; color: var(--muted); margin: 4px 0 0; }
+footer { color: var(--muted); font-size: 13px; margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--line); }
+footer a { color: var(--moss); }
+
+@media print {
+  body { background: #fff; }
+  .toolbar, .topbar { display: none !important; }
+  ul.pack li { break-inside: avoid; border-color: #ccc; }
+  .note { border: 1px solid #ddd; }
+  a { color: inherit; text-decoration: none; }
+  h2 { break-after: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a href="index.html">← 行程页</a>
+    <a href="../">← 全部行程</a>
+  </div>
+
+  <div class="hero-block">
+    <div class="kicker">JIANGXI 2026 · PACKING</div>
+    <h1>赣北7日行李勾选清单</h1>
+    <p class="sub">按人备。勾选会记在本机浏览器，换设备不算。10.1–10.7 同伴西进。</p>
+  </div>
+
+  <div class="toolbar">
+    <button type="button" id="clearBtn">清空勾选</button>
+    <span class="progress" id="progress">已勾 0 / 0</span>
+  </div>
+
+  <h2>衣服</h2>
+  <p class="note">按酒店不一定能洗晾备；短袖短裤城里白天可用，三清/庐山要外套。</p>
+  <ul class="pack" data-section="clothes">
+    <li><label><input type="checkbox" data-id="c1" /><span>短袖 ≥7</span></label></li>
+    <li><label><input type="checkbox" data-id="c2" /><span>内裤 ≥7</span></label></li>
+    <li><label><input type="checkbox" data-id="c3" /><span>袜子 ≥7</span></label></li>
+    <li><label><input type="checkbox" data-id="c4" /><span>长袖 ≥2</span></label></li>
+    <li><label><input type="checkbox" data-id="c5" /><span>长裤 ≥4</span></label></li>
+    <li><label><input type="checkbox" data-id="c6" /><span>短裤 ≥1</span></label></li>
+    <li><label><input type="checkbox" data-id="c7" /><span>外套（抓绒/薄羽绒中间层）≥1</span></label></li>
+    <li><label><input type="checkbox" data-id="c8" /><span>冲锋衣 ≥1（本身防雨可不另带雨衣）</span></label></li>
+    <li><label><input type="checkbox" data-id="c9" /><span>睡衣 1</span></label></li>
+    <li><label><input type="checkbox" data-id="c10" /><span>拖鞋 1</span></label></li>
+  </ul>
+
+  <h2>鞋</h2>
+  <p class="note">勿两双都是平胶底板鞋/帆布鞋。</p>
+  <ul class="pack" data-section="shoes">
+    <li><label><input type="checkbox" data-id="s1" /><span>深纹运动鞋或轻量登山鞋 1（三清/庐山/篁岭）</span></label></li>
+    <li><label><input type="checkbox" data-id="s2" /><span>走街鞋 1（景德镇等）</span></label></li>
+  </ul>
+
+  <h2>洗漱</h2>
+  <ul class="pack" data-section="toiletry">
+    <li><label><input type="checkbox" data-id="t1" /><span>牙刷牙膏</span></label></li>
+    <li><label><input type="checkbox" data-id="t2" /><span>毛巾（或确认酒店有）</span></label></li>
+    <li><label><input type="checkbox" data-id="t3" /><span>洗发水/沐浴（小样）</span></label></li>
+    <li><label><input type="checkbox" data-id="t4" /><span>面霜/护肤</span></label></li>
+    <li><label><input type="checkbox" data-id="t5" /><span>防晒霜 + 帽/墨镜</span></label></li>
+    <li><label><input type="checkbox" data-id="t6" /><span>女伴若需要：卫生用品</span></label></li>
+  </ul>
+
+  <h2>证件钱</h2>
+  <ul class="pack" data-section="docs">
+    <li><label><input type="checkbox" data-id="d1" /><span>身份证原件（购票入园）</span></label></li>
+    <li><label><input type="checkbox" data-id="d2" /><span>手机 + 充电宝 + 线</span></label></li>
+    <li><label><input type="checkbox" data-id="d3" /><span>少量现金 + 支付App</span></label></li>
+    <li><label><input type="checkbox" data-id="d4" /><span>驾照（租车驾驶人）</span></label></li>
+  </ul>
+
+  <h2>登山/雨</h2>
+  <ul class="pack" data-section="hike">
+    <li><label><input type="checkbox" data-id="h1" /><span>轻便雨衣（冲锋衣不防雨才要）或折叠伞</span></label></li>
+    <li><label><input type="checkbox" data-id="h2" /><span>小背包（上山）</span></label></li>
+    <li><label><input type="checkbox" data-id="h3" /><span>保温杯/水瓶</span></label></li>
+    <li><label><input type="checkbox" data-id="h4" /><span>创可贴/防磨脚贴</span></label></li>
+  </ul>
+
+  <h2>药</h2>
+  <p class="note warn">
+    <b>深圳肠胃偏清淡，赣菜偏辣偏咸——建议带。</b><br />
+    同伴线会吃赣菜+农家菜+景区餐：整体偏辣、偏咸、油重；景德镇小吃（冷粉、饺子粑等）相对温和，但炒菜、石锅、山货仍常放辣椒。点菜说「微辣/不放辣」。不是川菜麻辣，但仍容易胃不适。
+  </p>
+  <ul class="pack" data-section="meds">
+    <li><label><input type="checkbox" data-id="m1" /><span>胃药（抑酸或铝碳酸镁类，按自己习惯）</span></label></li>
+    <li><label><input type="checkbox" data-id="m2" /><span>止泻/整肠（蒙脱石或益生菌类）</span></label></li>
+    <li><label><input type="checkbox" data-id="m3" /><span>止痛（布洛芬或对乙酰氨基酚）</span></label></li>
+    <li><label><input type="checkbox" data-id="m4" /><span>感冒药小包装</span></label></li>
+    <li><label><input type="checkbox" data-id="m5" /><span>晕车药（若有人晕索道/山路）</span></label></li>
+    <li><label><input type="checkbox" data-id="m6" /><span>碘伏/消毒棉签</span></label></li>
+    <li><label><input type="checkbox" data-id="m7" /><span>抗过敏（若有人需要）</span></label></li>
+    <li><label><input type="checkbox" data-id="m8" /><span>常用处方药（自己的）</span></label></li>
+    <li><label><input type="checkbox" data-id="m9" /><span>若泡温泉 — 泳衣泳帽</span></label></li>
+  </ul>
+
+  <h2>出发前再查</h2>
+  <ul class="pack" data-section="pre">
+    <li><label><input type="checkbox" data-id="p1" /><span>9/29–30 再看三清、庐山逐日预报</span></label></li>
+    <li><label><input type="checkbox" data-id="p2" /><span>门票/高铁/租车确认</span></label></li>
+  </ul>
+
+  <footer>
+    <p>对应行程 <a href="https://cwywing.github.io/publicpage/jiangxi-2026/">https://cwywing.github.io/publicpage/jiangxi-2026/</a> ；同伴赣北西进 10.1–10.7</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var KEY = 'jx2026-packing-v1';
+  var boxes = document.querySelectorAll('ul.pack input[type="checkbox"]');
+  var progress = document.getElementById('progress');
+  var clearBtn = document.getElementById('clearBtn');
+
+  function load() {
+    var raw = null;
+    try { raw = localStorage.getItem(KEY); } catch (e) {}
+    var state = {};
+    if (raw) {
+      try { state = JSON.parse(raw) || {}; } catch (e) { state = {}; }
+    }
+    boxes.forEach(function (el) {
+      el.checked = !!state[el.getAttribute('data-id')];
+      el.closest('li').classList.toggle('done', el.checked);
+    });
+    updateProgress();
+  }
+
+  function save() {
+    var state = {};
+    boxes.forEach(function (el) {
+      if (el.checked) state[el.getAttribute('data-id')] = true;
+    });
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+    updateProgress();
+  }
+
+  function updateProgress() {
+    var total = boxes.length;
+    var n = 0;
+    boxes.forEach(function (el) { if (el.checked) n++; });
+    progress.textContent = '已勾 ' + n + ' / ' + total;
+  }
+
+  boxes.forEach(function (el) {
+    el.addEventListener('change', function () {
+      el.closest('li').classList.toggle('done', el.checked);
+      save();
+    });
+  });
+
+  clearBtn.addEventListener('click', function () {
+    if (!confirm('清空本页全部勾选？')) return;
+    boxes.forEach(function (el) {
+      el.checked = false;
+      el.closest('li').classList.remove('done');
+    });
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    updateProgress();
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>
