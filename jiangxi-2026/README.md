@@ -6,7 +6,7 @@
 
 ## 景点解说音频
 
-三清山、望仙谷、篁岭、景德镇、庐山五张景点卡各有多段解说。页面上的文字就是录音稿。语音用免费 Microsoft Edge 神经网络音色（Python 包 `edge-tts`），不是付费 Azure Speech。
+三清山、望仙谷、篁岭、景德镇、庐山五张景点卡各有多段解说。写的是地质、传说和历史（景德镇写瓷史），不写排队、住宿和拍照。页面上的文字就是录音稿。语音用免费 Microsoft Edge 神经网络音色（Python 包 `edge-tts`），不是付费 Azure Speech。
 
 - 音色：`zh-CN-XiaoxiaoNeural`
 - 语速：`-5%`（约 0.95）

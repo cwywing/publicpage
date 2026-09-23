@@ -104,6 +104,17 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
 .seg-err { margin: 0 0 10px; padding-left: 1.6em; font-size: 13px; color: var(--clay); }
 .seg audio { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .guide-credit { margin: 8px 0 4px; font-size: 12px; color: var(--muted); }
+.bullets, .facts { margin: 8px 0 12px; padding-left: 1.2em; }
+.bullets li, .facts li { margin: 4px 0; }
+.facts { margin-top: 0; }
+.fold { margin: 8px 0 16px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; }
+.fold summary { min-height: 44px; padding: 10px 14px; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.fold summary::-webkit-details-marker { display: none; }
+.fold summary .chev { display: inline-block; width: 1em; flex: none; transition: transform .15s ease; }
+.fold[open] summary .chev { transform: rotate(90deg); }
+.fold-body { padding: 0 14px 14px; font-size: 14px; }
+.fold-body p { margin: 0 0 8px; }
+.fold table { margin-top: 4px; }
 </style>
 </head>
 <body>
@@ -149,7 +160,7 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
   </div>
 
   <h2 id="shots">朋友圈会有的几张</h2>
-  <p>三清、望仙谷、篁岭、窑厂巷子。望仙谷用的是 Wikimedia 公版，拍于 2025-07-19，白天和傍晚亮灯都有，不是国庆夜场实拍。庐山这页没有现成公版图，正文用文字点位。</p>
+  <p class="note">三清、望仙谷、篁岭、窑厂。庐山这页没图。出处在图下。</p>
   <div class="xhs">
     <a href="https://www.xiaohongshu.com/search_result?keyword=%E4%B8%89%E6%B8%85%E5%B1%B1%E4%B8%9C%E6%96%B9%E5%A5%B3" target="_blank" rel="noopener">东方女神</a>
     <a href="https://www.xiaohongshu.com/search_result?keyword=%E5%B7%A8%E8%9F%92%E5%87%BA%E5%B1%B1" target="_blank" rel="noopener">巨蟒出山</a>
@@ -172,11 +183,11 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
     </figure>
     <figure>
       <img src="img/wxg-01.jpg" alt="望仙谷白天峡谷和仿古建筑" />
-      <figcaption><b>望仙谷白天</b>上饶广信。2025-07-19 上午。图源 Wikimedia Commons · 茅野ふたば / CC BY-SA 4.0</figcaption>
+      <figcaption><b>望仙谷白天</b>图源 Wikimedia Commons · 茅野ふたば / CC BY-SA 4.0</figcaption>
     </figure>
     <figure>
       <img src="img/wxg-28.jpg" alt="望仙谷入夜后的瀑布灯光" />
-      <figcaption><b>望仙谷入夜</b>灯刚亮，不是深夜满场。图源 Wikimedia Commons · 茅野ふたば / CC BY-SA 4.0</figcaption>
+      <figcaption><b>望仙谷入夜</b>图源 Wikimedia Commons · 茅野ふたば / CC BY-SA 4.0</figcaption>
     </figure>
     <figure>
       <img src="img/hl-trays.jpg" alt="篁岭晒秋竹匾" />
@@ -195,13 +206,34 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
       <figcaption><b>篁岭俯瞰</b>图源 Wikimedia Commons · Leungcwd / CC BY-SA 4.0</figcaption>
     </figure>
   </div>
-  <div class="warn">照片都标了出处。望仙谷六张都是同一位作者 2025 年 7 月 19 日的公版，坐标落在上饶市广信区望仙谷景区。庐山本页无图。权利人认为侵权的，说一声立刻删。这页只给朋友看行程。</div>
+  <details class="fold">
+    <summary><span class="chev" aria-hidden="true">▸</span>照片从哪来</summary>
+    <div class="fold-body">
+      <p>望仙谷六张是同一作者 2025-07-19 的 Wikimedia 公版，白天和傍晚刚亮灯，不是国庆夜场。权利人认为侵权的，说一声就删。</p>
+    </div>
+  </details>
 
   <h2 id="why">为什么这样排</h2>
-  <p>同伴环线：上饶进、庐山站出，高铁加租车，四人，一路向西，不进南昌。自驾骨干是金沙 → 望仙谷 → 篁岭 → 景德镇 → 庐山。望仙谷留着：D2 傍晚夜游，D3 上午白天场，两套景。浮梁史子园茶山不拿来换它。换城放在午后；三清例外，默认赶早索道。景德镇连住两晚，整天不搬家。瑶里不进。比云南国庆机票稳——高铁时刻能提前锁。</p>
+  <ul class="bullets">
+    <li>进上饶、出庐山站，高铁加租车，一路向西，不进南昌。</li>
+    <li>硬菜：三清一天（金沙上、港首下），望仙谷夜游加第二天白天。</li>
+    <li>住：金沙 1、望仙谷 1、篁岭 1、景德镇 2、牯岭 1。换城放午后，景德镇整天不搬家。</li>
+    <li>砍掉：茶山、瑶里、三叠泉、李坑江湾汪口、南昌。</li>
+  </ul>
+  <details class="fold">
+    <summary><span class="chev" aria-hidden="true">▸</span>展开说明</summary>
+    <div class="fold-body">
+      <p>望仙谷留两段，是夜景和白天峡谷两套，不拿浮梁史子园茶山换。三清要赶早索道，所以住金沙脚。景德镇连住，是为了整天看瓷，行李不用搬。国庆机票不稳，高铁时刻能提前锁。</p>
+    </div>
+  </details>
 
   <div class="spot">
     <h3>三清山 · 住金沙脚 1 晚</h3>
+    <ul class="facts">
+      <li>住金沙脚 1 晚。金沙索道上，港首索道下。</li>
+      <li>门票约 ¥190，索道往返约 ¥125，现查。</li>
+      <li>默认 07:40 排队。走不动就改港首轻徒步，10:00 上、13:00 下。</li>
+    </ul>
     <div class="shots">
       <figure>
         <img src="img/sq-goddess.jpg" alt="东方女神" />
@@ -244,8 +276,6 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
         <figcaption><b>索道</b>图源 Wikimedia Commons · Zhangzhugang / CC BY-SA 3.0</figcaption>
       </figure>
     </div>
-    <p>卖点在南清园。金沙索道上，港首索道下，下山不跟金沙的人挤。门票约 ¥190，金沙索道往返约 ¥125，现查前参考。东方女神、巨蟒出山看完，上午走阳光海岸，下午三清宫，再下山。西海岸大约 4 公里栈道，大部分平。一线天 299 级，有腿再下。同伴默认 <b>07:40</b> 到索道口排队。国庆首班大约 07:30，早一波能少排 1–2 小时。住脚下是为了赶上这班，不是为了睡到 10 点。</p>
-    <p>体力备选：不想走 5–6 小时，改「港首轻徒步」。三清宫、郁松林、猴王观宝，缓坡栈道，大约 3 小时。<b>10:00 上，13:00 下</b>，下午转望仙谷更从容。</p>
     <section class="guide" aria-label="三清山景点解说">
       <div class="guide-head">
         <h4>景点解说</h4>
@@ -254,47 +284,47 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
       <ol class="guide-list">
         <li class="seg" id="sq-01">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">金沙上、港首下</span></summary>
-            <p class="seg-script">三清这天住在金沙索道脚下，是为了赶上早班，不是为了睡到十点。同伴默认七点四十到索道口排队。国庆首班大约七点半，早到一波，能少排一到两小时。上山走金沙，下山走港首，免得跟上山的人挤同一条路。门票大约一百九十元，金沙索道往返大约一百二十五元，都是现查前参考，买之前再对一遍。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">山名从三清来</span></summary>
+            <p class="seg-script">三清山在上饶玉山。玉京、玉虚、玉华三峰并立，后人比作道教里的玉清、上清、太清，山名由此来。地方志记南宋乾道六年（1170）王霖建三清观，明代景泰年间重修为三清宫。葛洪或葛玄在此炼丹，两说都有，属于开山传说。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="金沙上、港首下" aria-pressed="false" aria-label="播放：金沙上、港首下" aria-controls="sq-01-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="山名从三清来" aria-pressed="false" aria-label="播放：山名从三清来" aria-controls="sq-01-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="sq-01-audio" preload="none" src="audio/sq-01.mp3"></audio>
         </li>
         <li class="seg" id="sq-02">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">南清园先看完</span></summary>
-            <p class="seg-script">卖点在南清园。上山先看巨蟒出山和东方女神，玉女开怀在同一片栈道上，别只停一个机位。巨蟒是一根竖着的花岗岩石柱，女神在侧面，远看像一张侧脸。这段以栈道为主，大约两小时。风大就抓栏杆，别倒退着拍照。这两处看完，上午的硬菜就算齐了。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">花岗岩峰林怎么来的</span></summary>
+            <p class="seg-script">山体主岩是白垩纪花岗岩，大约一亿两千万年前岩浆侵入，后来被抬出地面。岩体里有近于直立的节理，水沿缝往下切，软的先掉，硬的留成石柱和峰林。南清园那片不是人工堆的，是风化剥蚀剩下的。主峰玉京峰海拔一千八百一十七米。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="南清园先看完" aria-pressed="false" aria-label="播放：南清园先看完" aria-controls="sq-02-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="花岗岩峰林怎么来的" aria-pressed="false" aria-label="播放：花岗岩峰林怎么来的" aria-controls="sq-02-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="sq-02-audio" preload="none" src="audio/sq-02.mp3"></audio>
         </li>
         <li class="seg" id="sq-03">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">一天怎么走</span></summary>
-            <p class="seg-script">南清园之后走阳光海岸，海拔大约一千六百米，云海看运气。中午在山上简餐，日上餐厅、梯云岭食堂能填肚子，想省时间就自带干粮。下午到三清宫，三点左右从港首索道下山取车，再开望仙谷。西海岸大约四公里，栈道大部分平。一线天两百九十九级，腿还行再下。不想走五到六小时，改港首轻徒步：十点上、一点下，三清宫、郁松林、猴王观宝，缓坡大约三小时。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">巨蟒和女神是风化</span></summary>
+            <p class="seg-script">巨蟒出山是一根顺着节理留下的花岗岩石柱，远看像蛇抬头，名字是后人起的。东方女神是侧面一块像人脸的岩石，同样是风化造型，不是雕刻。世界遗产的记录也把它们算作石柱。山上没有真蟒，也没有一尊神。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="一天怎么走" aria-pressed="false" aria-label="播放：一天怎么走" aria-controls="sq-03-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="巨蟒和女神是风化" aria-pressed="false" aria-label="播放：巨蟒和女神是风化" aria-controls="sq-03-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="sq-03-audio" preload="none" src="audio/sq-03.mp3"></audio>
         </li>
         <li class="seg" id="sq-04">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">别耗在索道上</span></summary>
-            <p class="seg-script">风大的时候索道会减速，甚至停运。停了就下山，别在山上耗到末班。雨衣比伞好用，栈道一湿就滑，穿防滑鞋。国庆别信随到随上。体力不够就走轻徒步，别硬把西海岸和一线天叠在同一天。下山晚了，望仙谷夜游也会被挤短。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">南清园与三清宫</span></summary>
+            <p class="seg-script">南清园是石柱最密的一片，巨蟒、女神都在附近，石峰的名字多半按形状附会。道教宫观集中在三清宫一带，跟南清园的自然造型不是一回事。看石头，在南清园；看香火和明代的宫，得到三清宫。两边可以同一天走。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="别耗在索道上" aria-pressed="false" aria-label="播放：别耗在索道上" aria-controls="sq-04-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="南清园与三清宫" aria-pressed="false" aria-label="播放：南清园与三清宫" aria-controls="sq-04-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="sq-04-audio" preload="none" src="audio/sq-04.mp3"></audio>
         </li>
         <li class="seg" id="sq-05">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">拍这几张就够</span></summary>
-            <p class="seg-script">东方女神的侧脸、巨蟒出山的石柱、南清园的松和花岗岩、西海岸的峰林，这几张够用。云来了就拍层次，别死等完美云海。栈道可以入镜，人站在栏杆内侧。索道车厢里往下看，是金沙方向的山，别只拍自己的鞋。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">世界遗产和后来的栈道</span></summary>
+            <p class="seg-script">2008年，三清山因花岗岩峰林和生物多样性列入世界自然遗产，评的是山，不是庙。1988年它已是国家级风景名胜区。现在的索道和西海岸栈道，是近几十年为旅游修的。古代上山靠石阶。路是新的，山老得多。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="拍这几张就够" aria-pressed="false" aria-label="播放：拍这几张就够" aria-controls="sq-05-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="世界遗产和后来的栈道" aria-pressed="false" aria-label="播放：世界遗产和后来的栈道" aria-controls="sq-05-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="sq-05-audio" preload="none" src="audio/sq-05.mp3"></audio>
         </li>
       </ol>
@@ -304,33 +334,37 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
 
   <div class="spot">
     <h3>望仙谷 · 夜游一晚 + 第二天白天</h3>
+    <ul class="facts">
+      <li>住景区内街区 1 晚，约 ¥500 估，现查。悬崖民宿不住。</li>
+      <li>票约 ¥140。D2 傍晚夜游，D3 上午看峡谷。</li>
+      <li>三清过来约 50km / 1h。</li>
+    </ul>
     <div class="shots">
       <figure>
         <img src="img/wxg-01.jpg" alt="望仙谷峡谷和沿河建筑" />
-        <figcaption><b>白天峡谷</b>File: Wangxiangu Scenic Area - 01。图源 Wikimedia Commons · 茅野ふたば / CC BY-SA 4.0</figcaption>
+        <figcaption><b>白天峡谷</b>图源 Wikimedia Commons · 茅野ふたば / CC BY-SA 4.0</figcaption>
       </figure>
       <figure>
         <img src="img/wxg-02.jpg" alt="望仙谷瀑布" />
-        <figcaption><b>瀑布</b>上午。File: Wangxiangu Scenic Area - 02。图源 Wikimedia Commons · 茅野ふたば / CC BY-SA 4.0</figcaption>
+        <figcaption><b>瀑布</b>图源 Wikimedia Commons · 茅野ふたば / CC BY-SA 4.0</figcaption>
       </figure>
       <figure>
         <img src="img/wxg-03.jpg" alt="望仙谷崖壁上的建筑" />
-        <figcaption><b>崖壁房子</b>白鹤崖一带。File: Wangxiangu Scenic Area - 03。图源 Wikimedia Commons · 茅野ふたば / CC BY-SA 4.0</figcaption>
+        <figcaption><b>崖壁房子</b>图源 Wikimedia Commons · 茅野ふたば / CC BY-SA 4.0</figcaption>
       </figure>
       <figure>
         <img src="img/wxg-22.jpg" alt="望仙谷傍晚灯笼街" />
-        <figcaption><b>街区灯笼</b>19:10 左右，天还没全黑。File: Wangxiangu Scenic Area - 22。图源 Wikimedia Commons · 茅野ふたば / CC BY-SA 4.0</figcaption>
+        <figcaption><b>街区灯笼</b>图源 Wikimedia Commons · 茅野ふたば / CC BY-SA 4.0</figcaption>
       </figure>
       <figure>
         <img src="img/wxg-28.jpg" alt="望仙谷瀑布彩色灯光" />
-        <figcaption><b>瀑布亮灯</b>夜游看的就是这个。File: Wangxiangu Scenic Area - 28。图源 Wikimedia Commons · 茅野ふたば / CC BY-SA 4.0</figcaption>
+        <figcaption><b>瀑布亮灯</b>图源 Wikimedia Commons · 茅野ふたば / CC BY-SA 4.0</figcaption>
       </figure>
       <figure>
         <img src="img/wxg-40.jpg" alt="望仙谷崖壁入夜灯光" />
-        <figcaption><b>崖壁入夜</b>File: Wangxiangu Scenic Area - 40。图源 Wikimedia Commons · 茅野ふたば / CC BY-SA 4.0</figcaption>
+        <figcaption><b>崖壁入夜</b>图源 Wikimedia Commons · 茅野ふたば / CC BY-SA 4.0</figcaption>
       </figure>
     </div>
-    <p>夜游是主菜，白天峡谷是另一套。票约 ¥140，大约 9:30 开到 23:00，现查前参考。D2 三清下来开车约 50km / 1h，住景区内街区民宿（仙宿一类，同伴按约 ¥500/晚估）。白鹤崖悬崖民宿官方大约 ¥5000–6800/晚，两间过万，不住。住街区才能多次进出，夜游不用再赶夜路。D3 上午慢慢逛峡谷、瀑布、玻璃栈道、白鹤崖，中午再走。</p>
     <section class="guide" aria-label="望仙谷景点解说">
       <div class="guide-head">
         <h4>景点解说</h4>
@@ -339,47 +373,47 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
       <ol class="guide-list">
         <li class="seg" id="wxg-01">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">夜游加白天</span></summary>
-            <p class="seg-script">望仙谷留着，不拿浮梁史子园茶山换。夜游是主菜，白天的峡谷是另一套。票大约一百四十元，大约九点半开到晚上十一点，现查前参考。三清下来开车大约五十公里、一小时，傍晚住进景区。晚上看灯，第二天上午再逛山，中午才走。葛仙村也是灯光夜景，这趟只留这一处。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">谷名是乡里传说</span></summary>
+            <p class="seg-script">望仙谷在上饶广信，灵山北麓。乡名「望仙」有一套本地传说：三国隐士胡昭在山里修炼，家人筑台远望，后来叫望仙台。正史里的胡昭隐居在河南，没有南下江西的记载。这故事当乡里传说听，谷名是跟着乡名走的。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="夜游加白天" aria-pressed="false" aria-label="播放：夜游加白天" aria-controls="wxg-01-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="谷名是乡里传说" aria-pressed="false" aria-label="播放：谷名是乡里传说" aria-controls="wxg-01-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="wxg-01-audio" preload="none" src="audio/wxg-01.mp3"></audio>
         </li>
         <li class="seg" id="wxg-02">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">晚上看灯</span></summary>
-            <p class="seg-script">晚上大约七点半进。看瀑布上的彩色灯、崖壁上的房子、街区的灯笼，不是深夜一场大演出。页上的夜景图拍于二零二五年七月十九日傍晚，灯刚亮，别拿那个亮度要求国庆夜场。园区开到大约十一点。人住在景区里，看完不用再开夜路。玻璃栈道留给明天白天。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">花岗岩峡谷怎么切出来</span></summary>
+            <p class="seg-script">这是一条花岗岩峡谷。溪水长期下切，切出陡壁、瀑布和河床上的壶穴。白鹤崖是一面一百多米高的石壁。白鹤衔果救村民，是洪水传说，没有史料。山石曾被采去作板材，2007年停采，峡谷才慢慢恢复。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="晚上看灯" aria-pressed="false" aria-label="播放：晚上看灯" aria-controls="wxg-02-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="花岗岩峡谷怎么切出来" aria-pressed="false" aria-label="播放：花岗岩峡谷怎么切出来" aria-controls="wxg-02-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="wxg-02-audio" preload="none" src="audio/wxg-02.mp3"></audio>
         </li>
         <li class="seg" id="wxg-03">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">第二天上午是山</span></summary>
-            <p class="seg-script">第二天九点半再进。峡谷、瀑布、悬崖上的民宿群、玻璃栈道、白鹤崖，昨晚是灯，今早是山。不赶，十二点退房吃饭。怕高的人玻璃栈道绕开。白天的瀑布没有彩灯，水本身够看。白鹤崖的房子适合拍照，不适合按那个价住进去。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">崖上的房子是新盖的</span></summary>
+            <p class="seg-script">崖上那些房子，是停采以后仿赣东北民居新盖的，不是古代崖居。老村里有少量旧屋被修回来，更多是仿建。景区2020年10月开园。胡氏宗祠、杨府这类，是用本地名人做的新布景，别看成明清原物。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="第二天上午是山" aria-pressed="false" aria-label="播放：第二天上午是山" aria-controls="wxg-03-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="崖上的房子是新盖的" aria-pressed="false" aria-label="播放：崖上的房子是新盖的" aria-controls="wxg-03-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="wxg-03-audio" preload="none" src="audio/wxg-03.mp3"></audio>
         </li>
         <li class="seg" id="wxg-04">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">住街区，不住悬崖</span></summary>
-            <p class="seg-script">住景区内的街区民宿，仙宿一类。同伴按大约五百元一晚估，国庆价现查。住在街区才能多次进出，夜游完不用再赶夜路。白鹤崖悬崖民宿官方大约五千到六千八百元一晚，开两间就过万，不住。别被崖壁上的照片说服下单。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">瀑布、岩壁和水</span></summary>
+            <p class="seg-script">瀑布是溪水从花岗岩陡坎上跌下来的，白天看水和石壁就够。岩壁上的垂直节理，把山切成一块块峭壁，房子才挂得上去。三叠水和壶穴都是流水冲出来的，不是人工水景。彩灯是后来加的。水大才有气势，旱季会细。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="住街区，不住悬崖" aria-pressed="false" aria-label="播放：住街区，不住悬崖" aria-controls="wxg-04-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="瀑布、岩壁和水" aria-pressed="false" aria-label="播放：瀑布、岩壁和水" aria-controls="wxg-04-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="wxg-04-audio" preload="none" src="audio/wxg-04.mp3"></audio>
         </li>
         <li class="seg" id="wxg-05">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">白天和傍晚各一张</span></summary>
-            <p class="seg-script">白天拍峡谷、沿河的房子、瀑布和白鹤崖。傍晚灯笼街天还没全黑时最好拍，全黑以后多半是光斑。瀑布亮灯是夜游那一张，人站在水的侧面，别开闪光灯。页上白天和入夜的照片都是同一位作者七月拍的公版，构图可以参考，光线别照抄。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">夜游灯是现代演出</span></summary>
+            <p class="seg-script">晚上的彩灯、灯笼和崖壁亮化，是景区开园以后做的现代演出，不是古时的祭祀或庙会。灯一关，谷还是那条花岗岩峡谷。把它当成当代的夜景演绎即可，别写成这里自古就夜夜放灯。瀑布上的颜色也是灯打的。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="白天和傍晚各一张" aria-pressed="false" aria-label="播放：白天和傍晚各一张" aria-controls="wxg-05-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="夜游灯是现代演出" aria-pressed="false" aria-label="播放：夜游灯是现代演出" aria-controls="wxg-05-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="wxg-05-audio" preload="none" src="audio/wxg-05.mp3"></audio>
         </li>
       </ol>
@@ -389,6 +423,11 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
 
   <div class="spot">
     <h3>篁岭 · 山上 1 晚</h3>
+    <ul class="facts">
+      <li>山上住 1 晚。票加双程索道约 ¥145，现查。</li>
+      <li>D3 傍晚到，D4 早起看晨雾，再去景德镇。</li>
+      <li>十月晒秋，叶子刚起头。</li>
+    </ul>
     <div class="shots">
       <figure>
         <img src="img/hl-trays.jpg" alt="篁岭晒秋竹匾" />
@@ -431,7 +470,6 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
         <figcaption><b>梯田方向</b>图源 Wikimedia Commons · 沈澄心 / CC0</figcaption>
       </figure>
     </div>
-    <p>十月看晒秋。屋顶辣椒、玉米，也有菊花。票+双程索道约 ¥145。只住山上 1 晚：D3 下午到，傍晚天街、晒工坊、垒心桥；D4 早起拍晨雾，下午去景德镇。天街偏商业，台阶多。10 月初秋色刚起头，不是满山红。篁岭不在婺源通票里，别买通票。</p>
     <section class="guide" aria-label="篁岭景点解说">
       <div class="guide-head">
         <h4>景点解说</h4>
@@ -440,47 +478,47 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
       <ol class="guide-list">
         <li class="seg" id="hl-01">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">只住山上一晚</span></summary>
-            <p class="seg-script">十月来篁岭，看的是晒秋。只住山上一个晚上：第三天下午到，傍晚走天街、晒工坊、垒心桥；第四天早起拍晨雾，下午去景德镇。票加往返索道大约一百四十五元，现查前参考。篁岭不在婺源通票里，通票别买。从望仙谷过来大约一百五十公里、两个半小时，是这趟最长的一段路。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">县志里的篁岭</span></summary>
+            <p class="seg-script">篁岭在婺源东北的山坡上。清道光《婺源县志》说此地古名篁里，多竹，所以叫篁岭，曹氏世居。房子是白墙黛瓦的徽派民居，从水口往上呈扇形叠在坡上。现存多为明清砖木老屋。它是山里的村子，不是河边的商埠。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="只住山上一晚" aria-pressed="false" aria-label="播放：只住山上一晚" aria-controls="hl-01-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="县志里的篁岭" aria-pressed="false" aria-label="播放：县志里的篁岭" aria-controls="hl-01-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="hl-01-audio" preload="none" src="audio/hl-01.mp3"></audio>
         </li>
         <li class="seg" id="hl-02">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">晒秋不是满山红</span></summary>
-            <p class="seg-script">屋顶上晒辣椒和玉米，竹匾铺开，也有菊花。十月初秋色刚起头，不是满山红，别按宣传片里的红叶来。村子是徽派房子叠在坡上，从高处看下来，比钻进巷子更像那张经典图。梯田方向这个月是稻田，不是油菜花。江岭不用去。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">晒秋本来是农活</span></summary>
+            <p class="seg-script">坡陡，平地少，辣椒、玉米、皇菊摊不开，就用竹匾放在屋顶晒架上，这叫晒秋，本来是农活。近些年景区会把匾摆整齐，方便拍照，所以你看到的有传统，也有布置。十月正值晒季，叶子未必已经全红。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="晒秋不是满山红" aria-pressed="false" aria-label="播放：晒秋不是满山红" aria-controls="hl-02-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="晒秋本来是农活" aria-pressed="false" aria-label="播放：晒秋本来是农活" aria-controls="hl-02-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="hl-02-audio" preload="none" src="audio/hl-02.mp3"></audio>
         </li>
         <li class="seg" id="hl-03">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">傍晚走，早晨拍</span></summary>
-            <p class="seg-script">索道上山。傍晚五点到七点光线好，天街、晒工坊、垒心桥走一圈就够。天街偏商业，台阶多，梯田不用走完。第二天七点起，五桂堂推窗、摄影吧露台、晒秋观景台、垒心桥的玻璃栈道、晒工坊，这才是住山上的理由。一点前下山取车，国庆索道下山会排队。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">村名和曹氏迁徙</span></summary>
+            <p class="seg-script">「篁」就是竹，村名跟竹林有关，这是县志的解释。建村时间，族谱多记在明宣德年间，说曹氏从徽州歙县一带迁来。更早还有唐末避乱、先到歙县的说法。这些是谱牒，不是正史定论，当家族迁徙传说听。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="傍晚走，早晨拍" aria-pressed="false" aria-label="播放：傍晚走，早晨拍" aria-controls="hl-03-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="村名和曹氏迁徙" aria-pressed="false" aria-label="播放：村名和曹氏迁徙" aria-controls="hl-03-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="hl-03-audio" preload="none" src="audio/hl-03.mp3"></audio>
         </li>
         <li class="seg" id="hl-04">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">通票、台阶、吃饭</span></summary>
-            <p class="seg-script">李坑、江湾、汪口跟篁岭重复，不去。天街吃饭将就：荷包红鲤、糊豆腐、粉蒸菜、篁岭汽糕能点，也有预制菜、先付后吃的差评，不当美食。台阶多，带老人小孩别贪全村。十月叶子刚转，失望多半是还没红，不是走错了路。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">房子为什么叠在坡上</span></summary>
+            <p class="seg-script">房子贴着山坡建，前低后高，屋顶连成梯。晒架是为了在陡地上腾出一块平面，不是装饰。巷子窄、台阶多，是地形逼出来的。水口林在村子下方，是徽州村子常见的入口。从对面看整片屋顶，比钻进巷子更像它的格局。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="通票、台阶、吃饭" aria-pressed="false" aria-label="播放：通票、台阶、吃饭" aria-controls="hl-04-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="房子为什么叠在坡上" aria-pressed="false" aria-label="播放：房子为什么叠在坡上" aria-controls="hl-04-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="hl-04-audio" preload="none" src="audio/hl-04.mp3"></audio>
         </li>
         <li class="seg" id="hl-05">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">四张图就够</span></summary>
-            <p class="seg-script">屋顶竹匾、辣椒和玉米的近景、村子俯瞰、晨雾里的晒秋，四张够发。晨雾靠住在山上，不住就别指望早上七点的雾。垒心桥往下拍匾，人让开栏杆。巷子和屋脊当配角。早晨别耗在天街的店招前面，晒秋观景台更干净。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">跟河谷村子不一样</span></summary>
+            <p class="seg-script">李坑、汪口、江湾多在河谷，出名的是水巷、宗祠和徽商宅子。篁岭在山上，出名的是屋顶晒秋和坡地梯田。都在徽州文化圈里，过日子的场景不一样。十月这里是秋收，不是三四月的油菜花。别拿河边古村的标准来套它。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="四张图就够" aria-pressed="false" aria-label="播放：四张图就够" aria-controls="hl-05-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="跟河谷村子不一样" aria-pressed="false" aria-label="播放：跟河谷村子不一样" aria-controls="hl-05-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="hl-05-audio" preload="none" src="audio/hl-05.mp3"></audio>
         </li>
       </ol>
@@ -490,6 +528,11 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
 
   <div class="spot">
     <h3>景德镇 · 连住 2 晚</h3>
+    <ul class="facts">
+      <li>陶溪川附近连住 2 晚，行李放下。</li>
+      <li>D5：三宝、陶瓷博物馆（免费，要预约）、御窑。票价现查。</li>
+      <li>瑶里不进。县衙有余力再看。</li>
+    </ul>
     <div class="shots">
       <figure>
         <img src="img/kiln-alley.jpg" alt="窑厂巷子" />
@@ -509,14 +552,13 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
       </figure>
       <figure>
         <img src="img/ym-front.jpg" alt="浮梁古县衙" />
-        <figcaption><b>古县衙 · 加项</b>不当这天主菜。图源 Wikimedia Commons · Yumeto / CC BY-SA 4.0</figcaption>
+        <figcaption><b>古县衙</b>图源 Wikimedia Commons · Yumeto / CC BY-SA 4.0</figcaption>
       </figure>
       <figure>
         <img src="img/ym-hall.jpg" alt="县衙大堂" />
-        <figcaption><b>大堂 · 加项</b>图源 Wikimedia Commons · Zhangzhugang / CC BY-SA 3.0</figcaption>
+        <figcaption><b>大堂</b>图源 Wikimedia Commons · Zhangzhugang / CC BY-SA 3.0</figcaption>
       </figure>
     </div>
-    <p>陶溪川附近连住两晚，行李放着。D4 晚上看陶溪川夜景。D5 整天不搬家：三宝国际陶艺村（东郊大约 30 分钟）、中国陶瓷博物馆（免费，要预约）、御窑厂遗址和御窑博物馆。有余力再加古窑民俗博览区，或浮梁古县衙看一眼。史子园茶山不排。瑶里单程 1.5 小时，这天不换。陶瓷馆和御窑本页没有公版现场图，上面窑厂是氛围，县衙是加项。</p>
     <section class="guide" aria-label="景德镇景点解说">
       <div class="guide-head">
         <h4>景点解说</h4>
@@ -525,56 +567,56 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
       <ol class="guide-list">
         <li class="seg" id="jd-01">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">连住两晚</span></summary>
-            <p class="seg-script">景德镇住陶溪川附近，连住两晚，行李一次放好。第四天傍晚到，晚上看夜景；第五天整天不搬家，也不退房。瑶里单程大约一个半小时，这天不换。史子园茶山不排。觉得安排太空，就睡觉、逛街，别临时再加一座古镇。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">镇名从景德年来</span></summary>
+            <p class="seg-script">景德镇旧称昌南。北宋景德年间，宫廷用瓷底部署「景德年制」，镇名由此来，年份是公元1004到1007年。它能成瓷都，是因为附近有瓷石、高岭土、松柴和水。外销瓷后来大量从这里出去。镇名是年号，不是窑神赐的。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="连住两晚" aria-pressed="false" aria-label="播放：连住两晚" aria-controls="jd-01-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="镇名从景德年来" aria-pressed="false" aria-label="播放：镇名从景德年来" aria-controls="jd-01-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="jd-01-audio" preload="none" src="audio/jd-01.mp3"></audio>
         </li>
         <li class="seg" id="jd-02">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">三宝陶艺村</span></summary>
-            <p class="seg-script">第五天上午去三宝国际陶艺村。在东郊，开车大约三十分钟，山谷里一间间工作室，看拉坯、看院子，大约一个半小时，不是逛商场。门口有人推销所谓大师瓷，标价和出处对不上就走。本页没有三宝的现场公版图，尺度跟页上的窑厂巷子接近，别把氛围图当成村口实拍。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">高岭土和制瓷</span></summary>
+            <p class="seg-script">高岭土因浮梁高岭村得名，是花岗岩风化后的黏土。欧洲语言里这类白土的名字，就是从「高岭」音译过去的。制瓷用瓷石配高岭土，拉坯、上釉、进窑。温度和气氛一变，釉色就不同。博物馆按朝代排的，是这条工艺史。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="三宝陶艺村" aria-pressed="false" aria-label="播放：三宝陶艺村" aria-controls="jd-02-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="高岭土和制瓷" aria-pressed="false" aria-label="播放：高岭土和制瓷" aria-controls="jd-02-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="jd-02-audio" preload="none" src="audio/jd-02.mp3"></audio>
         </li>
         <li class="seg" id="jd-03">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">陶瓷博物馆</span></summary>
-            <p class="seg-script">中午回市区，去中国陶瓷博物馆。免费，必须提前预约，馆内大约两小时。按朝代看瓷，别指望每件都能拍照，现场规定现查。这是当天的主菜之一，跟买一只杯子不是一回事。本页没有展厅公版图。页上的窑是氛围，不是博物馆里面。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">御窑和砸碎的次品</span></summary>
+            <p class="seg-script">元代至元十五年（1278）在珠山设浮梁瓷局，给宫廷造瓷。明洪武二年（1369）改成御器厂，清代叫御窑厂，一直办到清末。贡品进宫，砸碎的次品就地埋掉，这是考古挖出来的，不是传说。御窑博物馆看的就是这些窑和残片。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="陶瓷博物馆" aria-pressed="false" aria-label="播放：陶瓷博物馆" aria-controls="jd-03-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="御窑和砸碎的次品" aria-pressed="false" aria-label="播放：御窑和砸碎的次品" aria-controls="jd-03-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="jd-03-audio" preload="none" src="audio/jd-03.mp3"></audio>
         </li>
         <li class="seg" id="jd-04">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">御窑遗址</span></summary>
-            <p class="seg-script">下午去御窑厂国家考古遗址公园，连着御窑博物馆，大约两小时。看的是官窑挖出来的窑和残片，不是一条买杯子的街。跟陶瓷博物馆安排在同一天下午，就不用再跨一次城。票价现查，别按旧攻略里的数字付钱。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">民窑和陶溪川</span></summary>
+            <p class="seg-script">御窑之外，民窑烧日用瓷和外销瓷，数量大得多。二十世纪，市区建成一批国营瓷厂，宇宙瓷厂是其中一座。厂停以后，锯齿厂房和烟囱留着，改成陶溪川。那是近代工业遗产，不是明清的窑。夜景归夜景，别把它当成御窑。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="御窑遗址" aria-pressed="false" aria-label="播放：御窑遗址" aria-controls="jd-04-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="民窑和陶溪川" aria-pressed="false" aria-label="播放：民窑和陶溪川" aria-controls="jd-04-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="jd-04-audio" preload="none" src="audio/jd-04.mp3"></audio>
         </li>
         <li class="seg" id="jd-05">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">陶溪川夜景</span></summary>
-            <p class="seg-script">第四天晚上大约七点半看陶溪川。老瓷厂、红砖烟囱，夜景够用，不用排成第二个博物馆。婺女洲打铁花在婺源县城，人已经住在景德镇，当晚去不成。第二天若还有力气，可以再回来坐一会。冷粉、饺子粑、碱水粑这些在市区解决，别把窑厂门口当正餐。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">三宝是当代陶艺村</span></summary>
+            <p class="seg-script">三宝村原来就有做瓷的作坊。1995年，陶艺家李见深在这里办三宝陶艺研修院，各地做陶的人把工作室设进来，慢慢变成三宝国际陶艺村。看的是还在用的拉坯和窑。跟御窑的区别：一个是当代创作的村子，一个是明清宫廷窑址。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="陶溪川夜景" aria-pressed="false" aria-label="播放：陶溪川夜景" aria-controls="jd-05-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="三宝是当代陶艺村" aria-pressed="false" aria-label="播放：三宝是当代陶艺村" aria-controls="jd-05-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="jd-05-audio" preload="none" src="audio/jd-05.mp3"></audio>
         </li>
         <li class="seg" id="jd-06">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">加项和别买的</span></summary>
-            <p class="seg-script">有余力再加古窑民俗博览区，票大约九十五元，现查前参考；或者去浮梁古县衙看一眼。县衙不当这天的主菜，页上的县衙照片是加项。瑶里不去。门口拉你做壶、卖大师瓷的，直接走。古窑若加，就放在御窑后面。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">浮梁县和琵琶行里的茶</span></summary>
+            <p class="seg-script">历史上管景德镇一带的是浮梁县。白居易《琵琶行》里的「前月浮梁买茶去」，说的是茶市，不是买瓷。瓷业的官办机构也挂在浮梁名下，元代就叫浮梁瓷局。现在开放的县衙，是旧治所在地的衙门，用来看县治，不是一座窑。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="加项和别买的" aria-pressed="false" aria-label="播放：加项和别买的" aria-controls="jd-06-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="浮梁县和琵琶行里的茶" aria-pressed="false" aria-label="播放：浮梁县和琵琶行里的茶" aria-controls="jd-06-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="jd-06-audio" preload="none" src="audio/jd-06.mp3"></audio>
         </li>
       </ol>
@@ -583,8 +625,13 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
   </div>
 
   <div class="spot">
-    <h3>庐山 · 住牯岭 1 晚（无图，文字点位）</h3>
-    <p>国庆核心区禁自驾上山，车停换乘中心，再乘观光车或交通索道。上山前可在温泉镇停东林大佛（免费）和泡汤，泳衣自带。西线轻松：如琴湖–花径–锦绣谷–仙人洞，天黑前走完。第二天美庐 / 会议旧址 / 芦林湖 / 含鄱口，平路接驳，不强制 5:30 日出。三叠泉别碰——往返大约 3 小时台阶，国庆还限流。红叶未到季，10 月初别指望满山红。门票约 ¥160，观光车另计；交通索道往返约 ¥120，可选。现查前参考。</p>
+    <h3>庐山 · 住牯岭 1 晚（无图）</h3>
+    <ul class="facts">
+      <li>住牯岭 1 晚。国庆核心区禁自驾，车停换乘中心。</li>
+      <li>门票约 ¥160，观光车另计，现查。交通索道可选。</li>
+      <li>D6 下午走西线。D7 美庐到含鄱口，12:00 前下山。</li>
+      <li>三叠泉不排。上山前可停东林大佛，泡汤自带泳衣。</li>
+    </ul>
     <section class="guide" aria-label="庐山景点解说">
       <div class="guide-head">
         <h4>景点解说</h4>
@@ -593,47 +640,47 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
       <ol class="guide-list">
         <li class="seg" id="ls-01">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">车停山下</span></summary>
-            <p class="seg-script">国庆从十月一日到八日，庐山核心区禁自驾。车停在换乘中心，再乘观光车，或者坐交通索道。门票大约一百六十元，观光车另计。交通索道往返大约一百二十元，可坐可不坐。这些都是现查前参考。门票、观光车和车辆进山，在一机游庐山里约，提前大约三天放票，售罄即止。别赌开车冲进核心区。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">断块山，不是冰川定论</span></summary>
+            <p class="seg-script">庐山是断块山。两侧断层把山体抬起来，旁边陷下去的是鄱阳湖平原，所以山坡陡，平地会突然接上高峰。李四光曾用某些地貌论证第四纪冰川，这个说法争议很大，不能当成定论。能确定的是断层抬升，不是冰川导游词。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="车停山下" aria-pressed="false" aria-label="播放：车停山下" aria-controls="ls-01-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="断块山，不是冰川定论" aria-pressed="false" aria-label="播放：断块山，不是冰川定论" aria-controls="ls-01-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="ls-01-audio" preload="none" src="audio/ls-01.mp3"></audio>
         </li>
         <li class="seg" id="ls-02">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">下午只走西线</span></summary>
-            <p class="seg-script">第一天若下午才上山，走西线就够：如琴湖、花径、锦绣谷、仙人洞。下坡栈道，大约两小时。十月初大约六点一刻前天黑，别把这段排到晚上。这页没有庐山的公版图，点位靠文字认。锦绣谷是贴着峭壁的步道，仙人洞在西线的末端。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">不识庐山真面目</span></summary>
+            <p class="seg-script">「不识庐山真面目，只缘身在此山中」出自苏轼《题西林壁》，写在宋代，地点在西林寺一带。他写的是人在山里，被山脊和云挡住，换一个位置就看成另一座山。庐山的名气，很大一块来自这类诗文，不是来自某一块奇石。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="下午只走西线" aria-pressed="false" aria-label="播放：下午只走西线" aria-controls="ls-02-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="不识庐山真面目" aria-pressed="false" aria-label="播放：不识庐山真面目" aria-controls="ls-02-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="ls-02-audio" preload="none" src="audio/ls-02.mp3"></audio>
         </li>
         <li class="seg" id="ls-03">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">第二天不追日出</span></summary>
-            <p class="seg-script">住牯岭一个晚上。第二天不把五点半日出当成默认。美庐、庐山会议旧址、芦林湖、含鄱口，观光车接驳，下车再走一小段。对旧房子没兴趣，就改成远看五老峰，加上植物园。十二点前下山，行李随身带走，车在山下。想看日出可以五点半去含鄱口，那是加项，不是行程表上的必须。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">牯岭别墅从租地来</span></summary>
+            <p class="seg-script">清末，英国传教士李德立租下长冲一带，改名牯岭，划地卖给外国人盖避暑别墅。房子是购地人自建的，风格不统一。美庐是后来蒋介石、宋美龄住过的一栋。牯岭这些石头别墅，是这百来年的避暑史，不是古代庙宇。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="第二天不追日出" aria-pressed="false" aria-label="播放：第二天不追日出" aria-controls="ls-03-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="牯岭别墅从租地来" aria-pressed="false" aria-label="播放：牯岭别墅从租地来" aria-controls="ls-03-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="ls-03-audio" preload="none" src="audio/ls-03.mp3"></audio>
         </li>
         <li class="seg" id="ls-04">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">三叠泉别碰</span></summary>
-            <p class="seg-script">三叠泉别碰。来回大约三小时台阶，国庆还限流，一下午就没了，还车和高铁都会紧。红叶这个时候还没到季，十月初别指望满山红，要到下旬。泡完温泉别穿着湿衣服上山，下午山上大约十五度。还车若迟到，改乘晚一班，别硬挤十六点十四分的那趟。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">东林寺老，大佛新</span></summary>
+            <p class="seg-script">东林寺在庐山西北麓。东晋太元九年（384）起，江州刺史桓伊为慧远建寺，慧远在此倡念佛，后来被看成净土宗祖庭。白莲社是同期的结社说法。温泉镇那尊约四十八米的东林大佛，2012年前后才完工，是新铸铜像，不是寺里的古佛。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="三叠泉别碰" aria-pressed="false" aria-label="播放：三叠泉别碰" aria-controls="ls-04-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="东林寺老，大佛新" aria-pressed="false" aria-label="播放：东林寺老，大佛新" aria-controls="ls-04-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="ls-04-audio" preload="none" src="audio/ls-04.mp3"></audio>
         </li>
         <li class="seg" id="ls-05">
           <details>
-            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">大佛和泡汤</span></summary>
-            <p class="seg-script">进山前可以在温泉镇停东林大佛。免费，大约早上八点到下午五点。露天铜像大约四十八米，几乎不用走路，停一小时够了。泡汤是可选项：醉石大约五十五元起，汤太宗大约一百六十八元，天沐下午两点才开门，别去早了。泳衣泳帽自己带。不想停，就直接去换乘中心。价钱现查。</p>
+            <summary><span class="chev" aria-hidden="true">▸</span><span class="seg-title">花径、仙人洞、含鄱口</span></summary>
+            <p class="seg-script">花径纪念白居易。他贬到江州后，在庐山写过「人间四月芳菲尽，山寺桃花始盛开」，说的是大林寺。仙人洞是悬崖上的天然石洞，道教曾在这里活动；洞外石缝里的松，后来因一张照片被认出来。锦绣谷的名字来自花草。含鄱口对着鄱阳湖口。</p>
             <p class="seg-err" hidden>这段音频没加载出来，先看文字。</p>
           </details>
-          <button type="button" class="seg-play" data-title="大佛和泡汤" aria-pressed="false" aria-label="播放：大佛和泡汤" aria-controls="ls-05-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
+          <button type="button" class="seg-play" data-title="花径、仙人洞、含鄱口" aria-pressed="false" aria-label="播放：花径、仙人洞、含鄱口" aria-controls="ls-05-audio"><span class="seg-icon" aria-hidden="true">▶</span><span class="seg-play-label">播放</span></button>
           <audio id="ls-05-audio" preload="none" src="audio/ls-05.mp3"></audio>
         </li>
       </ol>
@@ -657,7 +704,11 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
   </div>
 
   <h2 id="train">高铁 + 租车怎么走</h2>
-  <p class="note">数字标「同伴方案测算 / 现查前参考」。高铁以 12306 现图为准，房以国庆价为准。抢票：<b>9.17 去程 / 9.23 返程</b>，以实际开售为准。</p>
+  <p>进：G1602，深圳北 09:21 → 上饶 15:59。出：G635，庐山站 16:14 → 深圳北 20:57。租车：上饶取、庐山站还，SUV 约 6 天。自驾：金沙到望仙谷约 50km，再到篁岭约 150km，景德镇约 60km，庐山约 230km。抢票大约 9.17 去程、9.23 返程。票价现查。</p>
+  <details class="fold">
+    <summary><span class="chev" aria-hidden="true">▸</span>展开时刻与明细</summary>
+    <div class="fold-body">
+  <p class="note">数字标「同伴方案测算 / 现查前参考」。高铁以 12306 现图为准，房以国庆价为准。</p>
   <table>
     <tr><th>日期</th><th>车次 / 路段</th><th>时刻 / 距离</th><th>人均或预算</th><th>备注</th></tr>
     <tr class="pick"><td>10.01</td><td>G1602 深圳北 → 上饶</td><td>09:21–15:59</td><td>约 ¥539</td><td>备选 G636，经南昌西中转，要搬行李</td></tr>
@@ -668,6 +719,8 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
     <tr><td></td><td colspan="4">12:00 前下山取车 → 庐山站还车 → 上高铁。两趟都抢，下山晚了还有一小时余量。</td></tr>
   </table>
   <p class="note">自驾骨干：金沙 → 望仙谷（约 50km / 1h）→ 篁岭（约 150km / 2.5h）→ 景德镇（约 60km / 1h，月亮湾、思溪延村顺路可选）→ 庐山方向约 230km / 3h。</p>
+    </div>
+  </details>
 
   <article class="day" id="d1">
     <header>
@@ -880,15 +933,15 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
       <div class="shots">
         <figure>
           <img src="img/kiln-yard.jpg" alt="窑厂院子" />
-          <figcaption><b>窑厂院子</b>陶瓷馆和御窑本页无现场公版图</figcaption>
+          <figcaption><b>窑厂院子</b>图源本地行程图库</figcaption>
         </figure>
         <figure>
           <img src="img/kiln.jpg" alt="窑" />
-          <figcaption><b>窑</b>氛围，不是博物馆展厅</figcaption>
+          <figcaption><b>窑</b>图源本地行程图库</figcaption>
         </figure>
         <figure>
           <img src="img/kiln-alley.jpg" alt="巷子" />
-          <figcaption><b>巷子</b>三宝村、陶溪川都是这种尺度</figcaption>
+          <figcaption><b>巷子</b>图源本地行程图库</figcaption>
         </figure>
         <figure>
           <img src="img/kiln-arch.jpg" alt="拱门" />
@@ -896,7 +949,7 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
         </figure>
         <figure>
           <img src="img/ym-front.jpg" alt="浮梁古县衙" />
-          <figcaption><b>县衙 · 可加可不加</b>图源 Wikimedia Commons · Yumeto / CC BY-SA 4.0</figcaption>
+          <figcaption><b>县衙</b>图源 Wikimedia Commons · Yumeto / CC BY-SA 4.0</figcaption>
         </figure>
         <figure>
           <img src="img/ym-court.jpg" alt="县衙院子" />
@@ -939,7 +992,7 @@ footer { color: var(--muted); font-size: 13px; margin-top: 40px; }
       </ul>
       <div class="stay"><b>住 · 牯岭 1 晚</b>山上房紧。门票 + 观光车在「一机游庐山」约，提前大约 3 天开，售罄即止。</div>
       <div class="trap"><b>避坑</b>别赌自驾冲核心区。红叶未到季。三叠泉这趟别碰。泡完别穿着湿衣服上山。</div>
-      <p class="note">庐山本页无现成公版图，点位用文字。要图去小红书搜锦绣谷、含鄱口、美庐、东林大佛。</p>
+      <p class="note">庐山这页没有配图。要图去小红书搜锦绣谷、含鄱口、美庐、东林大佛。</p>
     </div>
   </article>
 
