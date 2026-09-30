@@ -1,7 +1,8 @@
 # podcast · 旅途随声听
 
 iPhone 优先的单页播客播放器，纯静态，无构建、无依赖。内置 6 集本地演示
-（带逐句字幕）+ 5 个写死的中文访谈播客 RSS 订阅。
+（带逐句字幕）+ 20 个写死的中文播客 RSS 订阅（陪伴通勤 10 档、访谈对谈
+10 档，含忽左忽右/日谈公园/故事FM/随机波动/无人知晓等）。
 
 ## 结构
 
@@ -20,7 +21,7 @@ podcast/
 ## 功能
 
 - 左侧节目库：分类可展开收起；窄屏（iPhone）为抽屉，宽屏常驻
-- RSS 订阅（写死地址）：故事FM / 忽左忽右 / 不合时宜 / 得意忘形 / 三五环，
+- RSS 订阅（写死地址）：20 档，按「陪伴通勤 / 访谈对谈」两组展示，
   展开即拉取最新 50 集；本地演示集有逐句字幕，RSS 单集无字幕稿
 - 右侧播放器：拖拽/点按进度条（拖动时有时间气泡预览）、±15 秒、倍速
 - 实时字幕：句子随播放高亮并自动滚动，点任意一句跳播；手动滚动后暂停跟随 3 秒
@@ -33,8 +34,9 @@ podcast/
   `feeds.js` 和节目单快照 `feeds-cache.js`（每源最近 20 集）
 - 运行时拉取链路：直连 → allorigins → corsproxy.io → rss2json，
   成功后缓存 6 小时；全部失败时显示离线快照并可手动重试
-- 故事FM、三五环的 feed 自带 CORS 头，任何环境直连可用；
-  小宇宙系（忽左忽右/不合时宜/得意忘形）依赖代理是否可达
+- 故事FM、三五环、半拿铁、文化有限与全部喜马拉雅系 feed 自带 CORS 头，
+  任何环境直连可用；小宇宙系（xyzfm.space）与 fireside 系（随机波动、
+  声东击西）依赖代理是否可达
 - 音频跨域可直接播（`<audio>` 不受 CORS 限制），feed 里均为 https，
   GitHub Pages 上不会触发混合内容拦截
 
@@ -54,6 +56,9 @@ python podcast/scripts/generate_audio.py           # 生成 audio/ + data.js
 ```bash
 python podcast/scripts/fetch_feeds.py   # 抓取并重写 feeds.js + feeds-cache.js
 ```
+
+订阅列表改 `FEEDS`（id/title/rss/note/group），group 取 `commute`（陪伴
+通勤）或 `talk`（访谈对谈）。
 
 ## 本地预览
 

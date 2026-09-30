@@ -194,6 +194,21 @@
   .artwork[data-cat="bhsy"] { background: linear-gradient(145deg, #0A84FF, #30B0C7); }
   .artwork[data-cat="dywx"] { background: linear-gradient(145deg, #64D2FF, #5E5CE6); }
   .artwork[data-cat="swh"] { background: linear-gradient(145deg, #30D158, #007AFF); }
+  .artwork[data-cat="blt"] { background: linear-gradient(145deg, #FF9F0A, #FF453A); }
+  .artwork[data-cat="rtgy"] { background: linear-gradient(145deg, #FF6482, #BF5AF2); }
+  .artwork[data-cat="zxh"] { background: linear-gradient(145deg, #FFD60A, #FF9F0A); }
+  .artwork[data-cat="whyx"] { background: linear-gradient(145deg, #34C759, #30B0C7); }
+  .artwork[data-cat="dqxd"] { background: linear-gradient(145deg, #8E8E93, #5E5CE6); }
+  .artwork[data-cat="btts"] { background: linear-gradient(145deg, #FF375F, #BF5AF2); }
+  .artwork[data-cat="zkjj"] { background: linear-gradient(145deg, #32ADE6, #5E5CE6); }
+  .artwork[data-cat="sjbd"] { background: linear-gradient(145deg, #0A84FF, #64D2FF); }
+  .artwork[data-cat="wrxz"] { background: linear-gradient(145deg, #A2845E, #FF9F0A); }
+  .artwork[data-cat="syf"] { background: linear-gradient(145deg, #FF375F, #FF9F0A); }
+  .artwork[data-cat="sdjx"] { background: linear-gradient(145deg, #3A3A3C, #0A84FF); }
+  .artwork[data-cat="dygcj"] { background: linear-gradient(145deg, #30D158, #FFD60A); }
+  .artwork[data-cat="bwl"] { background: linear-gradient(145deg, #64D2FF, #34C759); }
+  .artwork[data-cat="qjkt"] { background: linear-gradient(145deg, #BF5AF2, #FF6482); }
+  .artwork[data-cat="zxjy"] { background: linear-gradient(145deg, #FF453A, #FF9F0A); }
   .meta { min-width: 0; }
   .cat-label { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: .5px; }
   .meta h1 { font-size: 20px; line-height: 1.25; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
@@ -436,8 +451,11 @@
   });
 
   var FEED_META = {
-    gsfm: { icon: "📻" }, hzyy: { icon: "🎙️" }, bhsy: { icon: "🌍" },
-    dywx: { icon: "☕" }, swh: { icon: "💬" }
+    gsfm: { icon: "📻" }, hzyy: { icon: "🎙️" }, bhsy: { icon: "🌍" }, dywx: { icon: "☕" },
+    swh: { icon: "💬" }, blt: { icon: "🥐" }, rtgy: { icon: "🌳" }, zxh: { icon: "🍶" },
+    whyx: { icon: "📚" }, dqxd: { icon: "🏛️" }, btts: { icon: "🗨️" }, zkjj: { icon: "🎬" },
+    sjbd: { icon: "🌀" }, wrxz: { icon: "🕯️" }, syf: { icon: "💞" }, sdjx: { icon: "🌐" },
+    dygcj: { icon: "🗺️" }, bwl: { icon: "💼" }, qjkt: { icon: "🏡" }, zxjy: { icon: "🎤" }
   };
   function feedTrack(feed, i, ep) {
     var m = FEED_META[feed.id] || { icon: "📡" };
@@ -525,11 +543,19 @@
     });
 
     if (feeds.length) {
-      var label = document.createElement("div");
-      label.className = "side-label";
-      label.textContent = "RSS 订阅 · 访谈";
-      els.catList.appendChild(label);
-      feeds.forEach(function (feed) { renderFeed(feed); });
+      var GROUP_LABEL = { commute: "RSS 订阅 · 陪伴通勤", talk: "RSS 订阅 · 访谈对谈" };
+      var seen = {};
+      feeds.forEach(function (feed) {
+        var g = feed.group || "talk";
+        if (!seen[g]) {
+          seen[g] = true;
+          var label = document.createElement("div");
+          label.className = "side-label";
+          label.textContent = GROUP_LABEL[g] || "RSS 订阅";
+          els.catList.appendChild(label);
+        }
+        renderFeed(feed);
+      });
     }
   }
 
