@@ -9,6 +9,10 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F2F7">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
 <title>旅途随声听 · 播客</title>
 <style>
   :root {
@@ -36,7 +40,7 @@
     }
   }
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html, body { height: 100%; overflow: hidden; }
+  html, body { height: 100%; overflow: hidden; touch-action: manipulation; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC",
                  "Helvetica Neue", "Microsoft YaHei", sans-serif;
@@ -69,6 +73,8 @@
     border-right: 1px solid var(--line);
     transform: translateX(-104%);
     transition: transform .32s cubic-bezier(.32, .72, 0, 1);
+    touch-action: pan-y;
+    -webkit-touch-callout: none;
   }
   body.drawer-open #sidebar { transform: translateX(0); box-shadow: var(--shadow); }
   #scrim {
@@ -104,7 +110,10 @@
     font-size: 16px;
     font-weight: 600;
     text-align: left;
+    transition: opacity .15s ease;
   }
+  .cat-head:active { opacity: .55; }
+  .cat-head .ficon { flex: none; font-size: 18px; }
   .cat-head .note { font-size: 12px; font-weight: 400; color: var(--fg-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .cat-head .chev {
     margin-left: auto;
@@ -126,8 +135,9 @@
     text-align: left;
     padding: 10px 10px 10px 26px;
     border-radius: 10px;
+    transition: transform .12s ease, background .15s ease;
   }
-  .ep:active { background: var(--panel-2); }
+  .ep:active { background: var(--panel-2); transform: scale(.98); }
   .ep .t {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -142,6 +152,12 @@
   .ep.current .t { color: var(--accent); font-weight: 600; }
   .ep.current .t::before { content: "▸ "; }
   .feed-status { padding: 2px 10px 8px 26px; font-size: 11px; color: var(--fg-2); }
+  .feed-status.loading::after {
+    content: "···";
+    display: inline-block;
+    animation: dots 1.2s steps(1) infinite;
+  }
+  @keyframes dots { 0% { content: ""; } 25% { content: "·"; } 50% { content: "··"; } 75% { content: "···"; } }
   .feed-status button { color: var(--accent); font-size: 11px; padding: 0 4px; }
   .side-foot { padding: 10px 18px calc(12px + var(--sab)); font-size: 11px; color: var(--fg-2); border-top: 1px solid var(--line); }
 
@@ -327,6 +343,7 @@
   }
   .side-btn:active { transform: scale(.94); }
   .play {
+    position: relative;
     width: 72px; height: 72px;
     border-radius: 50%;
     background: var(--accent);
@@ -338,8 +355,19 @@
   }
   .play:active { transform: scale(.94); }
   .play svg { width: 32px; height: 32px; }
-  .play.loading svg { animation: pulse 1s ease-in-out infinite; }
-  @keyframes pulse { 50% { opacity: .35; } }
+  .play.loading svg { visibility: hidden; }
+  .play.loading::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 30px; height: 30px;
+    border: 3px solid rgba(255, 255, 255, .35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
   .rate {
     position: absolute;
     right: 18px;
@@ -353,6 +381,26 @@
   }
   .status { text-align: center; font-size: 12px; color: #FF3B30; margin-top: 8px; }
 
+  /* 添加到主屏幕引导 */
+  #a2hs {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: calc(8px + var(--sat)) 14px 10px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    font-size: 13px;
+    animation: slide-down .35s ease;
+  }
+  #a2hs[hidden] { display: none; }
+  #a2hs button { margin-left: auto; color: var(--accent); font-weight: 600; padding: 6px 8px; flex: none; }
+  @keyframes slide-down { from { transform: translateY(-110%); } to { transform: none; } }
+  .top-logo { width: 22px; height: 22px; border-radius: 6px; flex: none; }
+
   @media (min-width: 768px) {
     #sidebar { position: static; width: 300px; transform: none; transition: none; }
     #scrim { display: none; }
@@ -365,6 +413,10 @@
 </style>
 </head>
 <body>
+<div id="a2hs" hidden>
+  <span>📲 点分享 ⬆️ →「添加到主屏幕」，全屏听播客</span>
+  <button id="a2hsClose">知道了</button>
+</div>
 <div id="app">
   <aside id="sidebar" aria-label="订阅库">
     <header class="side-head">
@@ -379,6 +431,7 @@
   <main id="main">
     <header class="topbar">
       <button class="icon-btn" id="menuBtn" aria-label="打开订阅列表" aria-expanded="false">☰</button>
+      <img class="top-logo" src="icon.png" alt="">
       <div class="top-title" id="topTitle"></div>
     </header>
 
@@ -449,7 +502,8 @@
     slider: $("slider"), fill: $("fill"), thumb: $("thumb"), bubble: $("bubble"),
     tCur: $("tCur"), tDur: $("tDur"),
     playBtn: $("playBtn"), playIcon: $("playIcon"), back15: $("back15"), fwd15: $("fwd15"),
-    rateBtn: $("rateBtn"), status: $("status")
+    rateBtn: $("rateBtn"), status: $("status"),
+    sidebar: $("sidebar"), a2hs: $("a2hs"), a2hsClose: $("a2hsClose")
   };
 
   els.showTitle.textContent = show.title;
@@ -500,8 +554,9 @@
     var head = document.createElement("button");
     head.className = "cat-head";
     head.setAttribute("aria-expanded", "false");
-    head.innerHTML = "<span></span><span class='note'></span><span class='chev'>▶</span>";
-    head.querySelector("span").textContent = feed.title;
+    head.innerHTML = "<span class='ficon'></span><span></span><span class='note'></span><span class='chev'>▶</span>";
+    head.querySelector(".ficon").textContent = (FEED_META[feed.id] || { icon: "📡" }).icon;
+    head.querySelector("span:nth-child(2)").textContent = feed.title;
     head.querySelector(".note").textContent = feed.note || "";
     head.addEventListener("click", function () {
       var open = catDiv.classList.toggle("open");
@@ -542,6 +597,52 @@
     document.body.classList.contains("drawer-open") ? closeDrawer() : openDrawer();
   });
   els.scrim.addEventListener("click", closeDrawer);
+
+  /* 抽屉手势：向左滑动关闭（自动区分横滑与纵向滚动） */
+  (function () {
+    var sb = els.sidebar, scrim = els.scrim;
+    var startX = 0, startY = 0, dx = 0, w = 1, active = false, axis = null;
+    sb.addEventListener("pointerdown", function (ev) {
+      if (!document.body.classList.contains("drawer-open")) return;
+      active = true; axis = null; dx = 0;
+      startX = ev.clientX; startY = ev.clientY;
+      w = sb.offsetWidth || 1;
+    });
+    sb.addEventListener("pointermove", function (ev) {
+      if (!active) return;
+      var mx = ev.clientX - startX, my = ev.clientY - startY;
+      if (!axis && Math.abs(mx) < 12 && Math.abs(my) < 12) return;
+      if (!axis) axis = Math.abs(mx) > Math.abs(my) ? "x" : "y";
+      if (axis !== "x") return;
+      dx = Math.min(0, mx);
+      sb.style.transition = "none";
+      sb.style.transform = "translateX(" + dx + "px)";
+      scrim.style.opacity = String(Math.max(0, 1 + dx / w));
+    });
+    function finish() {
+      if (!active) return;
+      active = false;
+      sb.style.transition = "";
+      sb.style.transform = "";
+      scrim.style.opacity = "";
+      if (axis === "x" && dx < -w / 3.5) closeDrawer();
+    }
+    sb.addEventListener("pointerup", finish);
+    sb.addEventListener("pointercancel", finish);
+  })();
+
+  /* 添加到主屏幕引导：仅浏览器内首次访问提示，桌面/PWA 模式不出现 */
+  (function () {
+    var standalone = window.navigator.standalone === true ||
+                     window.matchMedia("(display-mode: standalone)").matches;
+    var seen = null;
+    try { seen = localStorage.getItem("podcast.a2hs"); } catch (e) {}
+    if (!standalone && !seen) els.a2hs.hidden = false;
+    els.a2hsClose.addEventListener("click", function () {
+      els.a2hs.hidden = true;
+      try { localStorage.setItem("podcast.a2hs", "1"); } catch (e) {}
+    });
+  })();
 
   /* ---------- RSS 节目单：拉取 → 缓存 → 快照兜底 ---------- */
   var feedState = {};   /* id: {eps, from: 'live'|'cache'|'snap', ts, loading} */
@@ -666,7 +767,10 @@
     if (st.loading) return;
     st.loading = true;
     var status = catDiv.querySelector(".feed-status");
-    if (status) { status.textContent = "正在拉取节目单…"; }
+    if (status) {
+      status.textContent = "正在拉取节目单";
+      status.classList.add("loading");
+    }
     fetchEps(feed).then(function (eps) {
       st.eps = eps; st.from = "live"; st.ts = Date.now(); st.loading = false;
       try {
@@ -675,6 +779,7 @@
       fillFeedEpisodes(feed, catDiv);
     }).catch(function () {
       st.loading = false;
+      if (status) status.classList.remove("loading");
       if (status && (!st.eps || !st.eps.length)) {
         status.textContent = "拉取失败（网络或代理不可用）";
         var btn = document.createElement("button");
@@ -696,6 +801,7 @@
     if (!st || !st.eps) return;
     var wrap = catDiv.querySelector(".cat-body > div");
     var status = catDiv.querySelector(".feed-status");
+    if (status) status.classList.remove("loading");
     var when = st.ts ? new Date(st.ts) : null;
     var fromTxt = st.from === "live" ? "已更新" : st.from === "cache" ? "本地缓存" : "离线快照";
     if (status) status.textContent = fromTxt + (when ? " · " + String(when.getHours()).padStart(2, "0") + ":" + String(when.getMinutes()).padStart(2, "0") : "") + " · 共 " + st.eps.length + " 集";
@@ -1002,7 +1108,9 @@
 
   /* ---------- 启动 ---------- */
   renderList();
-  restore();
+  if (!restore()) {
+    openDrawer();   /* 首次进入自动展开订阅库 */
+  }
 })();
 </script>
 </body>
