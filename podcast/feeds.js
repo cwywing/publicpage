@@ -89,6 +89,20 @@ window.PODCAST_FEEDS = [
     "note": "跨文化视野的谈话类播客"
   },
   {
+    "id": "yzhs",
+    "group": "talk",
+    "title": "岩中花述",
+    "rss": "https://feed.xyzfm.space/hwen8wf69c6g",
+    "note": "鲁豫对话女性的长访谈（官方）"
+  },
+  {
+    "id": "ydj",
+    "group": "talk",
+    "title": "游荡集",
+    "rss": "https://feed.xyzfm.space/6m6qmdfmaf6d",
+    "note": "许知远的官方音频播客"
+  },
+  {
     "id": "dywx",
     "group": "talk",
     "title": "得意忘形",
