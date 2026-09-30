@@ -1,32 +1,27 @@
 # podcast · 旅途随声听
 
-iPhone 优先的单页播客播放器，纯静态，无构建、无依赖。内置 6 集本地演示
-（带逐句字幕）+ 20 个写死的中文播客 RSS 订阅（陪伴通勤 10 档、访谈对谈
-10 档，含忽左忽右/日谈公园/故事FM/随机波动/无人知晓等）。
+iPhone 优先的单页播客播放器，纯静态，无构建、无依赖。内置 20 个写死的
+中文播客 RSS 订阅（陪伴通勤 10 档、访谈对谈 10 档）。
 
 ## 结构
 
 ```
 podcast/
 ├── index.html              # 页面 + 样式 + 播放器逻辑（单文件）
-├── data.js                 # 本地演示数据：分类/单集/字幕时间轴（脚本生成）
-├── audio/*.mp3             # edge-tts 合成的演示音频（脚本生成）
-├── feeds.js                # 写死的 RSS 订阅地址（脚本生成，勿手改）
+├── feeds.js                # 台标 + 写死的 RSS 订阅地址（脚本生成，勿手改）
 ├── feeds-cache.js          # RSS 节目单离线快照（脚本生成，拉取失败时兜底）
-└── scripts/
-    ├── generate_audio.py   # 重新生成本地演示音频与 data.js
-    └── fetch_feeds.py      # 维护订阅列表 + 更新节目单快照
+└── scripts/fetch_feeds.py  # 维护订阅列表 + 更新节目单快照
 ```
 
 ## 功能
 
-- 左侧节目库：分类可展开收起；窄屏（iPhone）为抽屉，宽屏常驻
-- RSS 订阅（写死地址）：20 档，按「陪伴通勤 / 访谈对谈」两组展示，
-  展开即拉取最新 50 集；本地演示集有逐句字幕，RSS 单集无字幕稿
-- 右侧播放器：拖拽/点按进度条（拖动时有时间气泡预览）、±15 秒、倍速
-- 实时字幕：句子随播放高亮并自动滚动，点任意一句跳播；手动滚动后暂停跟随 3 秒
+- 左侧订阅库：20 档按「陪伴通勤 / 访谈对谈」两组展示，展开即拉取最新
+  50 集；窄屏（iPhone）为抽屉，宽屏常驻
+- 右侧播放器：拖拽/点按进度条（拖动时有时间气泡预览）、±15 秒、倍速、
+  播完自动切同一下一集（待按播放，iOS 不允许无手势续播）
 - iOS 适配：安全区（刘海/底部横条）、`100dvh` 动态视口、深色模式、锁屏播放控制（Media Session）
-- 记忆播放位置：刷新后恢复上一集与进度（localStorage）
+- 记忆播放位置：刷新后从本地缓存/快照恢复上次的单集与进度（localStorage）
+- RSS 单集暂无字幕稿（feed 不提供转录文本），字幕区显示占位说明
 
 ## RSS 说明（静态页的边界）
 
@@ -40,25 +35,14 @@ podcast/
 - 音频跨域可直接播（`<audio>` 不受 CORS 限制），feed 里均为 https，
   GitHub Pages 上不会触发混合内容拦截
 
-## 重新生成本地演示内容
-
-```bash
-pip install edge-tts
-python podcast/scripts/generate_audio.py --check   # 只校验文案
-python podcast/scripts/generate_audio.py           # 生成 audio/ + data.js
-```
-
-改节目内容直接编辑 `scripts/generate_audio.py` 里的 `CATEGORIES`（每集一句
-连续的稿子，按 `。！？；…` 切句成字幕），再跑上面的命令。
-
-## 更新 RSS 快照 / 改订阅
+## 更新快照 / 改订阅
 
 ```bash
 python podcast/scripts/fetch_feeds.py   # 抓取并重写 feeds.js + feeds-cache.js
 ```
 
 订阅列表改 `FEEDS`（id/title/rss/note/group），group 取 `commute`（陪伴
-通勤）或 `talk`（访谈对谈）。
+通勤）或 `talk`（访谈对谈）；台标在 `SHOW`。
 
 ## 本地预览
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""生成 RSS 订阅数据：feeds.js（写死的订阅地址）+ feeds-cache.js（节目单快照）。
+"""生成 RSS 订阅数据：feeds.js（台标 + 写死的订阅地址）+ feeds-cache.js（节目单快照）。
 
 订阅列表在本文件 FEEDS 里维护（单一来源）。运行时会先尝试直连/代理拉取
 最新节目单，失败时退回本快照，保证离线也能看到列表。
@@ -66,6 +66,8 @@ FEEDS = [
     {"id": "zxjy", "group": "talk", "title": "张小珺商业访谈录", "rss": "https://feed.xyzfm.space/dk4yh3pkpjp3",
      "note": "企业家与商业人物长访谈"},
 ]
+
+SHOW = {"title": "旅途随声听", "subtitle": "中文播客 · 边走边听"}
 
 MAX_EPISODES = 20
 ITUNES_NS = "{http://www.itunes.com/dtds/podcast-1.0.dtd}"
@@ -134,7 +136,8 @@ def main() -> None:
             print(f"  {feed['title']}: 抓取失败 {exc}")
 
     (ROOT / "feeds.js").write_text(
-        "/* 由 scripts/fetch_feeds.py 生成：写死的 RSS 订阅地址。 */\n"
+        "/* 由 scripts/fetch_feeds.py 生成：节目台标 + 写死的 RSS 订阅地址。 */\n"
+        "window.PODCAST_SHOW = " + json.dumps(SHOW, ensure_ascii=False, indent=2) + ";\n"
         "window.PODCAST_FEEDS = " + json.dumps(FEEDS, ensure_ascii=False, indent=2) + ";\n",
         encoding="utf-8",
     )

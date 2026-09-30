@@ -57,7 +57,7 @@
   }
   #app { display: flex; height: 100vh; height: 100dvh; }
 
-  /* ---------- 左侧：节目库（手机上为抽屉） ---------- */
+  /* ---------- 左侧：订阅库（手机上为抽屉） ---------- */
   #sidebar {
     position: fixed;
     top: 0; bottom: 0; left: 0;
@@ -128,14 +128,14 @@
     border-radius: 10px;
   }
   .ep:active { background: var(--panel-2); }
-  .ep .t { font-size: 15px; line-height: 1.35; }
-  .ep.rss .t {
+  .ep .t {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     white-space: normal;
     font-size: 14px;
+    line-height: 1.35;
   }
   .ep .d { margin-top: 2px; font-size: 12px; color: var(--fg-2); }
   .ep.current { background: var(--panel-2); background: color-mix(in srgb, var(--accent) 14%, transparent); }
@@ -186,9 +186,6 @@
     background: linear-gradient(145deg, #5E5CE6, #0A84FF);
     box-shadow: var(--shadow);
   }
-  .artwork[data-cat="travel"] { background: linear-gradient(145deg, #30B0C7, #34C759); }
-  .artwork[data-cat="reading"] { background: linear-gradient(145deg, #FF9F0A, #FF375F); }
-  .artwork[data-cat="tech"] { background: linear-gradient(145deg, #5E5CE6, #0A84FF); }
   .artwork[data-cat="gsfm"] { background: linear-gradient(145deg, #FF9F0A, #FF375F); }
   .artwork[data-cat="hzyy"] { background: linear-gradient(145deg, #BF5AF2, #5E5CE6); }
   .artwork[data-cat="bhsy"] { background: linear-gradient(145deg, #0A84FF, #30B0C7); }
@@ -214,7 +211,7 @@
   .meta h1 { font-size: 20px; line-height: 1.25; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
   .ep-desc { margin-top: 3px; font-size: 13px; color: var(--fg-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-  /* 字幕 */
+  /* 信息区：RSS 单集暂无字幕稿，留作简介/提示 */
   .subs {
     flex: 1;
     overflow-y: auto;
@@ -242,6 +239,7 @@
     box-shadow: 0 1px 6px rgba(0, 0, 0, .07);
   }
   .subs-hint { text-align: center; font-size: 12px; color: var(--fg-2); padding: 6px 0 10px; }
+  .ep-note { font-size: 15px; line-height: 1.7; color: var(--fg-2); padding: 10px 6px; }
 
   /* 控制区 */
   .controls {
@@ -363,34 +361,34 @@
 </head>
 <body>
 <div id="app">
-  <aside id="sidebar" aria-label="节目库">
+  <aside id="sidebar" aria-label="订阅库">
     <header class="side-head">
       <h2 id="showTitle">播客</h2>
       <p id="showSub"></p>
     </header>
     <nav id="catList"></nav>
-    <footer class="side-foot">RSS 地址写死在 feeds.js · 本地音频由 scripts 生成</footer>
+    <footer class="side-foot">订阅地址写死在 feeds.js · 离线快照兜底</footer>
   </aside>
   <div id="scrim"></div>
 
   <main id="main">
     <header class="topbar">
-      <button class="icon-btn" id="menuBtn" aria-label="打开节目库" aria-expanded="false">☰</button>
+      <button class="icon-btn" id="menuBtn" aria-label="打开订阅列表" aria-expanded="false">☰</button>
       <div class="top-title" id="topTitle"></div>
     </header>
 
     <section class="now">
-      <div class="artwork" id="artwork" data-cat="">🎧</div>
+      <div class="artwork" id="artwork" data-cat="">📡</div>
       <div class="meta">
         <div class="cat-label" id="catLabel">—</div>
-        <h1 id="epTitle">选择一集开始收听</h1>
-        <div class="ep-desc" id="epDesc">左侧节目库点按任意单集</div>
+        <h1 id="epTitle">从订阅列表选一集开始收听</h1>
+        <div class="ep-desc" id="epDesc">展开左侧任意 RSS 订阅</div>
       </div>
     </section>
 
     <div class="subs" id="subs">
       <div class="subs-inner" id="subsInner">
-        <p class="subs-hint">播放后字幕在此实时滚动 · 点任意一句可跳播</p>
+        <p class="subs-hint">RSS 单集暂无字幕稿 · 播放与进度条不受影响</p>
       </div>
     </div>
 
@@ -422,60 +420,19 @@
 <audio id="audio" preload="metadata"></audio>
 <script src="feeds.js"></script>
 <script src="feeds-cache.js"></script>
-<script src="data.js"></script>
 <script>
 (function () {
   "use strict";
 
-  var data = window.PODCAST_DATA || { show: { title: "播客" }, categories: [] };
   var feeds = window.PODCAST_FEEDS || [];
   var feedSnap = window.PODCAST_FEEDS_CACHE || {};
+  var show = window.PODCAST_SHOW || { title: "播客", subtitle: "" };
   var audio = document.getElementById("audio");
-
-  /* ---------- 统一轨道模型：本地演示集与 RSS 单集共用播放器 ---------- */
-  var localTracks = [];
-  data.categories.forEach(function (cat, ci) {
-    cat.episodes.forEach(function (ep, ei) {
-      localTracks.push({
-        key: "local:" + ci + "-" + ei,
-        title: ep.title,
-        desc: ep.desc || "",
-        src: ep.src,
-        duration: ep.duration || 0,
-        cues: ep.cues || [],
-        catTitle: cat.title,
-        cls: cat.id,
-        icon: cat.id === "travel" ? "⛰️" : cat.id === "reading" ? "📖" : "🛰️"
-      });
-    });
-  });
-
-  var FEED_META = {
-    gsfm: { icon: "📻" }, hzyy: { icon: "🎙️" }, bhsy: { icon: "🌍" }, dywx: { icon: "☕" },
-    swh: { icon: "💬" }, blt: { icon: "🥐" }, rtgy: { icon: "🌳" }, zxh: { icon: "🍶" },
-    whyx: { icon: "📚" }, dqxd: { icon: "🏛️" }, btts: { icon: "🗨️" }, zkjj: { icon: "🎬" },
-    sjbd: { icon: "🌀" }, wrxz: { icon: "🕯️" }, syf: { icon: "💞" }, sdjx: { icon: "🌐" },
-    dygcj: { icon: "🗺️" }, bwl: { icon: "💼" }, qjkt: { icon: "🏡" }, zxjy: { icon: "🎤" }
-  };
-  function feedTrack(feed, i, ep) {
-    var m = FEED_META[feed.id] || { icon: "📡" };
-    return {
-      key: "rss:" + feed.id + ":" + i,
-      title: ep.t,
-      desc: (ep.p ? ep.p + " · " : "") + feed.title,
-      src: ep.u,
-      duration: ep.d || 0,
-      cues: [],
-      catTitle: feed.title,
-      cls: feed.id,
-      icon: m.icon
-    };
-  }
 
   var state = { track: null, cues: [], cueIdx: -1, scrubbing: false, pendingSeek: null };
   var RATES = [1, 1.25, 1.5, 0.75];
   var rateIdx = 0;
-  var LS_KEY = "podcast.mvp.v2";
+  var LS_KEY = "podcast.mvp.v3";
   var CACHE_TTL = 6 * 3600 * 1000;   /* 节目单缓存 6 小时 */
 
   var $ = function (id) { return document.getElementById(id); };
@@ -490,9 +447,9 @@
     rateBtn: $("rateBtn"), status: $("status")
   };
 
-  els.showTitle.textContent = data.show.title;
-  els.showSub.textContent = data.show.subtitle || "";
-  els.topTitle.textContent = data.show.title;
+  els.showTitle.textContent = show.title;
+  els.showSub.textContent = show.subtitle || "";
+  els.topTitle.textContent = show.title;
 
   function fmt(s) {
     if (!isFinite(s) || s < 0) s = 0;
@@ -505,58 +462,29 @@
       : m + ":" + String(sec).padStart(2, "0");
   }
 
-  /* ---------- 节目库渲染 ---------- */
+  function feedById(id) {
+    for (var i = 0; i < feeds.length; i++) {
+      if (feeds[i].id === id) return feeds[i];
+    }
+    return null;
+  }
+
+  /* ---------- 订阅库渲染 ---------- */
   function renderList() {
     els.catList.innerHTML = "";
-    data.categories.forEach(function (cat, ci) {
-      var catDiv = document.createElement("div");
-      catDiv.className = "cat open";
-      var head = document.createElement("button");
-      head.className = "cat-head";
-      head.setAttribute("aria-expanded", "true");
-      head.innerHTML = "<span>" + cat.title + "</span><span class='chev'>▶</span>";
-      head.addEventListener("click", function () {
-        var open = catDiv.classList.toggle("open");
-        head.setAttribute("aria-expanded", open ? "true" : "false");
-      });
-      var body = document.createElement("div");
-      body.className = "cat-body";
-      var wrap = document.createElement("div");
-      cat.episodes.forEach(function (ep, ei) {
-        var key = "local:" + ci + "-" + ei;
-        var b = document.createElement("button");
-        b.className = "ep";
-        b.dataset.key = key;
-        b.innerHTML = "<div class='t'></div><div class='d'>" +
-                      cat.title + " · " + fmt(ep.duration || 0) + "</div>";
-        b.querySelector(".t").textContent = ep.title;
-        b.addEventListener("click", function () {
-          loadTrack(localTracks[localIndexByKey(key)], true);
-          closeDrawer();
-        });
-        wrap.appendChild(b);
-      });
-      body.appendChild(wrap);
-      catDiv.appendChild(head);
-      catDiv.appendChild(body);
-      els.catList.appendChild(catDiv);
+    var GROUP_LABEL = { commute: "RSS 订阅 · 陪伴通勤", talk: "RSS 订阅 · 访谈对谈" };
+    var seen = {};
+    feeds.forEach(function (feed) {
+      var g = feed.group || "talk";
+      if (!seen[g]) {
+        seen[g] = true;
+        var label = document.createElement("div");
+        label.className = "side-label";
+        label.textContent = GROUP_LABEL[g] || "RSS 订阅";
+        els.catList.appendChild(label);
+      }
+      renderFeed(feed);
     });
-
-    if (feeds.length) {
-      var GROUP_LABEL = { commute: "RSS 订阅 · 陪伴通勤", talk: "RSS 订阅 · 访谈对谈" };
-      var seen = {};
-      feeds.forEach(function (feed) {
-        var g = feed.group || "talk";
-        if (!seen[g]) {
-          seen[g] = true;
-          var label = document.createElement("div");
-          label.className = "side-label";
-          label.textContent = GROUP_LABEL[g] || "RSS 订阅";
-          els.catList.appendChild(label);
-        }
-        renderFeed(feed);
-      });
-    }
   }
 
   function renderFeed(feed) {
@@ -588,6 +516,27 @@
     if (feedState[feed.id] && feedState[feed.id].eps) fillFeedEpisodes(feed, catDiv);
   }
 
+  function highlightList() {
+    var key = state.track ? state.track.key : "";
+    els.catList.querySelectorAll(".ep").forEach(function (b) {
+      b.classList.toggle("current", b.dataset.key === key);
+    });
+  }
+
+  /* ---------- 抽屉 ---------- */
+  function openDrawer() {
+    document.body.classList.add("drawer-open");
+    els.menuBtn.setAttribute("aria-expanded", "true");
+  }
+  function closeDrawer() {
+    document.body.classList.remove("drawer-open");
+    els.menuBtn.setAttribute("aria-expanded", "false");
+  }
+  els.menuBtn.addEventListener("click", function () {
+    document.body.classList.contains("drawer-open") ? closeDrawer() : openDrawer();
+  });
+  els.scrim.addEventListener("click", closeDrawer);
+
   /* ---------- RSS 节目单：拉取 → 缓存 → 快照兜底 ---------- */
   var feedState = {};   /* id: {eps, from: 'live'|'cache'|'snap', ts, loading} */
 
@@ -598,6 +547,22 @@
       var c = JSON.parse(localStorage.getItem(cacheKey(id)) || "null");
       if (c && c.eps && Date.now() - c.ts < CACHE_TTL) return c;
     } catch (e) {}
+    return null;
+  }
+
+  function epsForFeed(feed) {
+    var st = feedState[feed.id];
+    if (st && st.eps) return st.eps;
+    var cached = readCache(feed.id);
+    if (cached) {
+      feedState[feed.id] = { eps: cached.eps, from: "cache", ts: cached.ts };
+      return cached.eps;
+    }
+    var snap = feedSnap[feed.id];
+    if (snap && snap.eps) {
+      feedState[feed.id] = { eps: snap.eps, from: "snap", ts: snap.ts };
+      return snap.eps;
+    }
     return null;
   }
 
@@ -732,7 +697,7 @@
     st.eps.forEach(function (ep, i) {
       var track = feedTrack(feed, i, ep);
       var b = document.createElement("button");
-      b.className = "ep rss";
+      b.className = "ep";
       b.dataset.key = track.key;
       var t = document.createElement("div"); t.className = "t"; t.textContent = ep.t;
       var d = document.createElement("div"); d.className = "d";
@@ -747,31 +712,33 @@
     highlightList();
   }
 
-  function highlightList() {
-    var key = state.track ? state.track.key : "";
-    els.catList.querySelectorAll(".ep").forEach(function (b) {
-      b.classList.toggle("current", b.dataset.key === key);
-    });
+  /* ---------- 播放 ---------- */
+  var FEED_META = {
+    gsfm: { icon: "📻" }, hzyy: { icon: "🎙️" }, bhsy: { icon: "🌍" }, dywx: { icon: "☕" },
+    swh: { icon: "💬" }, blt: { icon: "🥐" }, rtgy: { icon: "🌳" }, zxh: { icon: "🍶" },
+    whyx: { icon: "📚" }, dqxd: { icon: "🏛️" }, btts: { icon: "🗨️" }, zkjj: { icon: "🎬" },
+    sjbd: { icon: "🌀" }, wrxz: { icon: "🕯️" }, syf: { icon: "💞" }, sdjx: { icon: "🌐" },
+    dygcj: { icon: "🗺️" }, bwl: { icon: "💼" }, qjkt: { icon: "🏡" }, zxjy: { icon: "🎤" }
+  };
+  function feedTrack(feed, i, ep) {
+    var m = FEED_META[feed.id] || { icon: "📡" };
+    return {
+      key: "rss:" + feed.id + ":" + i,
+      idx: i,
+      title: ep.t,
+      desc: (ep.p ? ep.p + " · " : "") + feed.title,
+      src: ep.u,
+      duration: ep.d || 0,
+      feedId: feed.id,
+      catTitle: feed.title,
+      cls: feed.id,
+      icon: m.icon
+    };
   }
 
-  /* ---------- 抽屉 ---------- */
-  function openDrawer() {
-    document.body.classList.add("drawer-open");
-    els.menuBtn.setAttribute("aria-expanded", "true");
-  }
-  function closeDrawer() {
-    document.body.classList.remove("drawer-open");
-    els.menuBtn.setAttribute("aria-expanded", "false");
-  }
-  els.menuBtn.addEventListener("click", function () {
-    document.body.classList.contains("drawer-open") ? closeDrawer() : openDrawer();
-  });
-  els.scrim.addEventListener("click", closeDrawer);
-
-  /* ---------- 加载单集 ---------- */
   function loadTrack(track, autoplay) {
     state.track = track;
-    state.cues = track.cues || [];
+    state.cues = [];
     state.cueIdx = -1;
 
     els.catLabel.textContent = track.catTitle;
@@ -782,27 +749,15 @@
     els.status.hidden = true;
 
     els.subsInner.innerHTML = "";
-    if (state.cues.length) {
-      state.cues.forEach(function (cue, i) {
-        var p = document.createElement("p");
-        p.className = "cue";
-        p.dataset.i = i;
-        p.textContent = cue.t;
-        els.subsInner.appendChild(p);
-      });
-      var hint = document.createElement("p");
-      hint.className = "subs-hint";
-      hint.textContent = "点任意一句可跳播";
-      els.subsInner.appendChild(hint);
-    } else {
-      var h1 = document.createElement("p");
-      h1.className = "subs-hint";
-      h1.textContent = "本集来自 RSS 订阅，暂无字幕稿";
-      var h2 = document.createElement("p");
-      h2.className = "subs-hint";
-      h2.textContent = "播放、进度条与倍速不受影响";
-      els.subsInner.appendChild(h1);
-      els.subsInner.appendChild(h2);
+    var h1 = document.createElement("p");
+    h1.className = "subs-hint";
+    h1.textContent = "RSS 单集暂无字幕稿，播放与进度条不受影响";
+    els.subsInner.appendChild(h1);
+    if (track.desc) {
+      var note = document.createElement("p");
+      note.className = "ep-note";
+      note.textContent = track.title + " —— " + track.catTitle;
+      els.subsInner.appendChild(note);
     }
     els.subs.scrollTop = 0;
 
@@ -836,7 +791,11 @@
   }
 
   els.playBtn.addEventListener("click", function () {
-    if (!audio.src) { if (localTracks.length) loadTrack(localTracks[0], true); return; }
+    if (!audio.src) {
+      els.status.textContent = "先在左侧订阅列表里选一集";
+      els.status.hidden = false;
+      return;
+    }
     if (audio.paused) play(); else audio.pause();
   });
   audio.addEventListener("play", function () { setPlayingUI(true); startLoop(); });
@@ -861,10 +820,13 @@
   });
   audio.addEventListener("ended", function () {
     setPlayingUI(false); stopLoop(); saveState();
-    if (state.track && state.track.key.indexOf("local:") === 0) {
-      var i = localIndexByKey(state.track.key);
-      if (i >= 0 && i + 1 < localTracks.length) {
-        loadTrack(localTracks[i + 1], false);   /* iOS 无手势不允许自动续播，切好下一集待按 */
+    /* 自动切同一下一集（iOS 无手势不允许自动续播，切好待按播放） */
+    if (state.track && state.track.key.indexOf("rss:") === 0) {
+      var feed = feedById(state.track.feedId);
+      var eps = feed ? epsForFeed(feed) : null;
+      var next = state.track.idx + 1;
+      if (eps && next < eps.length) {
+        loadTrack(feedTrack(feed, next, eps[next]), false);
       }
     }
   });
@@ -957,7 +919,7 @@
     if (step) { ev.preventDefault(); seekBy(step); }
   });
 
-  /* ---------- 字幕同步 + 进度绘制（播放中 rAF 循环） ---------- */
+  /* ---------- 绘制（播放中 rAF 循环） ---------- */
   var rafId = 0;
   function startLoop() {
     if (!rafId) rafId = requestAnimationFrame(tick);
@@ -971,51 +933,8 @@
   }
   function paint(t) {
     if (state.scrubbing) return;
-    var dur = duration();
-    setProgress(t, dur);
-    syncCue(t);
+    setProgress(t, duration());
   }
-  function syncCue(t) {
-    if (!state.cues.length) return;
-    var idx = -1;
-    for (var i = 0; i < state.cues.length; i++) {
-      if (t >= state.cues[i].s && t < state.cues[i].e) { idx = i; break; }
-      if (t >= state.cues[i].e) idx = i;    /* 句间空隙时保持上一句高亮 */
-    }
-    if (idx === state.cueIdx) return;
-    state.cueIdx = idx;
-    var nodes = els.subsInner.querySelectorAll(".cue");
-    nodes.forEach(function (n, i) { n.classList.toggle("active", i === idx); });
-    if (idx >= 0 && nodes[idx]) {
-      var node = nodes[idx];
-      var top = node.offsetTop - (els.subs.clientHeight - node.offsetHeight) / 2;
-      try {
-        els.subs.scrollTo({ top: top, behavior: "smooth" });
-      } catch (e) {
-        els.subs.scrollTop = top;
-      }
-    }
-  }
-  /* 用户手动滚动字幕时，暂停自动跟随 3 秒 */
-  var userScrollAt = 0;
-  els.subs.addEventListener("touchstart", function () { userScrollAt = Date.now(); }, { passive: true });
-  els.subs.addEventListener("wheel", function () { userScrollAt = Date.now(); }, { passive: true });
-  var _scrollTo = els.subs.scrollTo.bind(els.subs);
-  els.subs.scrollTo = function (opt) {
-    if (Date.now() - userScrollAt < 3000) return;
-    _scrollTo(opt);
-  };
-
-  /* 点字幕跳播 */
-  els.subsInner.addEventListener("click", function (ev) {
-    var p = ev.target.closest(".cue");
-    if (!p || !audio.src) return;
-    var cue = state.cues[+p.dataset.i];
-    if (!cue) return;
-    if (audio.readyState === 0) state.pendingSeek = cue.s;
-    else { try { audio.currentTime = cue.s; } catch (e) {} }
-    paint(cue.s);
-  });
 
   /* ---------- 锁屏 / 系统播放控制 ---------- */
   function updateMediaSession(track) {
@@ -1023,7 +942,7 @@
     try {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: track.title,
-        artist: data.show.title,
+        artist: show.title,
         album: track.catTitle
       });
       navigator.mediaSession.setActionHandler("play", play);
@@ -1036,7 +955,7 @@
     } catch (e) {}
   }
 
-  /* ---------- 记忆播放位置 ---------- */
+  /* ---------- 记忆播放位置（RSS 单集跨重启恢复） ---------- */
   function saveState() {
     try {
       localStorage.setItem(LS_KEY, JSON.stringify({
@@ -1046,24 +965,22 @@
       }));
     } catch (e) {}
   }
-  function localIndexByKey(key) {
-    for (var i = 0; i < localTracks.length; i++) {
-      if (localTracks[i].key === key) return i;
-    }
-    return -1;
-  }
   function restore() {
     var saved = null;
     try { saved = JSON.parse(localStorage.getItem(LS_KEY) || "null"); } catch (e) {}
     if (saved && typeof saved.rateIdx === "number" && RATES[saved.rateIdx]) rateIdx = saved.rateIdx;
     applyRate();
-    if (saved && saved.key && saved.key.indexOf("local:") === 0) {
-      var i = localIndexByKey(saved.key);
-      if (i >= 0) {
-        loadTrack(localTracks[i], false);
+    if (saved && saved.key && saved.key.indexOf("rss:") === 0) {
+      var parts = saved.key.split(":");
+      var feed = feedById(parts[1]);
+      var idx = parseInt(parts[2], 10);
+      var eps = feed ? epsForFeed(feed) : null;
+      if (feed && eps && eps[idx] && eps[idx].u) {
+        var track = feedTrack(feed, idx, eps[idx]);
+        loadTrack(track, false);
         if (saved.t > 1) {
           state.pendingSeek = saved.t;
-          setProgress(saved.t, localTracks[i].duration || 0);
+          setProgress(saved.t, track.duration || 0);
         }
         return true;
       }
@@ -1077,9 +994,7 @@
 
   /* ---------- 启动 ---------- */
   renderList();
-  if (!restore() && localTracks.length) {
-    loadTrack(localTracks[0], false);
-  }
+  restore();
 })();
 </script>
 </body>

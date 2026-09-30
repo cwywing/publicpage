@@ -1,4 +1,8 @@
-/* 由 scripts/fetch_feeds.py 生成：写死的 RSS 订阅地址。 */
+/* 由 scripts/fetch_feeds.py 生成：节目台标 + 写死的 RSS 订阅地址。 */
+window.PODCAST_SHOW = {
+  "title": "旅途随声听",
+  "subtitle": "中文播客 · 边走边听"
+};
 window.PODCAST_FEEDS = [
   {
     "id": "blt",
