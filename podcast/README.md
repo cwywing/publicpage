@@ -35,7 +35,7 @@ podcast/
 - 订阅地址写死在 `scripts/fetch_feeds.py` 的 `FEEDS`，跑一次脚本同时产出
   `feeds.js` 和节目单快照 `feeds-cache.js`（每源最近 20 集）
 - 运行时拉取链路：直连 → allorigins → corsproxy.io → rss2json，
-  成功后缓存 6 小时；全部失败时显示离线快照并可手动重试
+  成功后缓存 6 小时；全部失败时优先用本地旧节目单，其次离线快照，并可手动重试
 - 故事FM、三五环、半拿铁、文化有限与全部喜马拉雅系 feed 自带 CORS 头，
   任何环境直连可用；小宇宙系（xyzfm.space）、fireside 系（随机波动、
   声东击西）与 Anchor 系（锵锵/圆桌派存档）依赖代理是否可达

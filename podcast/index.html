@@ -660,10 +660,10 @@
 
   function cacheKey(id) { return "podcast.rss." + id; }
 
-  function readCache(id) {
+  function readCache(id, allowStale) {
     try {
       var c = JSON.parse(localStorage.getItem(cacheKey(id)) || "null");
-      if (c && c.eps && Date.now() - c.ts < CACHE_TTL) return c;
+      if (c && c.eps && (allowStale || Date.now() - c.ts < CACHE_TTL)) return c;
     } catch (e) {}
     return null;
   }
@@ -791,7 +791,13 @@
     }).catch(function () {
       st.loading = false;
       if (status) status.classList.remove("loading");
-      if (status && (!st.eps || !st.eps.length)) {
+      var stale = readCache(feed.id, true);   /* 超过 6 小时的旧节目单也比快照全 */
+      if (stale && (!st.eps || st.eps.length < stale.eps.length)) {
+        st.eps = stale.eps; st.from = "cache"; st.ts = stale.ts;
+        fillFeedEpisodes(feed, catDiv);
+      } else if (status && st.eps) {
+        status.textContent = "暂用离线快照 · 稍后可重试";
+      } else if (status && (!st.eps || !st.eps.length)) {
         status.textContent = "拉取失败（网络或代理不可用）";
         var btn = document.createElement("button");
         btn.textContent = "重试";
@@ -801,8 +807,6 @@
         });
         status.appendChild(document.createTextNode(" "));
         status.appendChild(btn);
-      } else if (status && st.eps) {
-        status.textContent = "暂用离线快照 · 稍后可重试";
       }
     });
   }
