@@ -206,6 +206,9 @@
   .artwork[data-cat="bwl"] { background: linear-gradient(145deg, #64D2FF, #34C759); }
   .artwork[data-cat="qjkt"] { background: linear-gradient(145deg, #BF5AF2, #FF6482); }
   .artwork[data-cat="zxjy"] { background: linear-gradient(145deg, #FF453A, #FF9F0A); }
+  .artwork[data-cat="qqq"] { background: linear-gradient(145deg, #8E8E93, #1C1C1E); }
+  .artwork[data-cat="qqq2"] { background: linear-gradient(145deg, #A2845E, #3A3A3C); }
+  .artwork[data-cat="yztp"] { background: linear-gradient(145deg, #32ADE6, #30D158); }
   .meta { min-width: 0; }
   .cat-label { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: .5px; }
   .meta h1 { font-size: 20px; line-height: 1.25; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
@@ -472,7 +475,8 @@
   /* ---------- 订阅库渲染 ---------- */
   function renderList() {
     els.catList.innerHTML = "";
-    var GROUP_LABEL = { commute: "RSS 订阅 · 陪伴通勤", talk: "RSS 订阅 · 访谈对谈" };
+      var GROUP_LABEL = { commute: "RSS 订阅 · 陪伴通勤", talk: "RSS 订阅 · 访谈对谈",
+                          classic: "RSS 订阅 · 经典访谈存档" };
     var seen = {};
     feeds.forEach(function (feed) {
       var g = feed.group || "talk";
@@ -578,7 +582,7 @@
     var out = [];
     var items = doc.getElementsByTagName("item");
     var IT = "http://www.itunes.com/dtds/podcast-1.0.dtd";
-    for (var i = 0; i < items.length && out.length < 50; i++) {
+    for (var i = 0; i < items.length && out.length < 100; i++) {
       var it = items[i];
       var enc = it.getElementsByTagName("enclosure")[0];
       var ttl = it.getElementsByTagName("title")[0];
@@ -718,7 +722,8 @@
     swh: { icon: "💬" }, blt: { icon: "🥐" }, rtgy: { icon: "🌳" }, zxh: { icon: "🍶" },
     whyx: { icon: "📚" }, dqxd: { icon: "🏛️" }, btts: { icon: "🗨️" }, zkjj: { icon: "🎬" },
     sjbd: { icon: "🌀" }, wrxz: { icon: "🕯️" }, syf: { icon: "💞" }, sdjx: { icon: "🌐" },
-    dygcj: { icon: "🗺️" }, bwl: { icon: "💼" }, qjkt: { icon: "🏡" }, zxjy: { icon: "🎤" }
+    dygcj: { icon: "🗺️" }, bwl: { icon: "💼" }, qjkt: { icon: "🏡" }, zxjy: { icon: "🎤" },
+    qqq: { icon: "📺" }, qqq2: { icon: "📻" }, yztp: { icon: "🍵" }
   };
   function feedTrack(feed, i, ep) {
     var m = FEED_META[feed.id] || { icon: "📡" };

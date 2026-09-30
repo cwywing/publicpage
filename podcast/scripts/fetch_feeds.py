@@ -65,6 +65,13 @@ FEEDS = [
      "note": "人物、职场与女性生活"},
     {"id": "zxjy", "group": "talk", "title": "张小珺商业访谈录", "rss": "https://feed.xyzfm.space/dk4yh3pkpjp3",
      "note": "企业家与商业人物长访谈"},
+    # ---- 经典访谈存档（民间上传的电视节目音频，Spotify Anchor 托管）----
+    {"id": "qqq", "group": "classic", "title": "锵锵三人行 06–17", "rss": "https://anchor.fm/s/22ab0ed8/podcast/rss",
+     "note": "窦文涛全档案 3000+ 期"},
+    {"id": "qqq2", "group": "classic", "title": "锵锵三人行 98–10", "rss": "https://anchor.fm/s/8488a278/podcast/rss",
+     "note": "早期节目 397 期"},
+    {"id": "yztp", "group": "classic", "title": "圆桌派（存档）", "rss": "https://anchor.fm/s/10bfbcf64/podcast/rss",
+     "note": "窦文涛圆桌谈话 185 期"},
 ]
 
 SHOW = {"title": "旅途随声听", "subtitle": "中文播客 · 边走边听"}
