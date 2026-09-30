@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="旅途随声听">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F2F7">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000">
+<title>旅途随声听 · 播客</title>
+<style>
+  :root {
+    --sat: env(safe-area-inset-top, 0px);
+    --sab: env(safe-area-inset-bottom, 0px);
+    --accent: #007AFF;
+    --bg: #F2F2F7;
+    --panel: #FFFFFF;
+    --panel-2: #E9E9EE;
+    --fg: #1C1C1E;
+    --fg-2: #6E6E73;
+    --line: rgba(60, 60, 67, .12);
+    --shadow: 0 8px 24px rgba(0, 0, 0, .10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --accent: #0A84FF;
+      --bg: #000000;
+      --panel: #1C1C1E;
+      --panel-2: #2C2C2E;
+      --fg: #F5F5F7;
+      --fg-2: #98989E;
+      --line: rgba(255, 255, 255, .12);
+      --shadow: 0 8px 24px rgba(0, 0, 0, .55);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC",
+                 "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
+  }
+  button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  #app { display: flex; height: 100vh; height: 100dvh; }
+
+  /* ---------- 左侧：节目库（手机上为抽屉） ---------- */
+  #sidebar {
+    position: fixed;
+    top: 0; bottom: 0; left: 0;
+    z-index: 30;
+    width: min(84vw, 330px);
+    display: flex;
+    flex-direction: column;
+    background: var(--panel);
+    border-right: 1px solid var(--line);
+    transform: translateX(-104%);
+    transition: transform .32s cubic-bezier(.32, .72, 0, 1);
+  }
+  body.drawer-open #sidebar { transform: translateX(0); box-shadow: var(--shadow); }
+  #scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 25;
+    background: rgba(0, 0, 0, .4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .32s ease;
+  }
+  body.drawer-open #scrim { opacity: 1; pointer-events: auto; }
+
+  .side-head { padding: calc(14px + var(--sat)) 18px 12px; border-bottom: 1px solid var(--line); }
+  .side-head h2 { font-size: 20px; letter-spacing: .2px; }
+  .side-head p { margin-top: 3px; font-size: 12px; color: var(--fg-2); }
+  #catList { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; padding: 8px 10px calc(10px + var(--sab)); }
+  .side-label {
+    padding: 16px 12px 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--fg-2);
+    letter-spacing: .5px;
+  }
+  .cat { border-radius: 12px; }
+  .cat + .cat { margin-top: 2px; }
+  .cat-head {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 10px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: left;
+  }
+  .cat-head .note { font-size: 12px; font-weight: 400; color: var(--fg-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cat-head .chev {
+    margin-left: auto;
+    color: var(--fg-2);
+    font-size: 13px;
+    transition: transform .25s ease;
+  }
+  .cat.open .cat-head .chev { transform: rotate(90deg); }
+  .cat-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .28s ease;
+  }
+  .cat.open .cat-body { grid-template-rows: 1fr; }
+  .cat-body > div { overflow: hidden; }
+  .ep {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 10px 10px 26px;
+    border-radius: 10px;
+  }
+  .ep:active { background: var(--panel-2); }
+  .ep .t { font-size: 15px; line-height: 1.35; }
+  .ep.rss .t {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    white-space: normal;
+    font-size: 14px;
+  }
+  .ep .d { margin-top: 2px; font-size: 12px; color: var(--fg-2); }
+  .ep.current { background: var(--panel-2); background: color-mix(in srgb, var(--accent) 14%, transparent); }
+  .ep.current .t { color: var(--accent); font-weight: 600; }
+  .ep.current .t::before { content: "▸ "; }
+  .feed-status { padding: 2px 10px 8px 26px; font-size: 11px; color: var(--fg-2); }
+  .feed-status button { color: var(--accent); font-size: 11px; padding: 0 4px; }
+  .side-foot { padding: 10px 18px calc(12px + var(--sab)); font-size: 11px; color: var(--fg-2); border-top: 1px solid var(--line); }
+
+  /* ---------- 右侧：播放主界面 ---------- */
+  #main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    max-width: 760px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: calc(8px + var(--sat)) 12px 8px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    -webkit-backdrop-filter: saturate(180%) blur(18px);
+    backdrop-filter: saturate(180%) blur(18px);
+  }
+  .icon-btn {
+    width: 40px; height: 40px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    font-size: 19px;
+  }
+  .icon-btn:active { background: var(--panel-2); }
+  .top-title { font-size: 16px; font-weight: 600; }
+
+  .now { display: flex; gap: 16px; align-items: center; padding: 16px 18px 12px; }
+  .artwork {
+    width: 86px; height: 86px;
+    flex: none;
+    border-radius: 20px;
+    display: grid; place-items: center;
+    font-size: 40px;
+    color: #fff;
+    background: linear-gradient(145deg, #5E5CE6, #0A84FF);
+    box-shadow: var(--shadow);
+  }
+  .artwork[data-cat="travel"] { background: linear-gradient(145deg, #30B0C7, #34C759); }
+  .artwork[data-cat="reading"] { background: linear-gradient(145deg, #FF9F0A, #FF375F); }
+  .artwork[data-cat="tech"] { background: linear-gradient(145deg, #5E5CE6, #0A84FF); }
+  .artwork[data-cat="gsfm"] { background: linear-gradient(145deg, #FF9F0A, #FF375F); }
+  .artwork[data-cat="hzyy"] { background: linear-gradient(145deg, #BF5AF2, #5E5CE6); }
+  .artwork[data-cat="bhsy"] { background: linear-gradient(145deg, #0A84FF, #30B0C7); }
+  .artwork[data-cat="dywx"] { background: linear-gradient(145deg, #64D2FF, #5E5CE6); }
+  .artwork[data-cat="swh"] { background: linear-gradient(145deg, #30D158, #007AFF); }
+  .meta { min-width: 0; }
+  .cat-label { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: .5px; }
+  .meta h1 { font-size: 20px; line-height: 1.25; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .ep-desc { margin-top: 3px; font-size: 13px; color: var(--fg-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* 字幕 */
+  .subs {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding: 6px 18px 24px;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .subs-inner { max-width: 600px; margin: 0 auto; }
+  .cue {
+    padding: 9px 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--fg-2);
+    transition: background .2s ease, color .2s ease;
+    cursor: pointer;
+  }
+  .cue:active { background: var(--panel-2); }
+  .cue.active {
+    background: var(--panel);
+    color: var(--fg);
+    font-weight: 600;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .07);
+  }
+  .subs-hint { text-align: center; font-size: 12px; color: var(--fg-2); padding: 6px 0 10px; }
+
+  /* 控制区 */
+  .controls {
+    padding: 10px 18px calc(14px + var(--sab));
+    border-top: 1px solid var(--line);
+    background: var(--panel);
+    background: color-mix(in srgb, var(--panel) 92%, transparent);
+    -webkit-backdrop-filter: saturate(180%) blur(18px);
+    backdrop-filter: saturate(180%) blur(18px);
+  }
+  .controls-inner { max-width: 600px; margin: 0 auto; }
+  .slider {
+    position: relative;
+    height: 30px;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    outline: none;
+  }
+  .slider .track {
+    position: absolute;
+    left: 0; right: 0; top: 50%;
+    height: 6px;
+    transform: translateY(-50%);
+    border-radius: 3px;
+    background: var(--panel-2);
+    overflow: hidden;
+  }
+  .slider .fill { height: 100%; width: 0%; border-radius: 3px; background: var(--accent); }
+  .slider .thumb {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .35);
+    transform: translate(-50%, -50%);
+    transition: width .15s ease, height .15s ease;
+    pointer-events: none;
+  }
+  .slider.dragging .thumb { width: 28px; height: 28px; }
+  .bubble {
+    position: absolute;
+    bottom: 30px;
+    transform: translateX(-50%);
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: var(--fg);
+    color: var(--bg);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .times {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2px;
+    font-size: 12px;
+    color: var(--fg-2);
+    font-variant-numeric: tabular-nums;
+  }
+  .transport {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    margin-top: 10px;
+    position: relative;
+  }
+  .side-btn {
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    background: var(--panel-2);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--fg);
+    display: grid; place-items: center;
+  }
+  .side-btn:active { transform: scale(.94); }
+  .play {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: grid; place-items: center;
+    box-shadow: 0 6px 18px rgba(0, 122, 255, .4);
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 45%, transparent);
+    transition: transform .12s ease;
+  }
+  .play:active { transform: scale(.94); }
+  .play svg { width: 32px; height: 32px; }
+  .play.loading svg { animation: pulse 1s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity: .35; } }
+  .rate {
+    position: absolute;
+    right: 18px;
+    bottom: calc(26px + var(--sab));
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--panel-2);
+    font-size: 13px;
+    font-weight: 600;
+    display: grid; place-items: center;
+  }
+  .status { text-align: center; font-size: 12px; color: #FF3B30; margin-top: 8px; }
+
+  @media (min-width: 768px) {
+    #sidebar { position: static; width: 300px; transform: none; transition: none; }
+    #scrim { display: none; }
+    #menuBtn { display: none; }
+    .topbar { padding-top: 10px; }
+    .artwork { width: 110px; height: 110px; border-radius: 24px; font-size: 50px; }
+    .now { padding: 22px 22px 14px; }
+    .meta h1 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar" aria-label="节目库">
+    <header class="side-head">
+      <h2 id="showTitle">播客</h2>
+      <p id="showSub"></p>
+    </header>
+    <nav id="catList"></nav>
+    <footer class="side-foot">RSS 地址写死在 feeds.js · 本地音频由 scripts 生成</footer>
+  </aside>
+  <div id="scrim"></div>
+
+  <main id="main">
+    <header class="topbar">
+      <button class="icon-btn" id="menuBtn" aria-label="打开节目库" aria-expanded="false">☰</button>
+      <div class="top-title" id="topTitle"></div>
+    </header>
+
+    <section class="now">
+      <div class="artwork" id="artwork" data-cat="">🎧</div>
+      <div class="meta">
+        <div class="cat-label" id="catLabel">—</div>
+        <h1 id="epTitle">选择一集开始收听</h1>
+        <div class="ep-desc" id="epDesc">左侧节目库点按任意单集</div>
+      </div>
+    </section>
+
+    <div class="subs" id="subs">
+      <div class="subs-inner" id="subsInner">
+        <p class="subs-hint">播放后字幕在此实时滚动 · 点任意一句可跳播</p>
+      </div>
+    </div>
+
+    <section class="controls">
+      <div class="controls-inner">
+        <div class="slider" id="slider" role="slider" tabindex="0"
+             aria-label="播放进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="track"><div class="fill" id="fill"></div></div>
+          <div class="thumb" id="thumb"></div>
+          <div class="bubble" id="bubble" hidden>00:00</div>
+        </div>
+        <div class="times"><span id="tCur">00:00</span><span id="tDur">00:00</span></div>
+        <div class="transport">
+          <button class="side-btn" id="back15" aria-label="后退 15 秒">−15</button>
+          <button class="play" id="playBtn" aria-label="播放">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path id="playIcon" d="M8 5.5v13l11-6.5z"/>
+            </svg>
+          </button>
+          <button class="side-btn" id="fwd15" aria-label="前进 15 秒">+15</button>
+          <button class="rate" id="rateBtn" aria-label="播放速度">1×</button>
+        </div>
+        <div class="status" id="status" hidden></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<audio id="audio" preload="metadata"></audio>
+<script src="feeds.js"></script>
+<script src="feeds-cache.js"></script>
+<script src="data.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var data = window.PODCAST_DATA || { show: { title: "播客" }, categories: [] };
+  var feeds = window.PODCAST_FEEDS || [];
+  var feedSnap = window.PODCAST_FEEDS_CACHE || {};
+  var audio = document.getElementById("audio");
+
+  /* ---------- 统一轨道模型：本地演示集与 RSS 单集共用播放器 ---------- */
+  var localTracks = [];
+  data.categories.forEach(function (cat, ci) {
+    cat.episodes.forEach(function (ep, ei) {
+      localTracks.push({
+        key: "local:" + ci + "-" + ei,
+        title: ep.title,
+        desc: ep.desc || "",
+        src: ep.src,
+        duration: ep.duration || 0,
+        cues: ep.cues || [],
+        catTitle: cat.title,
+        cls: cat.id,
+        icon: cat.id === "travel" ? "⛰️" : cat.id === "reading" ? "📖" : "🛰️"
+      });
+    });
+  });
+
+  var FEED_META = {
+    gsfm: { icon: "📻" }, hzyy: { icon: "🎙️" }, bhsy: { icon: "🌍" },
+    dywx: { icon: "☕" }, swh: { icon: "💬" }
+  };
+  function feedTrack(feed, i, ep) {
+    var m = FEED_META[feed.id] || { icon: "📡" };
+    return {
+      key: "rss:" + feed.id + ":" + i,
+      title: ep.t,
+      desc: (ep.p ? ep.p + " · " : "") + feed.title,
+      src: ep.u,
+      duration: ep.d || 0,
+      cues: [],
+      catTitle: feed.title,
+      cls: feed.id,
+      icon: m.icon
+    };
+  }
+
+  var state = { track: null, cues: [], cueIdx: -1, scrubbing: false, pendingSeek: null };
+  var RATES = [1, 1.25, 1.5, 0.75];
+  var rateIdx = 0;
+  var LS_KEY = "podcast.mvp.v2";
+  var CACHE_TTL = 6 * 3600 * 1000;   /* 节目单缓存 6 小时 */
+
+  var $ = function (id) { return document.getElementById(id); };
+  var els = {
+    showTitle: $("showTitle"), showSub: $("showSub"), catList: $("catList"),
+    menuBtn: $("menuBtn"), scrim: $("scrim"), topTitle: $("topTitle"),
+    artwork: $("artwork"), catLabel: $("catLabel"), epTitle: $("epTitle"), epDesc: $("epDesc"),
+    subs: $("subs"), subsInner: $("subsInner"),
+    slider: $("slider"), fill: $("fill"), thumb: $("thumb"), bubble: $("bubble"),
+    tCur: $("tCur"), tDur: $("tDur"),
+    playBtn: $("playBtn"), playIcon: $("playIcon"), back15: $("back15"), fwd15: $("fwd15"),
+    rateBtn: $("rateBtn"), status: $("status")
+  };
+
+  els.showTitle.textContent = data.show.title;
+  els.showSub.textContent = data.show.subtitle || "";
+  els.topTitle.textContent = data.show.title;
+
+  function fmt(s) {
+    if (!isFinite(s) || s < 0) s = 0;
+    s = Math.round(s);
+    var h = Math.floor(s / 3600);
+    var m = Math.floor((s % 3600) / 60);
+    var sec = s % 60;
+    return h > 0
+      ? h + ":" + String(m).padStart(2, "0") + ":" + String(sec).padStart(2, "0")
+      : m + ":" + String(sec).padStart(2, "0");
+  }
+
+  /* ---------- 节目库渲染 ---------- */
+  function renderList() {
+    els.catList.innerHTML = "";
+    data.categories.forEach(function (cat, ci) {
+      var catDiv = document.createElement("div");
+      catDiv.className = "cat open";
+      var head = document.createElement("button");
+      head.className = "cat-head";
+      head.setAttribute("aria-expanded", "true");
+      head.innerHTML = "<span>" + cat.title + "</span><span class='chev'>▶</span>";
+      head.addEventListener("click", function () {
+        var open = catDiv.classList.toggle("open");
+        head.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      var body = document.createElement("div");
+      body.className = "cat-body";
+      var wrap = document.createElement("div");
+      cat.episodes.forEach(function (ep, ei) {
+        var key = "local:" + ci + "-" + ei;
+        var b = document.createElement("button");
+        b.className = "ep";
+        b.dataset.key = key;
+        b.innerHTML = "<div class='t'></div><div class='d'>" +
+                      cat.title + " · " + fmt(ep.duration || 0) + "</div>";
+        b.querySelector(".t").textContent = ep.title;
+        b.addEventListener("click", function () {
+          loadTrack(localTracks[localIndexByKey(key)], true);
+          closeDrawer();
+        });
+        wrap.appendChild(b);
+      });
+      body.appendChild(wrap);
+      catDiv.appendChild(head);
+      catDiv.appendChild(body);
+      els.catList.appendChild(catDiv);
+    });
+
+    if (feeds.length) {
+      var label = document.createElement("div");
+      label.className = "side-label";
+      label.textContent = "RSS 订阅 · 访谈";
+      els.catList.appendChild(label);
+      feeds.forEach(function (feed) { renderFeed(feed); });
+    }
+  }
+
+  function renderFeed(feed) {
+    var catDiv = document.createElement("div");
+    catDiv.className = "cat rss";
+    catDiv.dataset.feed = feed.id;
+    var head = document.createElement("button");
+    head.className = "cat-head";
+    head.setAttribute("aria-expanded", "false");
+    head.innerHTML = "<span></span><span class='note'></span><span class='chev'>▶</span>";
+    head.querySelector("span").textContent = feed.title;
+    head.querySelector(".note").textContent = feed.note || "";
+    head.addEventListener("click", function () {
+      var open = catDiv.classList.toggle("open");
+      head.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open) ensureFeedEpisodes(feed, catDiv);
+    });
+    var body = document.createElement("div");
+    body.className = "cat-body";
+    var wrap = document.createElement("div");
+    var status = document.createElement("div");
+    status.className = "feed-status";
+    status.textContent = "展开时自动拉取节目单";
+    wrap.appendChild(status);
+    body.appendChild(wrap);
+    catDiv.appendChild(head);
+    catDiv.appendChild(body);
+    els.catList.appendChild(catDiv);
+    if (feedState[feed.id] && feedState[feed.id].eps) fillFeedEpisodes(feed, catDiv);
+  }
+
+  /* ---------- RSS 节目单：拉取 → 缓存 → 快照兜底 ---------- */
+  var feedState = {};   /* id: {eps, from: 'live'|'cache'|'snap', ts, loading} */
+
+  function cacheKey(id) { return "podcast.rss." + id; }
+
+  function readCache(id) {
+    try {
+      var c = JSON.parse(localStorage.getItem(cacheKey(id)) || "null");
+      if (c && c.eps && Date.now() - c.ts < CACHE_TTL) return c;
+    } catch (e) {}
+    return null;
+  }
+
+  function fetchWithTimeout(url, ms) {
+    var ctrl = new AbortController();
+    var timer = setTimeout(function () { ctrl.abort(); }, ms || 15000);
+    return fetch(url, { signal: ctrl.signal }).finally(function () { clearTimeout(timer); });
+  }
+
+  function parseXmlEps(text) {
+    var doc = new DOMParser().parseFromString(text, "text/xml");
+    if (doc.getElementsByTagName("parsererror").length) throw new Error("XML 解析失败");
+    var out = [];
+    var items = doc.getElementsByTagName("item");
+    var IT = "http://www.itunes.com/dtds/podcast-1.0.dtd";
+    for (var i = 0; i < items.length && out.length < 50; i++) {
+      var it = items[i];
+      var enc = it.getElementsByTagName("enclosure")[0];
+      var ttl = it.getElementsByTagName("title")[0];
+      if (!enc || !enc.getAttribute("url") || !ttl || !ttl.textContent) continue;
+      var durEl = it.getElementsByTagNameNS(IT, "duration")[0] ||
+                  it.getElementsByTagName("itunes:duration")[0];
+      var d = 0;
+      if (durEl && durEl.textContent) {
+        var parts = durEl.textContent.trim().split(":");
+        d = 0;
+        for (var k = 0; k < parts.length; k++) d = d * 60 + (parseInt(parts[k], 10) || 0);
+      }
+      var date = "";
+      var pub = it.getElementsByTagName("pubDate")[0];
+      if (pub && pub.textContent) {
+        var dt = new Date(pub.textContent);
+        if (!isNaN(dt)) date = dt.getFullYear() + "-" +
+          String(dt.getMonth() + 1).padStart(2, "0") + "-" + String(dt.getDate()).padStart(2, "0");
+      }
+      out.push({ t: ttl.textContent.trim(), u: enc.getAttribute("url"), d: d, p: date });
+    }
+    if (!out.length) throw new Error("feed 里没有可播的条目");
+    return out;
+  }
+
+  function fetchEps(feed) {
+    var via = "https://api.allorigins.win/raw?url=" + encodeURIComponent(feed.rss);
+    var via2 = "https://corsproxy.io/?url=" + encodeURIComponent(feed.rss);
+    var via3 = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(feed.rss);
+    return fetchWithTimeout(feed.rss).then(function (r) {
+      if (!r.ok) throw new Error("direct " + r.status);
+      return r.text();
+    }).then(parseXmlEps).catch(function () {
+      return fetchWithTimeout(via).then(function (r) {
+        if (!r.ok) throw new Error("allorigins " + r.status);
+        return r.text();
+      }).then(parseXmlEps);
+    }).catch(function () {
+      return fetchWithTimeout(via2).then(function (r) {
+        if (!r.ok) throw new Error("corsproxy " + r.status);
+        return r.text();
+      }).then(parseXmlEps);
+    }).catch(function () {
+      return fetchWithTimeout(via3).then(function (r) {
+        if (!r.ok) throw new Error("rss2json " + r.status);
+        return r.json();
+      }).then(function (j) {
+        if (!j || !j.items || !j.items.length) throw new Error("rss2json 空列表");
+        return j.items.map(function (it) {
+          var d = 0;
+          var parts = String(it.duration || "").split(":");
+          for (var k = 0; k < parts.length; k++) d = d * 60 + (parseInt(parts[k], 10) || 0);
+          return { t: it.title, u: it.enclosure && it.enclosure.link, d: d,
+                   p: (it.pubDate || "").slice(0, 10) };
+        }).filter(function (e) { return e.u; });
+      });
+    });
+  }
+
+  function ensureFeedEpisodes(feed, catDiv) {
+    var st = feedState[feed.id];
+    if (st && st.eps) { fillFeedEpisodes(feed, catDiv); return; }
+    var cached = readCache(feed.id);
+    if (cached) {
+      feedState[feed.id] = { eps: cached.eps, from: "cache", ts: cached.ts };
+      fillFeedEpisodes(feed, catDiv);
+      return;
+    }
+    var snap = feedSnap[feed.id];
+    if (snap && snap.eps) {   /* 先展示快照，后台再刷新 */
+      feedState[feed.id] = { eps: snap.eps, from: "snap", ts: snap.ts };
+      fillFeedEpisodes(feed, catDiv);
+    }
+    loadFeed(feed, catDiv);
+  }
+
+  function loadFeed(feed, catDiv) {
+    var st = feedState[feed.id] = feedState[feed.id] || {};
+    if (st.loading) return;
+    st.loading = true;
+    var status = catDiv.querySelector(".feed-status");
+    if (status) { status.textContent = "正在拉取节目单…"; }
+    fetchEps(feed).then(function (eps) {
+      st.eps = eps; st.from = "live"; st.ts = Date.now(); st.loading = false;
+      try {
+        localStorage.setItem(cacheKey(feed.id), JSON.stringify({ ts: Date.now(), eps: eps }));
+      } catch (e) {}
+      fillFeedEpisodes(feed, catDiv);
+    }).catch(function () {
+      st.loading = false;
+      if (status && (!st.eps || !st.eps.length)) {
+        status.textContent = "拉取失败（网络或代理不可用）";
+        var btn = document.createElement("button");
+        btn.textContent = "重试";
+        btn.addEventListener("click", function (ev) {
+          ev.stopPropagation();
+          loadFeed(feed, catDiv);
+        });
+        status.appendChild(document.createTextNode(" "));
+        status.appendChild(btn);
+      } else if (status && st.eps) {
+        status.textContent = "暂用离线快照 · 稍后可重试";
+      }
+    });
+  }
+
+  function fillFeedEpisodes(feed, catDiv) {
+    var st = feedState[feed.id];
+    if (!st || !st.eps) return;
+    var wrap = catDiv.querySelector(".cat-body > div");
+    var status = catDiv.querySelector(".feed-status");
+    var when = st.ts ? new Date(st.ts) : null;
+    var fromTxt = st.from === "live" ? "已更新" : st.from === "cache" ? "本地缓存" : "离线快照";
+    if (status) status.textContent = fromTxt + (when ? " · " + String(when.getHours()).padStart(2, "0") + ":" + String(when.getMinutes()).padStart(2, "0") : "") + " · 共 " + st.eps.length + " 集";
+    Array.prototype.forEach.call(wrap.querySelectorAll(".ep"), function (n) { n.remove(); });
+    st.eps.forEach(function (ep, i) {
+      var track = feedTrack(feed, i, ep);
+      var b = document.createElement("button");
+      b.className = "ep rss";
+      b.dataset.key = track.key;
+      var t = document.createElement("div"); t.className = "t"; t.textContent = ep.t;
+      var d = document.createElement("div"); d.className = "d";
+      d.textContent = (ep.p ? ep.p + " · " : "") + (ep.d ? fmt(ep.d) : "时长未知");
+      b.appendChild(t); b.appendChild(d);
+      b.addEventListener("click", function () {
+        loadTrack(track, true);
+        closeDrawer();
+      });
+      wrap.appendChild(b);
+    });
+    highlightList();
+  }
+
+  function highlightList() {
+    var key = state.track ? state.track.key : "";
+    els.catList.querySelectorAll(".ep").forEach(function (b) {
+      b.classList.toggle("current", b.dataset.key === key);
+    });
+  }
+
+  /* ---------- 抽屉 ---------- */
+  function openDrawer() {
+    document.body.classList.add("drawer-open");
+    els.menuBtn.setAttribute("aria-expanded", "true");
+  }
+  function closeDrawer() {
+    document.body.classList.remove("drawer-open");
+    els.menuBtn.setAttribute("aria-expanded", "false");
+  }
+  els.menuBtn.addEventListener("click", function () {
+    document.body.classList.contains("drawer-open") ? closeDrawer() : openDrawer();
+  });
+  els.scrim.addEventListener("click", closeDrawer);
+
+  /* ---------- 加载单集 ---------- */
+  function loadTrack(track, autoplay) {
+    state.track = track;
+    state.cues = track.cues || [];
+    state.cueIdx = -1;
+
+    els.catLabel.textContent = track.catTitle;
+    els.epTitle.textContent = track.title;
+    els.epDesc.textContent = track.desc;
+    els.artwork.dataset.cat = track.cls;
+    els.artwork.textContent = track.icon;
+    els.status.hidden = true;
+
+    els.subsInner.innerHTML = "";
+    if (state.cues.length) {
+      state.cues.forEach(function (cue, i) {
+        var p = document.createElement("p");
+        p.className = "cue";
+        p.dataset.i = i;
+        p.textContent = cue.t;
+        els.subsInner.appendChild(p);
+      });
+      var hint = document.createElement("p");
+      hint.className = "subs-hint";
+      hint.textContent = "点任意一句可跳播";
+      els.subsInner.appendChild(hint);
+    } else {
+      var h1 = document.createElement("p");
+      h1.className = "subs-hint";
+      h1.textContent = "本集来自 RSS 订阅，暂无字幕稿";
+      var h2 = document.createElement("p");
+      h2.className = "subs-hint";
+      h2.textContent = "播放、进度条与倍速不受影响";
+      els.subsInner.appendChild(h1);
+      els.subsInner.appendChild(h2);
+    }
+    els.subs.scrollTop = 0;
+
+    audio.src = track.src;
+    audio.load();
+    state.pendingSeek = 0;
+    setProgress(0, track.duration || 0);
+    setPlayingUI(false);
+    highlightList();
+    if (autoplay) play();
+    updateMediaSession(track);
+    saveState();
+  }
+
+  function play() {
+    audio.play().catch(function () {
+      /* iOS 首次需要用户手势；失败时静默回到暂停态 */
+      setPlayingUI(false);
+    });
+  }
+
+  /* ---------- 播放状态 UI ---------- */
+  var ICON_PLAY = "M8 5.5v13l11-6.5z";
+  var ICON_PAUSE = "M7 5h3.6v14H7zM13.4 5H17v14h-3.6z";
+  function setPlayingUI(playing) {
+    els.playIcon.setAttribute("d", playing ? ICON_PAUSE : ICON_PLAY);
+    els.playBtn.setAttribute("aria-label", playing ? "暂停" : "播放");
+  }
+  function setLoadingUI(loading) {
+    els.playBtn.classList.toggle("loading", loading);
+  }
+
+  els.playBtn.addEventListener("click", function () {
+    if (!audio.src) { if (localTracks.length) loadTrack(localTracks[0], true); return; }
+    if (audio.paused) play(); else audio.pause();
+  });
+  audio.addEventListener("play", function () { setPlayingUI(true); startLoop(); });
+  audio.addEventListener("pause", function () { setPlayingUI(false); setLoadingUI(false); stopLoop(); saveState(); });
+  audio.addEventListener("playing", function () { setLoadingUI(false); });
+  audio.addEventListener("waiting", function () { setLoadingUI(true); });
+  audio.addEventListener("loadstart", function () { setLoadingUI(true); });
+  audio.addEventListener("loadedmetadata", function () {
+    setLoadingUI(false);
+    els.tDur.textContent = fmt(audio.duration);
+    if (state.pendingSeek != null) {
+      try { audio.currentTime = state.pendingSeek; } catch (e) {}
+      state.pendingSeek = null;
+    }
+    applyRate();
+  });
+  audio.addEventListener("error", function () {
+    if (!audio.src) return;
+    setLoadingUI(false);
+    els.status.textContent = "音频加载失败，请检查网络或换一集试试";
+    els.status.hidden = false;
+  });
+  audio.addEventListener("ended", function () {
+    setPlayingUI(false); stopLoop(); saveState();
+    if (state.track && state.track.key.indexOf("local:") === 0) {
+      var i = localIndexByKey(state.track.key);
+      if (i >= 0 && i + 1 < localTracks.length) {
+        loadTrack(localTracks[i + 1], false);   /* iOS 无手势不允许自动续播，切好下一集待按 */
+      }
+    }
+  });
+
+  els.back15.addEventListener("click", function () { seekBy(-15); });
+  els.fwd15.addEventListener("click", function () { seekBy(15); });
+  function seekBy(dt) {
+    if (!audio.src) return;
+    var t = Math.max(0, Math.min((audio.currentTime || 0) + dt, audio.duration || 1e9));
+    try { audio.currentTime = t; } catch (e) {}
+    if (audio.paused) paint(t);
+  }
+
+  els.rateBtn.addEventListener("click", function () {
+    rateIdx = (rateIdx + 1) % RATES.length;
+    applyRate();
+    saveState();
+  });
+  function applyRate() {
+    var r = RATES[rateIdx];
+    els.rateBtn.textContent = r + "×";
+    try { audio.playbackRate = r; } catch (e) {}
+  }
+
+  /* ---------- 进度条：Pointer Events 拖拽 ---------- */
+  var slider = els.slider;
+  function pctFromEvent(ev) {
+    var r = slider.getBoundingClientRect();
+    var x = ev.clientX - r.left;
+    return Math.max(0, Math.min(1, x / r.width));
+  }
+  function duration() {
+    if (isFinite(audio.duration) && audio.duration > 0) return audio.duration;
+    return (state.track && state.track.duration) || 0;
+  }
+  function setProgress(sec, dur) {
+    var pct = dur > 0 ? Math.max(0, Math.min(100, sec / dur * 100)) : 0;
+    els.fill.style.width = pct + "%";
+    els.thumb.style.left = pct + "%";
+    els.tCur.textContent = fmt(sec);
+    els.tDur.textContent = fmt(dur);
+    slider.setAttribute("aria-valuenow", String(Math.round(pct)));
+  }
+  slider.addEventListener("pointerdown", function (ev) {
+    if (!audio.src) return;
+    state.scrubbing = true;
+    slider.classList.add("dragging");
+    slider.setPointerCapture(ev.pointerId);
+    var pct = pctFromEvent(ev);
+    var dur = duration();
+    els.bubble.hidden = false;
+    els.bubble.textContent = fmt(pct * dur);
+    els.bubble.style.left = (pct * 100) + "%";
+    els.fill.style.width = (pct * 100) + "%";
+    els.thumb.style.left = (pct * 100) + "%";
+    els.tCur.textContent = fmt(pct * dur);
+  });
+  slider.addEventListener("pointermove", function (ev) {
+    if (!state.scrubbing) return;
+    var pct = pctFromEvent(ev);
+    var dur = duration();
+    els.bubble.style.left = (pct * 100) + "%";
+    els.bubble.textContent = fmt(pct * dur);
+    els.fill.style.width = (pct * 100) + "%";
+    els.thumb.style.left = (pct * 100) + "%";
+    els.tCur.textContent = fmt(pct * dur);
+  });
+  function endScrub(ev) {
+    if (!state.scrubbing) return;
+    state.scrubbing = false;
+    slider.classList.remove("dragging");
+    els.bubble.hidden = true;
+    var pct = pctFromEvent(ev);
+    var dur = duration();
+    if (dur > 0) {
+      var t = pct * dur;
+      if (audio.readyState === 0) {
+        state.pendingSeek = t;          /* iOS 未加载元数据时先记下，播放时跳 */
+      } else {
+        try { audio.currentTime = t; } catch (e) { state.pendingSeek = t; }
+      }
+      setProgress(t, dur);
+    }
+  }
+  slider.addEventListener("pointerup", endScrub);
+  slider.addEventListener("pointercancel", endScrub);
+  slider.addEventListener("keydown", function (ev) {
+    if (!audio.src) return;
+    var step = { ArrowLeft: -5, ArrowRight: 5, ArrowDown: -5, ArrowUp: 5 }[ev.key];
+    if (step) { ev.preventDefault(); seekBy(step); }
+  });
+
+  /* ---------- 字幕同步 + 进度绘制（播放中 rAF 循环） ---------- */
+  var rafId = 0;
+  function startLoop() {
+    if (!rafId) rafId = requestAnimationFrame(tick);
+  }
+  function stopLoop() {
+    if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+  }
+  function tick() {
+    paint(audio.currentTime || 0);
+    rafId = requestAnimationFrame(tick);
+  }
+  function paint(t) {
+    if (state.scrubbing) return;
+    var dur = duration();
+    setProgress(t, dur);
+    syncCue(t);
+  }
+  function syncCue(t) {
+    if (!state.cues.length) return;
+    var idx = -1;
+    for (var i = 0; i < state.cues.length; i++) {
+      if (t >= state.cues[i].s && t < state.cues[i].e) { idx = i; break; }
+      if (t >= state.cues[i].e) idx = i;    /* 句间空隙时保持上一句高亮 */
+    }
+    if (idx === state.cueIdx) return;
+    state.cueIdx = idx;
+    var nodes = els.subsInner.querySelectorAll(".cue");
+    nodes.forEach(function (n, i) { n.classList.toggle("active", i === idx); });
+    if (idx >= 0 && nodes[idx]) {
+      var node = nodes[idx];
+      var top = node.offsetTop - (els.subs.clientHeight - node.offsetHeight) / 2;
+      try {
+        els.subs.scrollTo({ top: top, behavior: "smooth" });
+      } catch (e) {
+        els.subs.scrollTop = top;
+      }
+    }
+  }
+  /* 用户手动滚动字幕时，暂停自动跟随 3 秒 */
+  var userScrollAt = 0;
+  els.subs.addEventListener("touchstart", function () { userScrollAt = Date.now(); }, { passive: true });
+  els.subs.addEventListener("wheel", function () { userScrollAt = Date.now(); }, { passive: true });
+  var _scrollTo = els.subs.scrollTo.bind(els.subs);
+  els.subs.scrollTo = function (opt) {
+    if (Date.now() - userScrollAt < 3000) return;
+    _scrollTo(opt);
+  };
+
+  /* 点字幕跳播 */
+  els.subsInner.addEventListener("click", function (ev) {
+    var p = ev.target.closest(".cue");
+    if (!p || !audio.src) return;
+    var cue = state.cues[+p.dataset.i];
+    if (!cue) return;
+    if (audio.readyState === 0) state.pendingSeek = cue.s;
+    else { try { audio.currentTime = cue.s; } catch (e) {} }
+    paint(cue.s);
+  });
+
+  /* ---------- 锁屏 / 系统播放控制 ---------- */
+  function updateMediaSession(track) {
+    if (!("mediaSession" in navigator)) return;
+    try {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: track.title,
+        artist: data.show.title,
+        album: track.catTitle
+      });
+      navigator.mediaSession.setActionHandler("play", play);
+      navigator.mediaSession.setActionHandler("pause", function () { audio.pause(); });
+      navigator.mediaSession.setActionHandler("seekbackward", function () { seekBy(-15); });
+      navigator.mediaSession.setActionHandler("seekforward", function () { seekBy(15); });
+      navigator.mediaSession.setActionHandler("seekto", function (d) {
+        if (d.seekTime != null) { try { audio.currentTime = d.seekTime; } catch (e) {} }
+      });
+    } catch (e) {}
+  }
+
+  /* ---------- 记忆播放位置 ---------- */
+  function saveState() {
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify({
+        key: state.track ? state.track.key : null,
+        t: audio.currentTime || 0,
+        rateIdx: rateIdx
+      }));
+    } catch (e) {}
+  }
+  function localIndexByKey(key) {
+    for (var i = 0; i < localTracks.length; i++) {
+      if (localTracks[i].key === key) return i;
+    }
+    return -1;
+  }
+  function restore() {
+    var saved = null;
+    try { saved = JSON.parse(localStorage.getItem(LS_KEY) || "null"); } catch (e) {}
+    if (saved && typeof saved.rateIdx === "number" && RATES[saved.rateIdx]) rateIdx = saved.rateIdx;
+    applyRate();
+    if (saved && saved.key && saved.key.indexOf("local:") === 0) {
+      var i = localIndexByKey(saved.key);
+      if (i >= 0) {
+        loadTrack(localTracks[i], false);
+        if (saved.t > 1) {
+          state.pendingSeek = saved.t;
+          setProgress(saved.t, localTracks[i].duration || 0);
+        }
+        return true;
+      }
+    }
+    return false;
+  }
+  window.addEventListener("pagehide", saveState);   /* iOS 切后台/切页 */
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) saveState();
+  });
+
+  /* ---------- 启动 ---------- */
+  renderList();
+  if (!restore() && localTracks.length) {
+    loadTrack(localTracks[0], false);
+  }
+})();
+</script>
+</body>
+</html>
