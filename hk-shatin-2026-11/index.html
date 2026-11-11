@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#f3efe6" />
+<meta name="description" content="2026-11-12 从合水口到沙田火炭开会，再到新城市广场。楼层已于 2026-11-11 对照官网，价格、折扣和寄存费到场再确认。" />
+<title>香港沙田 · 火炭开会 + 新城市广场购物</title>
+<style>
+:root {
+  --ink: #1a1814;
+  --muted: #6b6358;
+  --paper: #f3efe6;
+  --card: #fffaf2;
+  --pine: #2c4a42;
+  --moss: #3d5c52;
+  --line: #e4d9c8;
+  --wash: #e7efe9;
+  --wash-line: #c9ddd4;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 18px/1.7 -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+img { max-width: 100%; }
+a { color: var(--moss); text-underline-offset: 3px; }
+a:focus-visible { outline: 2px solid var(--pine); outline-offset: 3px; }
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: rgba(243, 239, 230, 0.96);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  padding-top: env(safe-area-inset-top);
+}
+.toc-row {
+  max-width: 40rem;
+  margin: 0 auto;
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  padding: 12px 20px 14px;
+}
+.toc-row::-webkit-scrollbar { display: none; }
+.toc-row a {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--pine);
+  text-decoration: none;
+  font-size: 16px;
+  line-height: 1.2;
+}
+.wrap {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 28px 20px calc(64px + env(safe-area-inset-bottom));
+}
+h1 {
+  font-size: 28px;
+  line-height: 1.35;
+  font-weight: 650;
+  margin: 0 0 12px;
+}
+h2 {
+  font-size: 22px;
+  line-height: 1.35;
+  font-weight: 650;
+  color: var(--pine);
+  margin: 0 0 18px;
+}
+h3 {
+  font-size: 19px;
+  line-height: 1.4;
+  font-weight: 650;
+  margin: 0 0 12px;
+}
+p { margin: 0 0 16px; }
+ul, ol { margin: 0 0 16px; padding-left: 1.25em; }
+li { margin: 0 0 12px; }
+li:last-child { margin-bottom: 0; }
+.sub {
+  margin: 0 0 18px;
+  color: var(--muted);
+}
+.sub .keep { white-space: nowrap; }
+.lead { margin-bottom: 12px; }
+section {
+  scroll-margin-top: calc(88px + env(safe-area-inset-top));
+  border-top: 1px solid var(--line);
+  margin-top: 36px;
+  padding-top: 36px;
+}
+section h3.group { margin: 32px 0 14px; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px 18px 18px;
+  margin: 0 0 16px;
+}
+.card p:last-child,
+.card ul:last-child,
+.card ol:last-child { margin-bottom: 0; }
+.card.key {
+  background: var(--wash);
+  border-color: var(--wash-line);
+  box-shadow: inset 4px 0 0 var(--pine);
+}
+.quiet { color: var(--muted); }
+.loc {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  margin: 0 0 12px;
+}
+.loc b {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--pine);
+  color: #f3efe6;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.2;
+}
+.n {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: var(--pine);
+  color: #f3efe6;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 650;
+  vertical-align: middle;
+}
+.rate {
+  background: var(--wash);
+  border: 1px solid var(--wash-line);
+  border-radius: 18px;
+  padding: 20px 18px 8px;
+  margin: 0 0 16px;
+}
+.rate b {
+  display: block;
+  font-size: 40px;
+  line-height: 1;
+  color: var(--pine);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  margin: 0 0 12px;
+}
+.seq { list-style: none; padding: 0; margin: 0; }
+.seq li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  margin: 0;
+}
+.card.key .seq li { border-bottom-color: var(--wash-line); }
+.seq li:last-child { border-bottom: 0; padding-bottom: 0; }
+.seq li:first-child { padding-top: 0; }
+.end a, .home a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  margin-top: 8px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--pine);
+  text-decoration: none;
+  font-size: 17px;
+}
+.home { margin-top: 28px; }
+</style>
+</head>
+<body>
+<nav id="top" aria-label="本页目录">
+  <div class="toc-row">
+    <a href="#transit">交通</a>
+    <a href="#fx">汇率</a>
+    <a href="#route">明天路线</a>
+    <a href="#directory">店铺目录</a>
+    <a href="#clothes">衣服</a>
+    <a href="#drugstore">药妆</a>
+    <a href="#snacks">零食</a>
+    <a href="#membership">会员</a>
+    <a href="#lockers">寄存</a>
+    <a href="#customs">海关</a>
+    <a href="#nearby">附近补货</a>
+    <a href="#notes">核查说明</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header>
+    <h1>香港沙田 · 火炭开会 + 新城市广场购物</h1>
+    <p class="sub">2026-11-12｜合水口出发｜<span class="keep">衣服 / 药妆 / 零食</span></p>
+    <p class="lead">店铺楼层已于 2026-11-11 对照商场和品牌官网核对。价格、折扣和寄存收费，明天以货架和现场标价为准。</p>
+    <p class="quiet">2026-11-12 是周四。港铁往返，不经机场免税店。这一天不是香港或内地公众假期。</p>
+  </header>
+
+  <section id="transit">
+    <h2>交通</h2>
+    <p>合水口去沙田火炭开会，散会后乘一站东铁到新城市广场。下面的车程和站数，凡写“约”的都是估算，不是官方时刻表。落马洲到火炭的官方票价这次没有核实，这里不列票价。</p>
+
+    <article class="card">
+      <h3>开会地点</h3>
+      <p>香港新界沙田火炭禾盛街 11 号中建电讯大厦 22 楼 2206。英文地址常见写法是 11 Wo Shing Street。街名是禾盛街，不要写成禾穗街。</p>
+      <p>大厦资料（LeasingHub，2026-10-26 更新）写步行约 5 分钟到火炭站。出站用 D 出口。出口到禾盛街的逐步转弯没有做完整实地核实，到站按指示走。<a href="https://www.mtr.com.hk/archive/ch/services/maps/fot.pdf" target="_blank" rel="noopener noreferrer">港铁火炭站出入口图</a></p>
+    </article>
+
+    <article class="card key">
+      <h3>最早有用的一班</h3>
+      <p>合水口站 6 号线，往科学馆方向，约 06:29。06:15 那班往松岗，方向反了，不要坐。</p>
+      <p>依据：MetroMan 合水口站页面（数据标注 2026-10-27）写工作日往科学馆 06:29、往松岗 06:15；本地宝同一口径。深圳地铁官方英文页曾出现 06:31:51 / 06:26:33，可能偏旧。建议 06:25 到站台，以当天发车指示为准。</p>
+    </article>
+
+    <article class="card">
+      <h3><span class="n">1</span>合水口 → 深圳北</h3>
+      <p>6 号线，科学馆方向。车程约 43–47 分钟、约 15 站（估算）。</p>
+    </article>
+    <article class="card">
+      <h3><span class="n">2</span>深圳北 → 福田口岸</h3>
+      <p>换乘 4 号线。车程约 20 分钟、约 9 站（估算）。</p>
+    </article>
+    <article class="card">
+      <h3><span class="n">3</span>过境到落马洲</h3>
+      <p>步行约 240 米天桥到落马洲口岸。落马洲支线管制站开放时间 06:30–22:30（香港入境事务处资料）。</p>
+      <p>罗湖口岸 06:30–24:00，是深圳侧较慢的备选，不是主推。</p>
+    </article>
+    <article class="card">
+      <h3><span class="n">4</span>落马洲 → 火炭</h3>
+      <p>香港侧乘东铁线，往金钟方向，在火炭下车。约 6 站、车程约 22 分钟（估算）。</p>
+      <p>香港运输署资料：落马洲列车约 06:38–22:55，班距约 9–14 分钟。</p>
+    </article>
+    <article class="card">
+      <h3><span class="n">5</span>出站去大厦</h3>
+      <p>火炭站 D 出口，步行约 5 分钟到中建电讯大厦。逐步指路未做完整实地核实，跟指示走。</p>
+    </article>
+
+    <article class="card">
+      <h3>到达窗口</h3>
+      <p>大约 08:30–09:15（香港时间）。最大变数是过关，约 15–45 分钟。</p>
+      <p>口岸 06:30 才开。这班最早的地铁仍会在开放之后到达，不必为了赶这一班再提前出门。</p>
+    </article>
+
+    <article class="card">
+      <h3>不必改道</h3>
+      <p>古洞站预计约 2027 年才启用，明天走现有落马洲支线即可。高铁到西九龙、从深圳湾过关，对“一早到火炭”没有优势。</p>
+    </article>
+
+    <article class="card">
+      <h3>怎么付款</h3>
+      <p>深圳地铁用深圳通或乘车码。<a href="https://www.shenzhentong.com/ewmcp.html" target="_blank" rel="noopener noreferrer">深圳通</a></p>
+      <p>香港港铁用八达通，或港铁二维码车票（支付宝、微信、银联）。二维码车票和内地乘车码是两套，不要混用。<a href="https://www.mtr.com.hk/ch/customer/main/about_qr_code_ticket.html" target="_blank" rel="noopener noreferrer">港铁二维码车票说明</a></p>
+    </article>
+
+    <article class="card">
+      <h3>散会后去商场</h3>
+      <p>火炭乘东铁线，1 站到沙田站。商场在新界沙田正街（Sha Tin Centre Street）。</p>
+      <p><a href="https://www.newtownplaza.com.hk/zh-hans/位置/" target="_blank" rel="noopener noreferrer">新城市广场位置与交通</a>确认商场连接港铁沙田站 A 出口。常见说法是 A 出口可到一期，有资料写接到一期 L3。接到哪一层，以现场指示为准。</p>
+      <p>官网写一般营业时间可参考各店，常见为 10:00–22:00，但各店不同，下面目录按店分开写。顾客服务中心在一期 4 楼和三期 1 楼，每天 10:00–22:00。</p>
+    </article>
+  </section>
+
+  <section id="fx">
+    <h2>汇率</h2>
+    <p>查询日期 2026-11-11。货架标价是港币。结账或和内地同款比价时，用大约 0.85 折算。</p>
+    <div class="rate">
+      <b>0.85</b>
+      <p>大约 1 港币折合人民币。100 港币约 85 人民币。</p>
+      <p>不要按 9 折估。9 折约等于 1 港币 = 0.90 人民币，会把人民币成本估高。</p>
+    </div>
+    <ul>
+      <li>中国外汇交易中心 / 新华网 2026-11-11 中间价：100 港币 = 85.643 人民币，即 1 港币约 0.8564 人民币。</li>
+      <li>市场和实用参考大约 0.85。金投网当时约 0.8502；有银行中间价片段约 0.8507。</li>
+      <li>有中国银行牌价搜索片段写现钞卖出约 85.23/100。这则没有当成最终牌价，只作参考。</li>
+    </ul>
+  </section>
+
+  <section id="route">
+    <h2>明天路线</h2>
+    <p>按区域走完再换区，不要在一期和三期之间反复横跳。药油去一期的万宁主店。Bakehouse 和 City'super 都在一期 L2。</p>
+
+    <article class="card">
+      <h3><span class="n">1</span>如果要寄包</h3>
+      <p>到商场后先问一期 L4 或三期 L1 的顾客服务中心。笔记说寄包在一期 L3、Zara 旁边的通道。Zara 官方在一期 L3、335 铺。收费以现场标价为准，细节见后面的寄存一节。</p>
+    </article>
+
+    <article class="card">
+      <h3><span class="n">2</span>第一区 · 三期</h3>
+      <ol class="seq">
+        <li><b>GU</b>　L3 · A307</li>
+        <li><b>无印良品 MUJI</b>　L2 · A221</li>
+        <li><b>Mothercare</b>　L2 · A235B。明天周四，品牌官网写 11:00–20:00。</li>
+        <li><b>莎莎</b>　L3 · A335</li>
+      </ol>
+      <p>一田在三期，可作母婴备选。商场搜索对上的是三期 L2、A217–220 的一田百货。</p>
+    </article>
+
+    <article class="card key">
+      <h3><span class="n">3</span>第二区 · 一期</h3>
+      <ol class="seq">
+        <li><b>优衣库</b>　L2 · 225</li>
+        <li><b>松本清</b>　L2 · 250，以及 L3 · 359</li>
+        <li><b>万宁主店</b>　L3 · 307及307A。药油、眼药水来这里。</li>
+        <li><b>运动店</b>　L5：马拉松 519-521、运动家 529、Catalog 513</li>
+        <li><b>余仁生</b>　若看祛湿饮，去 L6 · 642</li>
+      </ol>
+    </article>
+
+    <article class="card key">
+      <h3><span class="n">4</span>第三区 · 一期 L2</h3>
+      <ol class="seq">
+        <li><b>City'super</b>　204-214。看包装零食。不在三期。</li>
+        <li><b>Bakehouse</b>　247。蛋挞和面包适合当天吃。不在三期。</li>
+      </ol>
+    </article>
+
+    <article class="card">
+      <h3><span class="n">5</span>还想比药油，再去龙丰</h3>
+      <p>从三期经连廊可到沙田中心 3 楼龙丰。旁边沙田广场 3 楼也有龙丰分店。是否更便宜，只能到场比价。取包后从沙田站坐东铁返回。</p>
+    </article>
+  </section>
+
+  <section id="directory">
+    <h2>店铺目录</h2>
+    <p>只列已经核对过的位置。营业时间来自 2026-11-11 当天的商场或品牌官网，明天仍可能临时调整。铺号和楼层以这一节为准。</p>
+
+    <h3 class="group">衣服 / 运动</h3>
+
+    <article class="card">
+      <h3>GU</h3>
+      <p class="loc"><b>三期 L3</b> A307</p>
+      <p>10:00–22:00。<a href="tel:+85222050388">电话 2205 0388</a></p>
+      <p><a href="https://www.newtownplaza.com.hk/zh-hans/购物/gu/" target="_blank" rel="noopener noreferrer">新城市广场 · GU</a></p>
+    </article>
+
+    <article class="card">
+      <h3>优衣库 UNIQLO</h3>
+      <p class="loc"><b>一期 L2</b> 225</p>
+      <p>10:00–22:00。<a href="tel:+85226061126">电话 2606 1126</a></p>
+      <p><a href="https://www.newtownplaza.com.hk/zh-hans/购物/uniqlo/" target="_blank" rel="noopener noreferrer">新城市广场 · 优衣库</a></p>
+    </article>
+
+    <article class="card">
+      <h3>无印良品 MUJI</h3>
+      <p class="loc"><b>三期 L2</b> A221</p>
+      <p>周一至五 11:00–21:30；周六、日及公众假期 11:00–22:00。明天周四按周一至五，11:00–21:30。<a href="tel:+85239713130">电话 3971 3130</a></p>
+    </article>
+
+    <article class="card">
+      <h3>马拉松 Marathon Sports</h3>
+      <p class="loc"><b>一期 L5</b> 519-521</p>
+      <p>铺号来自商场目录。营业时间到店看门口。</p>
+    </article>
+
+    <article class="card">
+      <h3>运动家 Sports House</h3>
+      <p class="loc"><b>一期 L5</b> 529</p>
+      <p>铺号来自商场目录。营业时间到店看门口。</p>
+    </article>
+
+    <article class="card">
+      <h3>Catalog</h3>
+      <p class="loc"><b>一期 L5</b> 513</p>
+      <p>铺号来自商场目录。换季折扣是否还在，只能到场看，不要当成已经确定的活动。</p>
+    </article>
+
+    <article class="card">
+      <h3>Zara</h3>
+      <p class="loc"><b>一期 L3</b> 335</p>
+      <p>10:00–22:00。<a href="tel:+85226082272">电话 2608 2272</a></p>
+      <p>用来找寄存通道的参照，不是这次要买的店。官方位置在 L3，不是四楼。</p>
+    </article>
+
+    <h3 class="group">母婴</h3>
+
+    <article class="card">
+      <h3>Mothercare</h3>
+      <p class="loc"><b>三期 L2</b> A235B</p>
+      <p>2026-11-11 品牌官网和商场页仍列出这家店，没有查到关店依据。</p>
+      <p>品牌官网营业时间：周一至周四 11:00–20:00；周五至周日及公众假期 11:00–21:00。明天周四，按品牌官网是 20:00 关门。商场页曾写每日 11:00–21:00，以品牌官网的分日时间为准，到场再确认。<a href="tel:+85226985533">电话 2698 5533</a></p>
+      <p><a href="https://www.mothercare.com.hk/zh/pages/where-to-buy" target="_blank" rel="noopener noreferrer">Mothercare 分店页</a></p>
+    </article>
+
+    <article class="card">
+      <h3>一田</h3>
+      <p class="loc"><b>三期 L2</b> A217–220</p>
+      <p>可作母婴备选。2026-11-11 商场搜索里，这个铺号对应一田百货。营业时间到店看门口。有这家店，不等于 Mothercare 已关。</p>
+    </article>
+
+    <article class="card">
+      <h3>万宁 Baby</h3>
+      <p class="loc"><b>三期 L2</b> A213</p>
+      <p>只适合母婴，不要当成药房主店。药油去一期 L3 的万宁主店。</p>
+      <p>2026-11-11 打开商场页核对：星期一至日及公众假期 10:00–21:00。<a href="tel:+85223425131">电话 2342 5131</a></p>
+      <p><a href="https://www.newtownplaza.com.hk/zh-hans/购物/mannings-baby/" target="_blank" rel="noopener noreferrer">新城市广场 · 万宁 Baby</a></p>
+    </article>
+
+    <h3 class="group">药妆</h3>
+
+    <article class="card key">
+      <h3>万宁主店 Mannings</h3>
+      <p class="loc"><b>一期 L3</b> 307及307A</p>
+      <p>买黄道益、药油、眼药水来这里。商场页和万宁分店名单一致。三期 L2 那家是万宁 Baby。</p>
+      <p>09:00–22:00。<a href="tel:+85226034318">电话 2603 4318</a></p>
+      <p><a href="https://www.newtownplaza.com.hk/zh-hans/购物/mannings/" target="_blank" rel="noopener noreferrer">新城市广场 · 万宁主店</a></p>
+    </article>
+
+    <article class="card">
+      <h3>莎莎 Sa Sa</h3>
+      <p class="loc"><b>三期 L3</b> A335</p>
+      <p>周一至四 10:30–21:30；周五至日及公众假期 10:30–22:00。明天周四是 10:30–21:30。<a href="tel:+85227368019">电话 2736 8019</a></p>
+    </article>
+
+    <article class="card">
+      <h3>松本清 Matsukiyo</h3>
+      <p class="loc"><b>一期 L2 + L3</b> L2 250 · L3 359</p>
+      <p>官方店址是一期 2 楼 250 铺以及 3 楼 359 铺，不是只有 L2。商场页曾把两个铺号写在 L2 下一行，以品牌官网为准。</p>
+      <p>10:00–22:00。<a href="tel:+85235831651">电话 3583 1651</a></p>
+      <p>有药房服务。注册药剂师当值时间：星期一至六 10:30–19:30。明天周四在这个范围内。药房热线 <a href="tel:+85235831652">+852 3583 1652</a>。</p>
+      <p><a href="https://www.matsukiyo.hk/shopinfo/" target="_blank" rel="noopener noreferrer">松本清分店页</a></p>
+    </article>
+
+    <article class="card">
+      <h3>余仁生</h3>
+      <p class="loc"><b>一期 L6</b> 642</p>
+      <p>10:00–21:00。<a href="tel:+85225721119">电话 2572 1119</a></p>
+      <p><a href="https://www.newtownplaza.com.hk/zh-hant/購物/eu-yan-sang-2/" target="_blank" rel="noopener noreferrer">新城市广场 · 余仁生</a></p>
+    </article>
+
+    <h3 class="group">食品</h3>
+
+    <article class="card key">
+      <h3>City'super</h3>
+      <p class="loc"><b>一期 L2</b> 204-214</p>
+      <p>在一期，不在三期。周一至四、周日及公众假期 09:00–22:00；周五至六及公众假期前夕 09:00–23:00。明天周四是 09:00–22:00。<a href="tel:+85227363866">电话 2736 3866</a></p>
+    </article>
+
+    <article class="card key">
+      <h3>Bakehouse</h3>
+      <p class="loc"><b>一期 L2</b> 247</p>
+      <p>品牌官网和商场页一致：Shop 247, Level 2, New Town Plaza I。在一期，不在三期。</p>
+      <p>周一至四 08:00–21:00；周五至日及公众假期 08:00–21:30。明天周四是 08:00–21:00。</p>
+      <p>这是手工烘焙店。蛋挞和面包适合当天吃，不适合当作带回的包装零食。</p>
+      <p><a href="https://www.bakehouse.hk/locations" target="_blank" rel="noopener noreferrer">Bakehouse 分店页</a></p>
+    </article>
+  </section>
+
+  <section id="clothes">
+    <h2>衣服</h2>
+    <p>铺位和营业时间见上面的店铺目录。下面是明天可以怎么看，不是保证比内地便宜。笔记里的价格以明天货架为准。</p>
+    <ul>
+      <li><b>GU。</b>先看清仓和活动价。有一篇大约两天前的笔记写低至 39 港币，再叠加汇率差。那是那篇笔记里的活动或清仓价，不是普遍价，不能保证明天还有。</li>
+      <li><b>优衣库。</b>看基础款。先看港币标价，用大约 0.85 折成人民币，再和内地同款比。</li>
+      <li><b>MUJI。</b>服装、家居和限定商品都有。同样不能一概说比内地便宜，要比同款。</li>
+      <li><b>一期 L5 运动店。</b>马拉松、运动家、Catalog。看有没有换季折扣。明天是否还在，没有确认。</li>
+    </ul>
+  </section>
+
+  <section id="drugstore">
+    <h2>药妆</h2>
+    <p>来源主要是 2026 年笔记和公开资料，楼层已在 2026-11-11 用官网核对。价格和“值不值得”都不是保证。下面这些是香港常见、可按自己是否用得上看的方向，先看成分和规格。</p>
+    <ul>
+      <li>黄道益活络油、双飞人（注意版本和成分）、保心安油、撒隆巴斯。</li>
+      <li>乐敦滴眼液。不同产品适应症不同。</li>
+      <li>虎标镇痛胶布。注意规格和禁忌。</li>
+      <li>休足时间。舒缓类，不是治疗腿部疾病的药。</li>
+      <li>超爆水面膜绿色款是主观推荐，没有足够证据说绿色款最好。</li>
+      <li>立康眼药水一类：不要因为便宜就盲目买，也不要大量囤。先看成分和用途。含血管收缩剂、抗生素或其他特殊成分的滴眼液，尤其不要乱囤。</li>
+      <li>余仁生祛湿饮：有笔记写 80 港币两盒。促销是否属实没有确认，到一期 L6 的店里看标价。</li>
+      <li>不要跟风买“少女针 / 婴儿针 / ellips 胶囊”这一类网红项。笔记里“有人后悔”或“不好用”只是个人体验，不能当成疗效评价。</li>
+    </ul>
+    <article class="card">
+      <p>热门款看生产日期。结账前看清是不是这家店的会员价，说明在会员一节。只带合理的自用数量。</p>
+    </article>
+  </section>
+
+  <section id="snacks">
+    <h2>零食</h2>
+    <ul>
+      <li>包装零食优先在一期 L2 的 City'super 看：出前一丁、维他柠檬茶、朱古力等。具体看价格。</li>
+      <li>“P7 巨峰乌龙”“小熊饼干”等，没有做可靠的货源确认，或者只是口味评价。不要写成必买。</li>
+      <li>Bakehouse 当天吃，不拿来当带回的包装零食。</li>
+      <li>新城市广场的商场目录里没有惠康。公开资料里较近的一家在旁边沙田广场（沙田正街 21–27 号），不是商场里面的店。不想多走，就在 City'super 买。</li>
+    </ul>
+  </section>
+
+  <section id="membership">
+    <h2>会员</h2>
+    <p>“结账前看清是不是会员价”，指的是各店自己的会员价，不是新城市广场的商场会员。</p>
+    <ul>
+      <li>万宁、莎莎的货架或小票上，常会同时标会员价和非会员价。没有注册，就按较高的那个结账。</li>
+      <li>Mothercare 也是该店自己的会员。有笔记写孕妇可以免费注册，正价商品可以打折。这是笔记里的说法，到店问。</li>
+      <li>已打开的笔记没有把“新城市会员”当成结账必看的条件。</li>
+    </ul>
+    <article class="card">
+      <p>这次没有核实万宁、莎莎会员的官方注册步骤。页面只提醒看价签，不写注册流程。</p>
+    </article>
+  </section>
+
+  <section id="lockers">
+    <h2>寄存</h2>
+    <article class="card key">
+      <h3>明天看标价</h3>
+      <p>官网没有公布当前每小时收费。到场看柜子上的价格，或问顾客服务中心。不要把 15 港币/小时当成确定预算。</p>
+    </article>
+    <p>商场确认有储物柜：<a href="https://www.newtownplaza.com.hk/zh-hans/礼宾服务/" target="_blank" rel="noopener noreferrer">新城市广场礼宾服务</a>。顾客服务中心在一期 4 楼和三期 1 楼，10:00–22:00。</p>
+    <ul>
+      <li>笔记说寄包在 Zara 旁边通道，15 港币/小时，只能用八达通。Zara 官方在一期 L3、335 铺，不是四楼。</li>
+      <li>2026 年 5 月一篇探店文写过两处柜子：文中写四楼 Zara 旁，以及客服中心旁。当时看到 12 港币/小时、八达通、大约 07:00–24:00。这不是官网，而且文中“四楼 Zara”和 Zara 官方的 L3 位置对不上。</li>
+      <li>更早的旧资料还有 6/12 港币、玛莎旁边的储物柜等说法，不能当作明天的价格。</li>
+    </ul>
+  </section>
+
+  <section id="customs">
+    <h2>海关</h2>
+    <p>带回内地，以农业农村部、海关总署公告第 470 号为准。<a href="https://www.moa.gov.cn/nybgb/2022/202202/202203/t20220324_6393815.htm" target="_blank" rel="noopener noreferrer">公告第 470 号</a></p>
+    <p>另外两份说明：<a href="http://hefei.customs.gov.cn/hefei_customs/2024-12/02/article_2026060515434032770.html" target="_blank" rel="noopener noreferrer">合肥海关说明（2024-12-02）</a>，<a href="http://paper.people.com.cn/rmrbhwb/html/2024-08/24/content_26076641.htm" target="_blank" rel="noopener noreferrer">人民日报海外版海关答疑（2024-08-24）</a>。</p>
+    <ul>
+      <li>燕窝原则上禁止携带或寄递进境。“经商业无菌处理的罐头装燕窝”除外。不要写成所有“即食燕窝”都可以带。</li>
+      <li>水生动物产品原则上禁止。干制、熟制、发酵后制成的食用酱汁类水生动物产品除外。</li>
+      <li>海关答疑写：鱼胶、海参属于干制水生动物产品。在不涉及濒危物种的前提下，现场检疫合格后，可以携带进境，并以自用、合理数量为限。</li>
+      <li>所以“绝不能带任何干货”，以及“干花胶、海参、鲍鱼一律禁止”，都比公告更严，不能原样采用。鲜活的，或未干制、未熟制的，不能带。涉及濒危物种的，仍然受限制。</li>
+      <li>不想过关时被查验耽误，可以不买这类。</li>
+      <li>鹿茸等动物源性中药材禁止。西洋参属于 CITES 附录 II，根和切片等禁止携带进境（答疑口径写明不包括某些制成品）。</li>
+      <li>生或熟的肉类及其制品禁止。汤料包要看配料，含肉类制品的不能带。</li>
+      <li>个人携带以自用、合理数量为限，应如实申报、接受查验。药品和受管制物品遵守具体规定。不要为了便宜，大量囤用途不清楚的药。</li>
+    </ul>
+    <article class="card">
+      <p>笔记里提到燕窝、花胶不要带回内地。燕窝（上面说的罐头例外之外）这一点和公告一致。干制花胶、海参并不是公告里的一律禁止项，但过关时仍可能被查验。</p>
+    </article>
+  </section>
+
+  <section id="nearby">
+    <h2>附近补货</h2>
+    <article class="card">
+      <h3>龙丰</h3>
+      <p><a href="https://www.lungfung.hk/location/" target="_blank" rel="noopener noreferrer">龙丰分店名单</a>列有两处：</p>
+      <ul>
+        <li>龙丰 Mall：沙田中心 3 楼 6-8、15、16 号 A&amp;B、17B&amp;C 号铺。</li>
+        <li>沙田正街 21–27 号沙田广场 3 楼 45A 及 47 号铺。</li>
+      </ul>
+      <p>从新城市广场三期经连廊可到沙田中心。是否一定比万宁、莎莎便宜，只能到场比价。付款前核对小票上的商品名称和单价。</p>
+    </article>
+    <article class="card">
+      <h3>惠康</h3>
+      <p>见零食一节。公开资料指向沙田广场（沙田正街 21–27 号），不是新城市广场目录里的店。</p>
+    </article>
+    <article class="card">
+      <p>连城广场“楼上”是否还在、确切铺位，这次没有再核实，不要当成确定要去的点。如果考虑“楼上”，先看上面的海关规则，尤其是燕窝和海味。</p>
+    </article>
+  </section>
+
+  <section id="notes">
+    <h2>核查说明</h2>
+    <p>2026-11-11 对照了新城市广场官网、部分品牌官网和海关公告，并按后来的核对意见改过这一版。结论以官网和公告为准。</p>
+    <h3>已经按官网改过来的</h3>
+    <ul>
+      <li>万宁主店在一期 L3，307及307A。三期 L2、A213 是万宁 Baby。</li>
+      <li>松本清跨一期 L2 和 L3，250 铺和 359 铺都有。</li>
+      <li>GU 笔记里的“低至 39 港币”、余仁生笔记里的“80 港币两盒”，都不是明天的保证价。</li>
+      <li>寄存 15 港币/小时不是官方定价。</li>
+      <li>商品评价多是个人体验。药品不要盲目囤。</li>
+    </ul>
+    <h3>不要跟着未核对的说法走</h3>
+    <ul>
+      <li>万宁主店以一期 L3 为准。</li>
+      <li>City'super、Bakehouse 在一期 L2。写在三期是错的。</li>
+      <li>购物时如果按“三期 L2 万宁”去买药油，会走到万宁 Baby。</li>
+      <li>“港币约打 9 折”不准确。2026-11-11 更接近 0.85，大约是 8.5 折，不是 9 折。</li>
+      <li>Mothercare 当天在品牌官网和商场页上仍是三期 L2、A235B，不能当成已经撤掉。一田可以备选，这不表示该店已关。</li>
+      <li>“干海味一律禁止带回”过严。以公告第 470 号为准：燕窝原则上禁止；干制、熟制的水产品另有条件，见海关一节。</li>
+    </ul>
+    <p>交通里“火炭到沙田一站、A 出口连接商场”基本准确。A 出口具体接到哪一层，以现场指示为准。</p>
+
+    <h3>已核实链接</h3>
+    <ul>
+      <li><a href="https://www.newtownplaza.com.hk/zh-hans/" target="_blank" rel="noopener noreferrer">新城市广场官网</a></li>
+      <li><a href="https://www.newtownplaza.com.hk/zh-hans/位置/" target="_blank" rel="noopener noreferrer">新城市广场位置与交通</a></li>
+      <li><a href="https://www.newtownplaza.com.hk/zh-hans/礼宾服务/" target="_blank" rel="noopener noreferrer">礼宾服务（储物柜、顾客服务中心）</a></li>
+      <li><a href="https://www.newtownplaza.com.hk/zh-hans/购物/mannings/" target="_blank" rel="noopener noreferrer">万宁主店（商场页）</a></li>
+      <li><a href="https://www.newtownplaza.com.hk/zh-hans/购物/mannings-baby/" target="_blank" rel="noopener noreferrer">万宁 Baby（商场页）</a></li>
+      <li><a href="https://www.newtownplaza.com.hk/zh-hans/购物/gu/" target="_blank" rel="noopener noreferrer">GU（商场页）</a></li>
+      <li><a href="https://www.newtownplaza.com.hk/zh-hans/购物/uniqlo/" target="_blank" rel="noopener noreferrer">优衣库（商场页）</a></li>
+      <li><a href="https://www.matsukiyo.hk/shopinfo/" target="_blank" rel="noopener noreferrer">松本清分店</a></li>
+      <li><a href="https://www.bakehouse.hk/locations" target="_blank" rel="noopener noreferrer">Bakehouse 分店</a></li>
+      <li><a href="https://www.mothercare.com.hk/zh/pages/where-to-buy" target="_blank" rel="noopener noreferrer">Mothercare 分店</a></li>
+      <li><a href="https://www.newtownplaza.com.hk/zh-hant/購物/eu-yan-sang-2/" target="_blank" rel="noopener noreferrer">余仁生（商场页）</a></li>
+      <li><a href="https://www.lungfung.hk/location/" target="_blank" rel="noopener noreferrer">龙丰分店</a></li>
+      <li><a href="https://www.moa.gov.cn/nybgb/2022/202202/202203/t20220324_6393815.htm" target="_blank" rel="noopener noreferrer">公告第 470 号</a></li>
+      <li><a href="http://hefei.customs.gov.cn/hefei_customs/2024-12/02/article_2026060515434032770.html" target="_blank" rel="noopener noreferrer">合肥海关说明（2024-12-02）</a></li>
+      <li><a href="http://paper.people.com.cn/rmrbhwb/html/2024-08/24/content_26076641.htm" target="_blank" rel="noopener noreferrer">人民日报海外版海关答疑（2024-08-24）</a></li>
+      <li><a href="https://www.mtr.com.hk/archive/ch/services/maps/fot.pdf" target="_blank" rel="noopener noreferrer">港铁火炭站出入口图</a></li>
+      <li><a href="https://www.shenzhentong.com/ewmcp.html" target="_blank" rel="noopener noreferrer">深圳通</a></li>
+      <li><a href="https://www.mtr.com.hk/ch/customer/main/about_qr_code_ticket.html" target="_blank" rel="noopener noreferrer">港铁二维码车票</a></li>
+    </ul>
+  </section>
+
+  <p class="end"><a href="#top">回到目录</a></p>
+  <p class="home"><a href="../">全部行程</a></p>
+</main>
+</body>
+</html>
