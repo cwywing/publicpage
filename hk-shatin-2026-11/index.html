@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#f3efe6" />
-<meta name="description" content="2026-11-12 合水口到沙田火炭开会，再到新城市广场。价格、折扣和寄存收费以明天货架和现场标价为准。" />
+<meta name="description" content="2026-11-12 合水口到沙田火炭开会，再到新城市广场。价格、折扣和寄存收费以现场货架和标价为准。" />
 <title>香港沙田 · 火炭开会 + 新城市广场购物</title>
 <style>
 :root {
@@ -142,6 +142,42 @@ table.fit tbody th {
   color: var(--ink);
   font-weight: 650;
 }
+table.duty { width: 100%; position: relative; }
+.unit {
+  margin: 0;
+  padding: 14px 16px 0;
+  color: var(--muted);
+  font-size: 16px;
+}
+table.duty thead {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+table.duty,
+table.duty tbody,
+table.duty tr,
+table.duty th,
+table.duty td {
+  display: block;
+  width: auto;
+  white-space: normal;
+}
+table.duty tr { padding: 14px 16px; border-bottom: 1px solid var(--line); }
+table.duty tr:last-child { border-bottom: 0; }
+table.duty th,
+table.duty td { border: 0; padding: 0; background: transparent; color: var(--ink); }
+table.duty tbody th { font-weight: 650; }
+table.duty td.price {
+  margin-top: 4px;
+  color: var(--pine);
+  font-weight: 650;
+}
+table.duty td.note { margin-top: 4px; color: var(--muted); }
+table.duty td.note:empty { display: none; }
+h3.calm { color: var(--pine); }
 .shops {
   width: max-content;
   min-width: 100%;
@@ -222,6 +258,7 @@ tr:last-child th { border-bottom: 0; }
     <a href="#membership">会员</a>
     <a href="#lockers">寄存</a>
     <a href="#customs">海关</a>
+    <a href="#dutyfree">口岸烟酒</a>
     <a href="#nearby">附近补货</a>
   </div>
 </nav>
@@ -230,7 +267,7 @@ tr:last-child th { border-bottom: 0; }
   <header>
     <h1>香港沙田 · 火炭开会 + 新城市广场购物</h1>
     <p class="sub">2026-11-12（周四）｜合水口出发<br>衣服 / 药妆 / 零食</p>
-    <p class="lead">价格、折扣和寄存收费以明天货架和现场标价为准。</p>
+    <p class="lead">价格、折扣和寄存收费以现场货架和标价为准。</p>
   </header>
 
   <section id="transit">
@@ -293,7 +330,7 @@ tr:last-child th { border-bottom: 0; }
       <li>再一期：优衣库、松本清、万宁主店；若看运动装去 L5；若看祛湿饮去 L6 余仁生。余仁生周四 21:00 关。</li>
       <li>一期 L2：City'super 买包装零食，Bakehouse 买当天吃的蛋挞和面包。Bakehouse 周四 21:00 关。</li>
       <li>若要比药油或保健品：经连廊去沙田中心 3 楼龙丰；沙田广场 3 楼也有分店。</li>
-      <li>取包后从沙田站坐东铁返回。落马洲支线管制站 22:30 关闭。</li>
+      <li>取包后从沙田站坐东铁返回。落马洲支线管制站 22:30 关闭。回程在落马洲离境层看港免，过关后再看福田口岸二楼深免；具体价格见<a href="#dutyfree">口岸烟酒</a>。</li>
     </ol>
     <p>商场常见营业时间可参考各店，多为 10:00–22:00，以下面目录为准。</p>
   </section>
@@ -301,7 +338,7 @@ tr:last-child th { border-bottom: 0; }
   <section id="fx">
     <h2>汇率</h2>
     <p>参考汇率：1 港币 ≈ 0.85 人民币（100 港币约 85 元人民币）。</p>
-    <p>2026-11-11 中间价：100 港币 = 85.643 人民币，即约 0.8564。实际结账以支付渠道汇率为准。</p>
+    <p>2026-11-12 新华社中间价：100 港币 = 85.633 人民币，即约 0.8563。实际结账以支付渠道汇率为准。</p>
   </section>
 
   <section id="route">
@@ -338,7 +375,7 @@ tr:last-child th { border-bottom: 0; }
 
   <section id="directory">
     <h2>店铺目录</h2>
-    <p>时间按 2026-11-11 官网，写成明天周四的口径。</p>
+    <p>时间按 2026-11-11 官网，写成当天周四的口径。</p>
 
     <h3>衣服 / 运动</h3>
     <div class="scroll">
@@ -479,7 +516,7 @@ tr:last-child th { border-bottom: 0; }
   <section id="clothes">
     <h2>衣服</h2>
     <ul class="checks">
-      <li><label><input type="checkbox" data-key="gu"><span>GU：先看清仓和活动价。笔记里出现过 39 港币低价，不保证明天还有。</span></label></li>
+      <li><label><input type="checkbox" data-key="gu"><span>GU：先看清仓和活动价。笔记里出现过 39 港币低价，不保证现场还有。</span></label></li>
       <li><label><input type="checkbox" data-key="uniqlo"><span>优衣库：看基础款，按约 0.85 折成人民币后和内地同款比。</span></label></li>
       <li><label><input type="checkbox" data-key="muji"><span>MUJI：服装、家居或限定款，比同款。</span></label></li>
       <li><label><input type="checkbox" data-key="sports"><span>一期 L5 运动装：马拉松、运动家、Catalog，看换季折扣。</span></label></li>
@@ -540,6 +577,215 @@ tr:last-child th { border-bottom: 0; }
       <li>鹿茸等动物源性中药材禁止。西洋参根和切片等按管制口径不能带。</li>
       <li>药品遵守相关规定，不要大量携带用途不清的药。</li>
     </ul>
+  </section>
+
+  <section id="dutyfree">
+    <h2>口岸烟酒</h2>
+    <p>回程再买。去程不要囤：香港入境免税只有 19 支。回程先在落马洲离境层港免（Club Avolta Shop 1B），过关后再看福田口岸二楼入境大厅深免。下面价格来自 2026 年 8 月、10 月和 11 月初小红书货架或收据，以现场为准。</p>
+
+    <h3>带回内地的额度</h3>
+    <p>从香港回内地，一般为：香烟 200 支（一条），或雪茄 10 支，或烟丝 250 克；酒精度 12% 以上 0.75 升。<a href="https://www.mofcom.gov.cn/zcfb/zgdwjjmywg/art/2025/art_1e3054b72cf8471abeed5b224eda0c8d.html" target="_blank" rel="noopener noreferrer">税委会公告2024年第11号</a></p>
+    <p>15 天内已经进过境的，降为 40 支香烟，酒不能再免。官方是 200 支，不是「能带两条」。超量走红通道申报。</p>
+    <p>香港入境免税是 19 支，所以不要在去程买一条。<a href="https://www.customs.gov.hk/sc/service-enforcement-information/passenger-clearance/duty-free-concessions/index.html" target="_blank" rel="noopener noreferrer">香港海关免税额</a></p>
+
+    <h3 class="calm">港免 · 这些偏贵，建议先跳过</h3>
+    <div class="scroll">
+      <p class="unit">实拍价（港元/条）</p>
+      <table class="duty">
+        <thead>
+          <tr><th>品名</th><th class="price">实拍价（港元/条）</th><th>备注</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">七星 Prime Leaf 8</th>
+            <td class="price">8月 465</td>
+            <td class="note">有人说机场大约 220，这里贵一倍左右</td>
+          </tr>
+          <tr>
+            <th scope="row">七星 Charcoal Filter（经典白银盒）</th>
+            <td class="price">8月 430</td>
+            <td class="note"></td>
+          </tr>
+          <tr>
+            <th scope="row">七星 Charcoal Filter 4（黑盒）</th>
+            <td class="price">11月初 465</td>
+            <td class="note"></td>
+          </tr>
+          <tr>
+            <th scope="row">七星 Charcoal Filter 7（银盒）</th>
+            <td class="price">11月初同层可见价签 465</td>
+            <td class="note"></td>
+          </tr>
+          <tr>
+            <th scope="row">Mevius（万事发）蓝盒，可见 1、4 等</th>
+            <td class="price">8月 420</td>
+            <td class="note">各款都是这个价，建议直接略过</td>
+          </tr>
+          <tr>
+            <th scope="row">Mevius Option Rich Taste 等深色款</th>
+            <td class="price">11月初 420</td>
+            <td class="note">同上</td>
+          </tr>
+          <tr>
+            <th scope="row">芙蓉王 Royal</th>
+            <td class="price">8月 1600</td>
+            <td class="note"></td>
+          </tr>
+          <tr>
+            <th scope="row">沉香</th>
+            <td class="price">8月 1380 / 1100 / 880</td>
+            <td class="note">不同款</td>
+          </tr>
+          <tr>
+            <th scope="row">Cigaronne Legend / Big Boss</th>
+            <td class="price">8月 715</td>
+            <td class="note"></td>
+          </tr>
+          <tr>
+            <th scope="row">Cigaronne Royal</th>
+            <td class="price">8月 615</td>
+            <td class="note"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>港免 · 相对没那么贵</h3>
+    <p>这些只是同场实拍，不是「推荐必买」。以现场为准。</p>
+    <div class="scroll">
+      <p class="unit">实拍价（港元/条）</p>
+      <table class="duty">
+        <thead>
+          <tr><th>品名</th><th class="price">实拍价（港元/条）</th><th>备注</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">百年龙凤</th>
+            <td class="price">8月 180</td>
+            <td class="note">港免里相对便宜</td>
+          </tr>
+          <tr>
+            <th scope="row">万宝路 Flavor Mix（白盒、灰字 flavor mix）</th>
+            <td class="price">350</td>
+            <td class="note">Club Avolta Shop 1B 收据，一条 200 支</td>
+          </tr>
+          <tr>
+            <th scope="row">东方之珠</th>
+            <td class="price">8月 360</td>
+            <td class="note"></td>
+          </tr>
+          <tr>
+            <th scope="row">芙蓉王细长金边</th>
+            <td class="price">8月 253</td>
+            <td class="note"></td>
+          </tr>
+          <tr>
+            <th scope="row">Winston</th>
+            <td class="price">8月 390</td>
+            <td class="note">同场价签，没有明显「值得买」的评价</td>
+          </tr>
+          <tr>
+            <th scope="row">Camel</th>
+            <td class="price">8月 420</td>
+            <td class="note">同上</td>
+          </tr>
+          <tr>
+            <th scope="row">CASTER 5</th>
+            <td class="price">8月 430</td>
+            <td class="note">同上</td>
+          </tr>
+          <tr>
+            <th scope="row">南京 1905</th>
+            <td class="price">8月 620</td>
+            <td class="note">不便宜，仅作对照</td>
+          </tr>
+          <tr>
+            <th scope="row">芙蓉王底层黑</th>
+            <td class="price">8月 320</td>
+            <td class="note">仅作对照</td>
+          </tr>
+          <tr>
+            <th scope="row">贵烟</th>
+            <td class="price">8月 1000 / 560 / 440 / 240</td>
+            <td class="note">不同款，仅作对照</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>深免（10 月笔记，楼层未写清）</h3>
+    <p>打折货架上相对便宜的国产中档，例如：</p>
+    <div class="scroll">
+      <p class="unit">实拍价（港元/条）</p>
+      <table class="duty">
+        <thead>
+          <tr><th>品名</th><th class="price">实拍价（港元/条）</th><th>备注</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">芙蓉王硬盒</th>
+            <td class="price">160</td>
+            <td class="note"></td>
+          </tr>
+          <tr>
+            <th scope="row">芙蓉王硬细支</th>
+            <td class="price">251</td>
+            <td class="note"></td>
+          </tr>
+          <tr>
+            <th scope="row">芙蓉王深蓝</th>
+            <td class="price">360</td>
+            <td class="note"></td>
+          </tr>
+          <tr>
+            <th scope="row">硬中华</th>
+            <td class="price">特价 270</td>
+            <td class="note">标签 SALE 71%；软盒 500</td>
+          </tr>
+          <tr>
+            <th scope="row">中华细支</th>
+            <td class="price">436</td>
+            <td class="note">不便宜</td>
+          </tr>
+          <tr>
+            <th scope="row">中华金中支</th>
+            <td class="price">670</td>
+            <td class="note">不便宜</td>
+          </tr>
+          <tr>
+            <th scope="row">红双喜</th>
+            <td class="price">有到 110</td>
+            <td class="note">新意境绿纪念版曾标 SALE 65%；也见过 180 / 210 / 300</td>
+          </tr>
+          <tr>
+            <th scope="row">大汉天子粗支</th>
+            <td class="price">140</td>
+            <td class="note">细支 210</td>
+          </tr>
+          <tr>
+            <th scope="row">熊猫五包装</th>
+            <td class="price">210</td>
+            <td class="note"></td>
+          </tr>
+          <tr>
+            <th scope="row">牡丹凤凰翅支</th>
+            <td class="price">330</td>
+            <td class="note">青柠 270</td>
+          </tr>
+          <tr>
+            <th scope="row">荷花硬盒</th>
+            <td class="price">450</td>
+            <td class="note">软盒 320</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>万宝路和七星在深免和港免差价较大。是否还在打折、在哪个厅，以现场为准。</p>
+
+    <h3>宝亨细支莫吉托</h3>
+    <p>BOHEM mojito Double Slim LIME and MINT，全英文细长盒，深蓝加一圈湖蓝边，滤嘴有一颗莫吉托爆珠（盒上的 Double 是压爆珠后味道更浓，不是两颗珠）。</p>
+    <p>8 月和 11 月初港免货架没有见到这款，没有港免实拍价。</p>
+    <p>别处参考，不是港免价：日本关西机场官网，常规支（不是细支）莫吉托 Double 4450 日元一条，按 2026-11-12 汇率大约 220 港元；中文目录给这款细支的参考价大约 180 元一条，约 210 港元。如果港免有货，按同场进口烟，心理预期 350–450 港元一条；明显高于这个区间就先再看一看。以现场为准。</p>
   </section>
 
   <section id="nearby">
