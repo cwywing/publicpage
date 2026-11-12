@@ -177,6 +177,35 @@ table.duty td.price {
 }
 table.duty td.note { margin-top: 4px; color: var(--muted); }
 table.duty td.note:empty { display: none; }
+figure.shot { margin: 12px 0 20px; padding: 0; max-width: 100%; }
+figure.shot img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+figure.shot figcaption {
+  margin: 8px 4px 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+table.duty img.pack {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  border-radius: 12px;
+  margin: 0 0 10px;
+}
+.packs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 10px;
+}
+.packs img.pack { width: calc(50% - 4px); max-width: 200px; margin: 0; }
 h3.calm { color: var(--pine); }
 .shops {
   width: max-content;
@@ -589,6 +618,9 @@ tr:last-child th { border-bottom: 0; }
     <p>香港入境免税是 19 支，所以不要在去程买一条。<a href="https://www.customs.gov.hk/sc/service-enforcement-information/passenger-clearance/duty-free-concessions/index.html" target="_blank" rel="noopener noreferrer">香港海关免税额</a></p>
 
     <h3 class="calm">港免 · 这些偏贵，建议先跳过</h3>
+    <figure class="shot">
+      <img src="img/sevenstars-gangmian.jpg" alt="港免实拍：七星 Prime Leaf 8 和 Charcoal Filter，建议先跳过" loading="lazy">
+    </figure>
     <div class="scroll">
       <p class="unit">实拍价（港元/条）</p>
       <table class="duty">
@@ -597,52 +629,104 @@ tr:last-child th { border-bottom: 0; }
         </thead>
         <tbody>
           <tr>
-            <th scope="row">七星 Prime Leaf 8</th>
+            <th scope="row"><img class="pack" src="img/thumbs/sevenstars-prime8.jpg" alt="七星 Prime Leaf 8 包装" loading="lazy">七星 Prime Leaf 8</th>
             <td class="price">8月 465</td>
             <td class="note">有人说机场大约 220，这里贵一倍左右</td>
           </tr>
           <tr>
-            <th scope="row">七星 Charcoal Filter（经典白银盒）</th>
+            <th scope="row"><img class="pack" src="img/thumbs/sevenstars-cf.jpg" alt="七星 Charcoal Filter 经典白银盒包装" loading="lazy">七星 Charcoal Filter（经典白银盒）</th>
             <td class="price">8月 430</td>
             <td class="note"></td>
           </tr>
           <tr>
-            <th scope="row">七星 Charcoal Filter 4（黑盒）</th>
+            <th scope="row"><img class="pack" src="img/thumbs/sevenstars-cf4.jpg" alt="七星 Charcoal Filter 4 黑盒包装" loading="lazy">七星 Charcoal Filter 4（黑盒）</th>
             <td class="price">11月初 465</td>
             <td class="note"></td>
           </tr>
           <tr>
-            <th scope="row">七星 Charcoal Filter 7（银盒）</th>
+            <th scope="row"><img class="pack" src="img/thumbs/sevenstars-cf7.jpg" alt="七星 Charcoal Filter 7 银盒包装" loading="lazy">七星 Charcoal Filter 7（银盒）</th>
             <td class="price">11月初同层可见价签 465</td>
             <td class="note"></td>
           </tr>
+        </tbody>
+      </table>
+    </div>
+    <figure class="shot">
+      <img src="img/mevius-gangmian.jpg" alt="港免实拍：Mevius 蓝盒和 Option 深色款，建议先跳过" loading="lazy">
+    </figure>
+    <div class="scroll">
+      <p class="unit">实拍价（港元/条）</p>
+      <table class="duty">
+        <thead>
+          <tr><th>品名</th><th class="price">实拍价（港元/条）</th><th>备注</th></tr>
+        </thead>
+        <tbody>
           <tr>
-            <th scope="row">Mevius（万事发）蓝盒，可见 1、4 等</th>
+            <th scope="row"><img class="pack" src="img/thumbs/mevius-blue.jpg" alt="Mevius 蓝盒包装" loading="lazy">Mevius（万事发）蓝盒，可见 1、4 等</th>
             <td class="price">8月 420</td>
             <td class="note">各款都是这个价，建议直接略过</td>
           </tr>
           <tr>
-            <th scope="row">Mevius Option Rich Taste 等深色款</th>
+            <th scope="row"><img class="pack" src="img/thumbs/mevius-option.jpg" alt="Mevius Option 深色款包装" loading="lazy">Mevius Option Rich Taste 等深色款</th>
             <td class="price">11月初 420</td>
             <td class="note">同上</td>
           </tr>
+        </tbody>
+      </table>
+    </div>
+    <figure class="shot">
+      <img src="img/furongwang-gangmian.jpg" alt="港免实拍：芙蓉王 Royal。细长金边和底层黑同柜，中层其他价签仅对照" loading="lazy">
+    </figure>
+    <div class="scroll">
+      <p class="unit">实拍价（港元/条）</p>
+      <table class="duty">
+        <thead>
+          <tr><th>品名</th><th class="price">实拍价（港元/条）</th><th>备注</th></tr>
+        </thead>
+        <tbody>
           <tr>
-            <th scope="row">芙蓉王 Royal</th>
+            <th scope="row"><img class="pack" src="img/thumbs/furong-royal.jpg" alt="芙蓉王 Royal 包装" loading="lazy">芙蓉王 Royal</th>
             <td class="price">8月 1600</td>
             <td class="note"></td>
           </tr>
+        </tbody>
+      </table>
+    </div>
+    <figure class="shot">
+      <img src="img/chenxiang-guiyan-gangmian.jpg" alt="港免实拍：沉香 1380、1100、880，下半是贵烟各款" loading="lazy">
+    </figure>
+    <div class="scroll">
+      <p class="unit">实拍价（港元/条）</p>
+      <table class="duty">
+        <thead>
+          <tr><th>品名</th><th class="price">实拍价（港元/条）</th><th>备注</th></tr>
+        </thead>
+        <tbody>
           <tr>
-            <th scope="row">沉香</th>
+            <th scope="row"><span class="packs"><img class="pack" src="img/thumbs/chenxiang-1380.jpg" alt="沉香 1380 包装" loading="lazy"><img class="pack" src="img/thumbs/chenxiang-1100.jpg" alt="沉香 1100 包装" loading="lazy"><img class="pack" src="img/thumbs/chenxiang-880.jpg" alt="沉香 880 包装" loading="lazy"></span>沉香</th>
             <td class="price">8月 1380 / 1100 / 880</td>
             <td class="note">不同款</td>
           </tr>
+        </tbody>
+      </table>
+    </div>
+    <figure class="shot">
+      <img src="img/cigaronne-gangmian.jpg" alt="港免实拍：Cigaronne Legend、Big Boss 和 Royal" loading="lazy">
+    </figure>
+    <div class="scroll">
+      <p class="unit">实拍价（港元/条）</p>
+      <table class="duty">
+        <thead>
+          <tr><th>品名</th><th class="price">实拍价（港元/条）</th><th>备注</th></tr>
+        </thead>
+        <tbody>
           <tr>
-            <th scope="row">Cigaronne Legend / Big Boss</th>
+            <th scope="row"><span class="packs"><img class="pack" src="img/thumbs/cigaronne-legend.jpg" alt="Cigaronne Legend 包装" loading="lazy"><img class="pack" src="img/thumbs/cigaronne-bigboss.jpg" alt="Cigaronne Big Boss 包装" loading="lazy"></span>Cigaronne Legend / Big Boss</th>
             <td class="price">8月 715</td>
             <td class="note"></td>
           </tr>
           <tr>
-            <th scope="row">Cigaronne Royal</th>
+            <th scope="row"><img class="pack" src="img/thumbs/cigaronne-royal.jpg" alt="Cigaronne Royal 包装" loading="lazy">Cigaronne Royal</th>
             <td class="price">8月 615</td>
             <td class="note"></td>
           </tr>
@@ -652,6 +736,9 @@ tr:last-child th { border-bottom: 0; }
 
     <h3>港免 · 相对没那么贵</h3>
     <p>这些只是同场实拍，不是「推荐必买」。以现场为准。</p>
+    <figure class="shot">
+      <img src="img/nanjing-pearl-longfeng.jpg" alt="港免实拍：百年龙凤、东方之珠、南京 1905。未核对款名的不另起名" loading="lazy">
+    </figure>
     <div class="scroll">
       <p class="unit">实拍价（港元/条）</p>
       <table class="duty">
@@ -660,52 +747,104 @@ tr:last-child th { border-bottom: 0; }
         </thead>
         <tbody>
           <tr>
-            <th scope="row">百年龙凤</th>
+            <th scope="row"><img class="pack" src="img/thumbs/longfeng.jpg" alt="百年龙凤包装" loading="lazy">百年龙凤</th>
             <td class="price">8月 180</td>
             <td class="note">港免里相对便宜</td>
           </tr>
           <tr>
-            <th scope="row">万宝路 Flavor Mix（白盒、灰字 flavor mix）</th>
-            <td class="price">350</td>
-            <td class="note">Club Avolta Shop 1B 收据，一条 200 支</td>
-          </tr>
-          <tr>
-            <th scope="row">东方之珠</th>
+            <th scope="row"><img class="pack" src="img/thumbs/orient-pearl.jpg" alt="东方之珠城景盒包装" loading="lazy">东方之珠</th>
             <td class="price">8月 360</td>
             <td class="note"></td>
           </tr>
           <tr>
-            <th scope="row">芙蓉王细长金边</th>
+            <th scope="row"><img class="pack" src="img/thumbs/nanjing1905.jpg" alt="南京 1905 包装" loading="lazy">南京 1905</th>
+            <td class="price">8月 620</td>
+            <td class="note">不便宜，仅作对照</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <figure class="shot">
+      <img src="img/flavor-mix-gangmian.jpg" alt="港免实拍：万宝路 Flavor Mix，收据 350" loading="lazy">
+    </figure>
+    <div class="scroll">
+      <p class="unit">实拍价（港元/条）</p>
+      <table class="duty">
+        <thead>
+          <tr><th>品名</th><th class="price">实拍价（港元/条）</th><th>备注</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><img class="pack" src="img/thumbs/flavor-mix.jpg" alt="万宝路 Flavor Mix 白盒包装" loading="lazy">万宝路 Flavor Mix（白盒、灰字 flavor mix）</th>
+            <td class="price">350</td>
+            <td class="note">Club Avolta Shop 1B 收据，一条 200 支</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <figure class="shot">
+      <img src="img/furongwang-gangmian.jpg" alt="港免芙蓉王货架：细长金边 253 和底层黑 320，中层其他价签仅对照" loading="lazy">
+    </figure>
+    <div class="scroll">
+      <p class="unit">实拍价（港元/条）</p>
+      <table class="duty">
+        <thead>
+          <tr><th>品名</th><th class="price">实拍价（港元/条）</th><th>备注</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><img class="pack" src="img/thumbs/furong-goldslim.jpg" alt="芙蓉王细长金边包装" loading="lazy">芙蓉王细长金边</th>
             <td class="price">8月 253</td>
             <td class="note"></td>
           </tr>
           <tr>
-            <th scope="row">Winston</th>
+            <th scope="row"><img class="pack" src="img/thumbs/furong-black.jpg" alt="芙蓉王底层黑包装" loading="lazy">芙蓉王底层黑</th>
+            <td class="price">8月 320</td>
+            <td class="note">仅作对照</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <figure class="shot">
+      <img src="img/camel-winston-caster.jpg" alt="港免实拍：Camel、Winston、CASTER 5，价签是这几款自己的" loading="lazy">
+    </figure>
+    <div class="scroll">
+      <p class="unit">实拍价（港元/条）</p>
+      <table class="duty">
+        <thead>
+          <tr><th>品名</th><th class="price">实拍价（港元/条）</th><th>备注</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><img class="pack" src="img/thumbs/winston.jpg" alt="Winston 包装" loading="lazy">Winston</th>
             <td class="price">8月 390</td>
             <td class="note">同场价签，没有明显「值得买」的评价</td>
           </tr>
           <tr>
-            <th scope="row">Camel</th>
+            <th scope="row"><span class="packs"><img class="pack" src="img/thumbs/camel-blue.jpg" alt="Camel 蓝盒包装" loading="lazy"><img class="pack" src="img/thumbs/camel-yellow.jpg" alt="Camel 黄盒包装" loading="lazy"></span>Camel</th>
             <td class="price">8月 420</td>
             <td class="note">同上</td>
           </tr>
           <tr>
-            <th scope="row">CASTER 5</th>
+            <th scope="row"><img class="pack" src="img/thumbs/caster.jpg" alt="CASTER 5 包装" loading="lazy">CASTER 5</th>
             <td class="price">8月 430</td>
             <td class="note">同上</td>
           </tr>
+        </tbody>
+      </table>
+    </div>
+    <figure class="shot">
+      <img src="img/chenxiang-guiyan-gangmian.jpg" alt="港免货架下半：贵烟各款，仅作对照" loading="lazy">
+    </figure>
+    <div class="scroll">
+      <p class="unit">实拍价（港元/条）</p>
+      <table class="duty">
+        <thead>
+          <tr><th>品名</th><th class="price">实拍价（港元/条）</th><th>备注</th></tr>
+        </thead>
+        <tbody>
           <tr>
-            <th scope="row">南京 1905</th>
-            <td class="price">8月 620</td>
-            <td class="note">不便宜，仅作对照</td>
-          </tr>
-          <tr>
-            <th scope="row">芙蓉王底层黑</th>
-            <td class="price">8月 320</td>
-            <td class="note">仅作对照</td>
-          </tr>
-          <tr>
-            <th scope="row">贵烟</th>
+            <th scope="row"><img class="pack" src="img/thumbs/guiyan.jpg" alt="贵烟包装" loading="lazy">贵烟</th>
             <td class="price">8月 1000 / 560 / 440 / 240</td>
             <td class="note">不同款，仅作对照</td>
           </tr>
@@ -715,6 +854,16 @@ tr:last-child th { border-bottom: 0; }
 
     <h3>深免（10 月笔记，楼层未写清）</h3>
     <p>打折货架上相对便宜的国产中档，例如：</p>
+    <figure class="shot">
+      <img src="img/shenmian-overview.jpg" alt="深免货架总览，楼层未写清" loading="lazy">
+    </figure>
+    <figure class="shot">
+      <img src="img/shenmian-close-top.jpg" alt="深免上排：芙蓉王硬盒、硬细支、深蓝" loading="lazy">
+    </figure>
+    <figure class="shot">
+      <img src="img/shenmian-close-mid.jpg" alt="深免中下排价签，可对照品名" loading="lazy">
+    </figure>
+    <p>上图价签上的品名可对照。</p>
     <div class="scroll">
       <p class="unit">实拍价（港元/条）</p>
       <table class="duty">
@@ -786,6 +935,10 @@ tr:last-child th { border-bottom: 0; }
     <p>BOHEM mojito Double Slim LIME and MINT，全英文细长盒，深蓝加一圈湖蓝边，滤嘴有一颗莫吉托爆珠（盒上的 Double 是压爆珠后味道更浓，不是两颗珠）。</p>
     <p>8 月和 11 月初港免货架没有见到这款，没有港免实拍价。</p>
     <p>别处参考，不是港免价：日本关西机场官网，常规支（不是细支）莫吉托 Double 4450 日元一条，按 2026-11-12 汇率大约 220 港元；中文目录给这款细支的参考价大约 180 元一条，约 210 港元。如果港免有货，按同场进口烟，心理预期 350–450 港元一条；明显高于这个区间就先再看一看。以现场为准。</p>
+    <figure class="shot">
+      <img src="img/bohem-slim-mojito.jpg" alt="宝亨细支莫吉托包装对照，不是港免货架实拍" loading="lazy">
+      <figcaption>包装对照，不是港免货架实拍，没有港免实拍价。</figcaption>
+    </figure>
   </section>
 
   <section id="nearby">
